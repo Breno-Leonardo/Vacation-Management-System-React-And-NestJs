@@ -1,24 +1,15 @@
-import { useState } from 'react'
-import './App.css'
-import { Header } from './components/Header'
-import { Sidebar } from './components/Sidebar'
-import { Container } from './components/Container'
-
-let isExpanded = false;
+import "./App.css";
+import { Router } from "./Router";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
-
-return (
-<div className="App">
-  <Header></Header>
-  <div className="bodyContent">
-   
-    <div className="content">
-      <Container title="Time"></Container>
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Router></Router>
+      </BrowserRouter>
     </div>
-  </div>
-</div>
-)
+  );
 }
 
-export default App
+export default App;
