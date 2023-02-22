@@ -1,0 +1,44 @@
+:root {
+    --green-light: #33A457;
+    --green: #01653C;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+body,
+input,
+select,
+textarea,
+button {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1 rem;
+    font-weight: 400;
+}
+#root{ 
+    width: 100%;
+}
+.App {
+    display: flex;
+    flex-direction: column;
+ 
+}
+.bodyContent{
+    display: flex;
+    flex-basis: auto;
+    min-height: calc(100vh - 6.2rem);
+     
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    
+    
+    width: 100%;
+    
+
+}

@@ -1,0 +1,54 @@
+.employeeLine {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: space-between;
+    margin-top:3.0rem ;
+    width:100%;
+    font-size:1.3rem;
+    font-weight: 500;
+}
+
+.employeeLine > p{
+    width:15%;
+    align-items:center;
+    text-align: center;
+    word-break: break-word;
+}
+.nameDiv{ 
+    width: 15%;
+    display: flex;
+    justify-content: flex-start;
+    align-items:center;
+    text-align: center;
+    word-break: break-word;
+    
+}
+.nameDiv > img{
+    margin-left: 1.5rem;
+ 
+    margin-right:0.5rem;
+    
+}
+.alertDiv{ 
+    width: 15%;
+    color:red;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    text-align: center;
+    word-break: break-word;
+    
+}
+ .alertSpan{
+    color:white;
+    font-size: 0.7rem;
+    background-color:red;
+    padding:0.2rem;
+    border-radius: 20px;
+    box-shadow:0px 0px 2px black ;
+ }
+ .icon{
+    height:2rem;
+}
