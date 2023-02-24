@@ -3,6 +3,7 @@
   --green: #01653c;
   --red:#AD1E1E;
   --red-light:#FF0000;
+  --blue:#2237A9;
 }
 
 * {
@@ -28,7 +29,7 @@ button {
 
 .App {
   display: flex;
-  min-height: calc(100vh - 6.2rem);
+  min-height: calc(100vh - 8.2rem);
   flex-direction: column;
   
 }
@@ -37,6 +38,6 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: calc(100vh - 6.2rem);
+  min-height: calc(100vh - 8.2rem);
   width: 100%;
 }

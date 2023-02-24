@@ -4,6 +4,7 @@
     padding: 0.25rem;
     color:white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+    margin-top:2.5rem;
 }
 
 
@@ -18,8 +19,9 @@
 }
 .Green:hover{
     background-color:var(--green-light);
+    transition: 0.2s ease-in;
 }
 .Big{
     font-size:2.25rem;
-    width:40%;
+    width:16rem;
 }

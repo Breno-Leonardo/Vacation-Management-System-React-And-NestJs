@@ -1,7 +1,7 @@
 import { Header } from "../../components/Header";
 import { Container } from "../../components/Container";
-import styles from "./TeamPage.module.css";
-import { EmployeeLine } from "../../components/managerTeamPage/EmployeeLine";
+import styles from "./TeamPageManager.module.css";
+import { EmployeeLine } from "../../components/EmployeeLine";
 
 const funcionario = {
   nome: "Breno Leonardo",
@@ -34,7 +34,7 @@ export function TeamPage() {
       <Header forWho="Gestor"></Header>
 
       <div className="content">
-        <Container title="Time" titlePosition="center">
+        <Container title="Time" >
           <div className={styles.topics}>
             <p>Nome</p>
             <p>Saldo</p>
@@ -44,13 +44,10 @@ export function TeamPage() {
           </div>
 
           {funcionarios.map((f) => {
+            
             return (
               <EmployeeLine
-                name={f.nome}
-                balance={f.saldo}
-                concessivePeriod={f.periodoConcessivo}
-                vestingPeriod={f.periodoAquisitivo}
-                concessiveDeadline={f.dataLimiteConcessiva}
+                fields={[f.nome,f.saldo,f.periodoConcessivo,f.periodoAquisitivo,f.dataLimiteConcessiva]}
                 attentionFlag={f.attentionFlag}
               ></EmployeeLine>
             );

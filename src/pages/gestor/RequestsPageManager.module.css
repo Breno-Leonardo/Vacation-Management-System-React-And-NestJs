@@ -1,0 +1,62 @@
+.topics {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  width: 100%;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.topics > p {
+  width: 15%;
+  align-items: center;
+  text-align: center;
+  word-break: break-word;
+}
+
+
+.topicsCenter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 100%;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.topicsCenter > p{
+  width:15%;
+  align-items:center;
+  text-align: center;
+  word-break: break-word;
+}
+
+
+
+.divForButton{
+  display: flex;
+  width:100%;
+  flex-direction: row;
+}
+
+.topicsWithButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-right:3rem;
+  margin-top: 2rem;
+  width: 100%;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+.topicsWithButton > p{
+  width:15%;
+  align-items:center;
+  text-align: center;
+  word-break: break-word;
+}

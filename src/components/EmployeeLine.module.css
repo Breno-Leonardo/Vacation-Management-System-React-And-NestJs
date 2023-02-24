@@ -15,6 +15,25 @@
     text-align: center;
     word-break: break-word;
 }
+
+.employeeLineCenter {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: center;
+    margin-top:3.0rem ;
+    width:100%;
+    font-size:1.3rem;
+    font-weight: 500;
+}
+
+.employeeLineCenter > p{
+    width:15%;
+    
+    align-items:center;
+    text-align: center;
+    word-break: break-word;
+}
 .nameDiv{ 
     width: 15%;
     display: flex;
@@ -22,6 +41,7 @@
     align-items:center;
     text-align: center;
     word-break: break-word;
+    
     
 }
 .nameDiv > img{
@@ -51,4 +71,22 @@
  }
  .icon{
     height:2rem;
+}
+
+.green{
+    color:var(--green);
+}
+.red{
+    color:var(--red);
+}
+.blue{
+    color:var(--blue);
+}
+
+.divForButton{
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    
+   width: 14.4rem;
 }
