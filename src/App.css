@@ -37,7 +37,7 @@ button {
 .content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: calc(100vh - 8.2rem);
   width: 100%;
 }

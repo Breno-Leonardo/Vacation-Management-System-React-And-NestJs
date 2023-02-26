@@ -25,3 +25,10 @@
     font-size:2.25rem;
     width:16rem;
 }
+
+.Small{
+    font-size:0.8rem;
+    font-weight: 500;
+    width:5rem;
+    height:2rem;    
+}

@@ -1,0 +1,43 @@
+.topicsCenter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 100%;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.topicsCenter > p {
+  width: 15%;
+  align-items: center;
+  text-align: center;
+  word-break: break-word;
+}
+.infos {
+  display: flex;
+  font-size: 1.3rem;
+  
+}
+.infoPrimary { 
+  margin-top: 1.5rem;
+  display: flex;
+  width: 25rem;
+  margin-left:10rem;
+}
+.infoSecondary {
+  margin-top: 1.5rem;
+  display: flex;
+  width: 25rem;
+  
+}
+.infos p {
+  width: 20rem;
+  margin-right: 9rem;
+}
+.divForButton {
+  display: flex;
+  width: 40rem;
+  justify-content: space-between;
+ }

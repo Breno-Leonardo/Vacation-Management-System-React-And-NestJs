@@ -2,30 +2,33 @@ import { Header } from "../../components/Header";
 import { Container } from "../../components/Container";
 import styles from "./RequestsPageManager.module.css";
 import { EmployeeLine } from "../../components/EmployeeLine";
+import { Button } from "../../components/Button";
+import { Card } from "../../components/Card";
+import { Link } from "react-router-dom";
 
-const funcionario = {
+const solicitacao = {
   nome: "Breno Leonardo",
-  saldo: "10",
-  periodoAquisitivo: "17/01/2023 até 17/01/2024",
-  periodoConcessivo: "17/01/2022 \n até \n 17/01/2023",
-  dataLimiteConcessiva: "07/01/2022",
-  attentionFlag: true,
+  dataSolicitacao: "15/01/2022",
+  inicio: "17/01/2022",
+  fim: "27/01/2022",
+  dataLimiteConcessiva: "26/02/2022", 
+  attentionFlag:false
 };
-const funcionario2 = {
+const solicitacao2 = {
   nome: "Sofia Lima",
-  saldo: "0",
-  periodoAquisitivo: "17/01/2023 até 17/01/2024",
-  periodoConcessivo: "17/01/2022 \n até \n 17/01/2023",
-  dataLimiteConcessiva: "07/01/2022",
-  attentionFlag: false,
+  dataSolicitacao: "15/01/2022",
+  inicio: "17/01/2022",
+  fim: "27/01/2022",
+  dataLimiteConcessiva: "26/02/2022",
+  attentionFlag:true
 };
 
-const funcionarios = [
-  funcionario,
-  funcionario2,
-  funcionario,
-  funcionario2,
-  funcionario,
+const solicitacoes = [
+  solicitacao,
+  solicitacao2,
+  solicitacao,
+  solicitacao2,
+  solicitacao,
 ];
 
 export function RequestsPageManager() {
@@ -34,7 +37,12 @@ export function RequestsPageManager() {
       <Header forWho="Gestor"></Header>
 
       <div className="content">
-        <Container title="Solicitações" >
+        <div className={styles.divCards}>
+          <Card content="3" size="Medium" title="Funcionários de férias"></Card>
+          <Card content="3" size="Medium" title="Solicitações"></Card>
+          <Card content="4" size="Medium" title="Férias agendadas"></Card>
+        </div>
+        <Container title="Solicitações">
           <div className={styles.topicsWithButton}>
             <p>Nome</p>
             <p>Data da Solicitação</p>
@@ -43,54 +51,56 @@ export function RequestsPageManager() {
             <p>Data Limite Concessiva</p>
           </div>
 
-          {funcionarios.map((f) => {
+          {solicitacoes.map((f) => {
             return (
               <div className={styles.divForButton}>
                 <EmployeeLine
-                  fields={[f.nome,f.saldo,f.periodoConcessivo,f.periodoAquisitivo,f.dataLimiteConcessiva]}
+                  fields={[
+                    f.nome,
+                    f.dataSolicitacao,
+                    f.inicio,
+                    f.fim,
+                    f.dataLimiteConcessiva
+                  ]}
+                  colorsFields={["black", "black", "greee", "red", "blue"]}
                   attentionFlag={f.attentionFlag}
                 ></EmployeeLine>
-                <button>sadasd</button>
+                <Link to="/pagina-de-resposta-gestor"><Button content="Responder" size="Small"></Button></Link>
               </div>
-              
             );
           })}
         </Container>
 
-        <Container title="Funcionários de férias" >
+        <Container title="Funcionários de férias">
           <div className={styles.topicsCenter}>
             <p>Nome</p>
             <p>Início</p>
             <p>Fim</p>
           </div>
 
-          {funcionarios.map((f) => {
+          {solicitacoes.map((f) => {
             return (
               <EmployeeLine
-              fields={[f.nome,f.periodoConcessivo,f.dataLimiteConcessiva]}
-              colorsFields={["black","green","red"]}
-              attentionFlag={f.attentionFlag}
-              positionCenter="center"
+                fields={[f.nome, f.inicio, f.fim]}
+                colorsFields={["black", "green", "red"]}
+                positionCenter="center"
               ></EmployeeLine>
-              
             );
           })}
-          
         </Container>
 
-        <Container title="Férias agendadas" >
+        <Container title="Férias agendadas">
           <div className={styles.topicsCenter}>
             <p>Nome</p>
             <p>Início</p>
             <p>Fim</p>
           </div>
 
-          {funcionarios.map((f) => {
+          {solicitacoes.map((f) => {
             return (
               <EmployeeLine
-                fields={[f.nome,f.periodoConcessivo,f.dataLimiteConcessiva]}
-                colorsFields={["black","green","red"]}
-                attentionFlag={f.attentionFlag}
+                fields={[f.nome, f.inicio, f.fim]}
+                colorsFields={["black", "green", "red"]}
                 positionCenter="center"
               ></EmployeeLine>
             );

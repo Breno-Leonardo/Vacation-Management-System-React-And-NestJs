@@ -28,7 +28,7 @@ const funcionarios = [
   funcionario,
 ];
 
-export function TeamPage() {
+export function TeamPageManager() {
   return (
     <div className="App">
       <Header forWho="Gestor"></Header>
@@ -47,6 +47,7 @@ export function TeamPage() {
             
             return (
               <EmployeeLine
+                key={f.nome+f.dataLimiteConcessiva}
                 fields={[f.nome,f.saldo,f.periodoConcessivo,f.periodoAquisitivo,f.dataLimiteConcessiva]}
                 attentionFlag={f.attentionFlag}
               ></EmployeeLine>

@@ -1,92 +1,91 @@
 .employeeLine {
-    display: flex;
-    flex-direction: row;
-    align-items:center;
-    justify-content: space-between;
-    margin-top:3.0rem ;
-    width:100%;
-    font-size:1.3rem;
-    font-weight: 500;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  width: 100%;
+  font-size: 1.3rem;
+  font-weight: 500;
 }
 
-.employeeLine > p{
-    width:15%;
-    align-items:center;
-    text-align: center;
-    word-break: break-word;
+.employeeLine > p {
+  width: 15%;
+  align-items: center;
+  text-align: center;
+  word-break: break-word;
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
 }
 
 .employeeLineCenter {
-    display: flex;
-    flex-direction: row;
-    align-items:center;
-    justify-content: center;
-    margin-top:3.0rem ;
-    width:100%;
-    font-size:1.3rem;
-    font-weight: 500;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  width: 100%;
+  font-size: 1.3rem;
+  font-weight: 500;
+
 }
 
-.employeeLineCenter > p{
-    width:15%;
-    
-    align-items:center;
-    text-align: center;
-    word-break: break-word;
+.employeeLineCenter > p {
+  width: 15%;
+  align-items: center;
+  text-align: center;
+  word-break: break-word;
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
 }
-.nameDiv{ 
-    width: 15%;
-    display: flex;
-    justify-content: flex-start;
-    align-items:center;
-    text-align: center;
-    word-break: break-word;
-    
-    
+.nameDiv {
+  width: 15%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  word-break: break-word;
 }
-.nameDiv > img{
-    margin-left: 1.5rem;
- 
-    margin-right:0.5rem;
-    
+.nameDiv > img {
+  margin-left: 1.5rem;
+
+  margin-right: 0.5rem;
 }
-.alertDiv{ 
-    width: 15%;
-    color:red;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items:center;
-    text-align: center;
-    word-break: break-word;
-    
+.alertDiv {
+  width: 15%;
+  color: red;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  word-break: break-word;
+  margin-bottom: 1.5rem;
 }
- .alertSpan{
-    color:white;
-    font-size: 0.7rem;
-    background-color:red;
-    padding:0.2rem;
-    border-radius: 20px;
-    box-shadow:0px 0px 2px black ;
- }
- .icon{
-    height:2rem;
+.alertSpan {
+  color: white;
+  font-size: 0.7rem;
+  background-color: red;
+  padding: 0.2rem;
+  border-radius: 20px;
+  box-shadow: 0px 0px 2px black;
+}
+.icon {
+  height: 2rem;
 }
 
-.green{
-    color:var(--green);
+.green {
+  color: var(--green-light);
 }
-.red{
-    color:var(--red);
+.red {
+  color: var(--red);
 }
-.blue{
-    color:var(--blue);
+.blue {
+  color: var(--blue);
 }
 
-.divForButton{
-    display: flex;
-    flex-direction:row;
-    justify-content: space-between;
-    
-   width: 14.4rem;
+.divForButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 14.4rem;
 }

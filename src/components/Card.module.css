@@ -1,0 +1,70 @@
+.Card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border: none;
+  border-radius: 30px;
+  padding: 0.25rem;
+  color: white;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
+  margin-top: 2.5rem;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6);
+}
+.Card span {
+    font-size: 2rem;
+    margin-top: 0.5rem;
+}
+.Card div {
+  
+    margin-top: 2rem;
+}
+.Medium {
+  height: 15rem;
+  width: 22rem;
+}
+
+.Red {
+  background: rgb(109, 8, 8);
+  background: linear-gradient(
+    90deg,
+    rgba(109, 8, 8, 1) 0%,
+    rgba(255, 0, 0, 1) 50%,
+    rgba(109, 8, 8, 1) 100%
+  );
+}
+
+.Green {
+  background: rgb(1, 101, 60);
+  background: linear-gradient(
+    90deg,
+    rgba(1, 101, 60, 1) 0%,
+    rgba(51, 164, 87, 1) 50%,
+    rgba(1, 101, 60, 1) 100%
+  );
+}
+
+.Big {
+  width: 16rem;
+}
+
+.Small {
+  font-size: 0.8rem;
+  font-weight: 500;
+  width: 5rem;
+  height: 2rem;
+}
+
+.divContent{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  font-size: 5.0rem;
+}
+
+.divDates{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  font-size: 2.0rem;
+}
