@@ -1,7 +1,7 @@
 import styles from "./Buton.module.css"
 interface ButtonProps{
     content: string;
-    size: "Big"|"Medium"|"Small";
+    size: "ExtraBig"|"Big"|"Medium"|"Small";
     color?: "Green"|"Red"
 }
 

@@ -1,0 +1,23 @@
+
+.infos {
+  display: flex;
+  font-size: 1.3rem;
+  justify-content:space-between;
+  width: 45rem;
+}
+.infosContent{
+  display: flex;
+  flex-direction: column;
+ justify-content: center;
+ 
+ 
+}
+.infos p {
+  width: 20rem;
+  margin-right: 9rem;
+}
+.infosContent span{
+  margin-left: 1rem;
+  margin-bottom: 0.4rem;
+ 
+}

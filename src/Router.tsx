@@ -6,6 +6,11 @@ import { TeamPageManager } from "./pages/gestor/TeamPageManager";
 import { ResponsePageManager } from "./pages/gestor/ResponsePageManager";
 import { RequestsPageCollaborator } from "./pages/colaborador/RequestsPageCollaborator";
 import { TeamPageCollaborator } from "./pages/colaborador/TeamPageCollaborator";
+import { HistoryRequestsPageCollaborator } from "./pages/colaborador/HistoryRequestPageCollaborator";
+import { ThirteenthPageCollaborator } from "./pages/colaborador/ThirteenthPageCollaborator";
+import { HomeRH } from "./pages/rh/HomeRH";
+import { NewRequestPage } from "./pages/colaborador/NewRequestPage";
+import { RegisterCollaboratorPage } from "./pages/rh/RegisterCollaboratorPage";
 
 export function Router() {
   return (
@@ -29,9 +34,13 @@ export function Router() {
         element={<ResponsePageManager></ResponsePageManager>}
       ></Route>
 
-<Route
+      <Route
         path="/pagina-do-time-colaborador"
         element={<TeamPageCollaborator></TeamPageCollaborator>}
+      ></Route>
+      <Route
+        path="/pagina-nova-solicitacao"
+        element={<NewRequestPage></NewRequestPage>}
       ></Route>
       <Route
         path="/pagina-de-solicitacoes-colaborador"
@@ -39,12 +48,32 @@ export function Router() {
       ></Route>
       <Route
         path="/pagina-de-historico-solicitacoes-colaborador"
-        element={<HistoryRequestsPageManager></HistoryRequestsPageManager>}
+        element={
+          <HistoryRequestsPageCollaborator></HistoryRequestsPageCollaborator>
+        }
       ></Route>
       <Route
-        path="/pagina-nova-solicitacao"
-        element={<ResponsePageManager></ResponsePageManager>}
+        path="/pagina-decimo-terceiro"
+        element={<ThirteenthPageCollaborator></ThirteenthPageCollaborator>}
       ></Route>
+
+      <Route
+        path="/pagina-inicial-rh"
+        element={<HomeRH></HomeRH>}
+      ></Route>
+      <Route
+        path="/pagina-cadastrar-colaborador"
+        element={<RegisterCollaboratorPage></RegisterCollaboratorPage>}
+      ></Route>
+      <Route
+        path="/pagina-cadastrar-gestor"
+        element={<HomeRH></HomeRH>}
+      ></Route>
+      <Route
+        path="/pagina-remover"
+        element={<HomeRH></HomeRH>}
+      ></Route>
+      
     </Routes>
   );
 }

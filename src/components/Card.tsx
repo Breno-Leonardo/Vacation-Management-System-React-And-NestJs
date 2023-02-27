@@ -4,43 +4,40 @@ interface CardProps {
   title: string;
   size: "Big" | "Medium" | "Small";
   color?: "Green" | "Red";
+  icon?: string;
   initialDateContent?: string;
 }
-function setContent(
-  content: string,
-  initialDateContent: string,
-  
-) {
-  if (initialDateContent != "" ) {
+function setContent(content: string, initialDateContent: string) {
+  if (initialDateContent != "") {
     return (
-      
-        <div className={styles.divDates}>
-            <p>{initialDateContent}</p>
-            <p>até</p>
-            <p>{initialDateContent}</p>
-        </div>
+      <div className={styles.divDates}>
+        <p>{initialDateContent}</p>
+        <p>até</p>
+        <p>{initialDateContent}</p>
+      </div>
     );
   } else {
-     return (
-      
-        <div className={styles.divContent}>
-            {content}
-        </div>
-    );
+    return <div className={styles.divContent}>{content}</div>;
   }
 }
+
 export function Card({
   title,
   content,
   size,
   color = "Green",
+  icon = "",
   initialDateContent = "",
 }: CardProps) {
-  return (
+  return icon != "" ? (
+    <div className={`${styles.Card} ${styles[size]} ${styles[color]} `}>
+      <img className={styles.icon} src={icon}></img>
+      <span>{title}</span>
+    </div>
+  ) : (
     <div className={`${styles.Card} ${styles[size]} ${styles[color]} `}>
       <span>{title}</span>
-      {setContent(content,initialDateContent)}
-        
+      {setContent(content, initialDateContent)}
     </div>
   );
 }

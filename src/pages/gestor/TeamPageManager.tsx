@@ -2,7 +2,6 @@ import { Header } from "../../components/Header";
 import { Container } from "../../components/Container";
 import styles from "./TeamPageManager.module.css";
 import { EmployeeLine } from "../../components/EmployeeLine";
-
 const funcionario = {
   nome: "Breno Leonardo",
   saldo: "10",
@@ -28,8 +27,10 @@ const funcionarios = [
   funcionario,
 ];
 
+
 export function TeamPageManager() {
   return (
+    
     <div className="App">
       <Header forWho="Gestor"></Header>
 

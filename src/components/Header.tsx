@@ -32,7 +32,7 @@ export function Header({ forWho }: HeaderProps) {
             <span>Time</span>
           </div>
         </Link>
-        <Link to="/pagina-de-historico-solicitacoes-colaborador">
+        <Link to="/pagina-decimo-terceiro">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={decimoTerceiroIcon}></img>
             <span>Décimo Terceiro</span>

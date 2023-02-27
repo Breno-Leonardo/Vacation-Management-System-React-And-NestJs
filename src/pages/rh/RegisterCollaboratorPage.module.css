@@ -1,0 +1,25 @@
+
+.infos {
+  display: flex;
+  font-size: 1.3rem;
+  justify-content:space-between;
+  width: 40rem;
+  margin-left:3rem;
+  margin-top:1.1rem;
+}
+.infosContent{
+  display: flex;
+  flex-direction: column;
+ justify-content: center;
+ width: 20rem;
+ 
+}
+.infos p {
+  width: 20rem;
+  margin-right: 9rem;
+}
+.infosContent span{
+  margin-left: 1rem;
+  margin-bottom: 0.4rem;
+ 
+}

@@ -64,6 +64,9 @@ export function RequestsPageCollaborator() {
               ></EmployeeLine>
             );
           })}
+          <Link to="/pagina-nova-solicitacao">
+            <Button content="Nova Solicitação" size="ExtraBig"></Button>
+          </Link>
         </Container>
       </div>
     </div>
