@@ -30,11 +30,6 @@ const funcionarios = [
 
 export function TeamPageManager() {
   return (
-    
-    <div className="App">
-      <Header forWho="Gestor"></Header>
-
-      <div className="content">
         <Container title="Time" >
           <div className={styles.topics}>
             <p>Nome</p>
@@ -55,7 +50,7 @@ export function TeamPageManager() {
             );
           })}
         </Container>
-      </div>
-    </div>
+      
+    
   );
 }

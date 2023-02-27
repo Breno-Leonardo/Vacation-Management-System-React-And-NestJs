@@ -21,10 +21,7 @@ const solicitacoes = [
 
 export function TeamPageCollaborator() {
   return (
-    <div className="App">
-      <Header forWho="Colaborador"></Header>
-
-      <div className="content">
+    
         <Container title="Solicitações e Férias do Time" >
           <div className={styles.topics}>
             <p>Nome</p>
@@ -46,7 +43,6 @@ export function TeamPageCollaborator() {
             );
           })}
         </Container>
-      </div>
-    </div>
+      
   );
 }

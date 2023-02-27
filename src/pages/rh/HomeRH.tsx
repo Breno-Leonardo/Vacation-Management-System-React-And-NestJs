@@ -7,23 +7,20 @@ import manager from "../../assets/account-tie.svg";
 import remove from "../../assets/account-remove.svg";
 export function HomeRH() {
   return (
-    <div className="App">
-      <Header forWho="RH"></Header>
-      <div className="content">
+    
       
         <div className={styles.divCards}>
-          <Link to="/">
+          <Link to="/rh/cadastrar-colaborador">
             <Card icon={collaborator} content="" size="Medium" title="Cadastrar Fucionário"></Card>
           </Link>
-          <Link>
+          <Link to="/rh/cadastrar-gestor">
             <Card icon={manager} content="" size="Medium" title="Cadastrar Gestor"></Card>
           </Link>
-          <Link>
+          <Link to="/rh/remover">
             <Card icon={remove} content="" size="Medium" title="Remover" color="Red"></Card>
           </Link>
         </div>
         
-      </div>
-    </div>
+      
   );
 }

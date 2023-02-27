@@ -26,49 +26,45 @@ const solicitacoes = [
 
 export function RequestsPageCollaborator() {
   return (
-    <div className="App">
-      <Header forWho="Colaborador"></Header>
+    <>
+      <div className={styles.divCards}>
+        <Card content="30" size="Medium" title="Saldo De Dias"></Card>
+        <Card
+          content=""
+          initialDateContent="07/07/2022"
+          size="Medium"
+          title="Período Aquisitivo"
+        ></Card>
+        <Card
+          content=""
+          initialDateContent="07/07/2023"
+          size="Medium"
+          title="Período Concessivo"
+        ></Card>
+      </div>
 
-      <div className="content">
-        <div className={styles.divCards}>
-          <Card content="30" size="Medium" title="Saldo De Dias"></Card>
-          <Card
-            content=""
-            initialDateContent="07/07/2022"
-            size="Medium"
-            title="Período Aquisitivo"
-          ></Card>
-          <Card
-            content=""
-            initialDateContent="07/07/2023"
-            size="Medium"
-            title="Período Concessivo"
-          ></Card>
+      <Container title="Solicitações">
+        <div className={styles.topicsCenter}>
+          <p>Data Solicitação</p>
+          <p>Início</p>
+          <p>Fim</p>
+          <p>Status</p>
         </div>
 
-        <Container title="Solicitações">
-          <div className={styles.topicsCenter}>
-            <p>Data Solicitação</p>
-            <p>Início</p>
-            <p>Fim</p>
-            <p>Status</p>
-          </div>
-
-          {solicitacoes.map((f) => {
-            return (
-              <EmployeeLine
-                fields={[f.dataSolicitacao, f.inicio, f.fim, f.status]}
-                colorsFields={["black", "green", "red"]}
-                positionCenter="center"
-                hasIcon={false}
-              ></EmployeeLine>
-            );
-          })}
-          <Link to="/pagina-nova-solicitacao">
-            <Button content="Nova Solicitação" size="ExtraBig"></Button>
-          </Link>
-        </Container>
-      </div>
-    </div>
+        {solicitacoes.map((f) => {
+          return (
+            <EmployeeLine
+              fields={[f.dataSolicitacao, f.inicio, f.fim, f.status]}
+              colorsFields={["black", "green", "red"]}
+              positionCenter="center"
+              hasIcon={false}
+            ></EmployeeLine>
+          );
+        })}
+        <Link to="/colaborador/nova-solicitacao">
+          <Button content="Nova Solicitação" size="ExtraBig"></Button>
+        </Link>
+      </Container>
+    </>
   );
 }

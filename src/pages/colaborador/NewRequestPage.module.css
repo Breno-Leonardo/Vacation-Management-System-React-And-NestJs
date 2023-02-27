@@ -3,7 +3,8 @@
   display: flex;
   font-size: 1.3rem;
   justify-content:space-between;
-  width: 45rem;
+  width: 50rem;
+  margin-left:2rem;
 }
 .infosContent{
   display: flex;

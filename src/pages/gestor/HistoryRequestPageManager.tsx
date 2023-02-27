@@ -1,4 +1,4 @@
-import { Header } from "../../components/Header";
+
 import { Container } from "../../components/Container";
 import styles from "./HistoryRequestPageManager.module.css";
 import { EmployeeLine } from "../../components/EmployeeLine";
@@ -10,7 +10,7 @@ const options = [
   ["789", "Adriana"],
 ];
 
-interface solicitacao{
+interface solicitacao {
   nome: string;
   dataSolicitacao: string;
   inicio: string;
@@ -31,39 +31,28 @@ const solicitacoes = [
   },
 ];
 
-
 export function HistoryRequestsPageManager() {
   return (
-    <div className="App">
-      <Header forWho="Gestor"></Header>
-      <div className="content">
-        <Container title="Histórico de solicitações">
-          <></>
-          <div className={styles.divSearch}>
-            <span>Funcionário: </span>
-            <Select options={options}></Select>
-          </div>
-          <div className={styles.topics}>
-            <p>Nome</p>
-            <p>Data Solicitação</p>
-            <p>Início</p>
-            <p>Fim</p>
-          </div>
-          {
-          solicitacoes.map((soli) => {
-            return (
-                
-                <EmployeeLine
-                  fields={[soli.nome, soli.dataSolicitacao, soli.inicio, soli.fim]}
-                  colorsFields={["black", "black", "green", "red"]}
-                  
-                ></EmployeeLine>
-                
-            );
-          })
-          }
-        </Container>
+    <Container title="Histórico de solicitações">
+      <></>
+      <div className={styles.divSearch}>
+        <span>Funcionário: </span>
+        <Select optionsDouble={options}></Select>
       </div>
-    </div>
+      <div className={styles.topics}>
+        <p>Nome</p>
+        <p>Data Solicitação</p>
+        <p>Início</p>
+        <p>Fim</p>
+      </div>
+      {solicitacoes.map((soli) => {
+        return (
+          <EmployeeLine
+            fields={[soli.nome, soli.dataSolicitacao, soli.inicio, soli.fim]}
+            colorsFields={["black", "black", "green", "red"]}
+          ></EmployeeLine>
+        );
+      })}
+    </Container>
   );
 }

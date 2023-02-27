@@ -1,4 +1,3 @@
-import { Header } from "../../components/Header";
 import { Container } from "../../components/Container";
 import styles from "./ResponsePageManager.module.css";
 import { EmployeeLine } from "../../components/EmployeeLine";
@@ -26,56 +25,48 @@ const solicitacoes = [solicitacao, solicitacao2];
 
 export function ResponsePageManager() {
   return (
-    <div className="App">
-      <Header forWho="Gestor"></Header>
+    <>
+      <Container title="Interseções de Férias">
+        <div className={styles.topicsCenter}>
+          <p>Nome</p>
+          <p>Início</p>
+          <p>Fim</p>
+        </div>
 
-      <div className="content">
-        <Container title="Interseções de Férias">
-          <div className={styles.topicsCenter}>
-            <p>Nome</p>
-            <p>Início</p>
-            <p>Fim</p>
-          </div>
+        {solicitacoes.map((f) => {
+          return (
+            <EmployeeLine
+              fields={[f.nome, f.inicio, f.fim]}
+              colorsFields={["black", "green", "red"]}
+              positionCenter="center"
+            ></EmployeeLine>
+          );
+        })}
+      </Container>
 
-          {solicitacoes.map((f) => {
-            return (
-              <EmployeeLine
-                fields={[f.nome, f.inicio, f.fim]}
-                colorsFields={["black", "green", "red"]}
-                positionCenter="center"
-              ></EmployeeLine>
-            );
-          })}
-        </Container>
-
-        <Container title="Solicitação">
-          <div className={styles.infos}>
-            <div className={styles.infoPrimary}>Nome: {solicitacao.nome}</div>
-            <div className={styles.infoSecondary}>
-              Cargo: Desenvolvedor Mobile
-            </div>
+      <Container title="Solicitação">
+        <div className={styles.infos}>
+          <div className={styles.infoPrimary}>Nome: {solicitacao.nome}</div>
+          <div className={styles.infoSecondary}>
+            Cargo: Desenvolvedor Mobile
           </div>
-          <div className={styles.infos}>
-            <span className={styles.infoPrimary}>Data Início: 07/07/2022</span>
-            <span className={styles.infoSecondary}>
-              Data Término: 17/07/2022
-            </span>
-          </div>
-          <div className={styles.infos}>
-            <span className={styles.infoPrimary}>
-              Saldo Restante De Dias: 20
-            </span>
-            <span className={styles.infoSecondary}>
-              Data Limite Concessiva: 17/07/2022
-            </span>
-          </div>
-          <TextArea placeholder="Digite uma mensagem para o fucionário, caso necessário"></TextArea>
-          <div className={styles.divForButton}>
-            <Button content="Aprovar" size="Big"></Button>
-            <Button content="Reprovar" size="Big" color="Red"></Button>
-          </div>
-        </Container>
-      </div>
-    </div>
+        </div>
+        <div className={styles.infos}>
+          <span className={styles.infoPrimary}>Data Início: 07/07/2022</span>
+          <span className={styles.infoSecondary}>Data Término: 17/07/2022</span>
+        </div>
+        <div className={styles.infos}>
+          <span className={styles.infoPrimary}>Saldo Restante De Dias: 20</span>
+          <span className={styles.infoSecondary}>
+            Data Limite Concessiva: 17/07/2022
+          </span>
+        </div>
+        <TextArea placeholder="Digite uma mensagem para o fucionário, caso necessário"></TextArea>
+        <div className={styles.divForButton}>
+          <Button content="Aprovar" size="Big"></Button>
+          <Button content="Reprovar" size="Big" color="Red"></Button>
+        </div>
+      </Container>
+    </>
   );
 }

@@ -20,25 +20,25 @@ export function Header({ forWho }: HeaderProps) {
       <header className={styles.header}>
         <img className={styles.logo} src={logo}></img>
 
-        <Link to="/pagina-de-solicitacoes-colaborador">
+        <Link to="/colaborador/solicitacoes">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={calendar}></img>
             <span>Solicitações</span>
           </div>
         </Link>
-        <Link to="/pagina-do-time-colaborador">
+        <Link to="/colaborador/time">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={accountGroup}></img>
             <span>Time</span>
           </div>
         </Link>
-        <Link to="/pagina-decimo-terceiro">
+        <Link to="/colaborador/decimo-terceiro">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={decimoTerceiroIcon}></img>
             <span>Décimo Terceiro</span>
           </div>
         </Link>
-        <Link to="/pagina-de-historico-solicitacoes-colaborador">
+        <Link to="/colaborador/historico">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={historyIcon}></img>
             <span>Histórico</span>
@@ -65,19 +65,19 @@ export function Header({ forWho }: HeaderProps) {
       <header className={styles.header}>
         <img className={styles.logo} src={logo}></img>
 
-        <Link to="/pagina-de-solicitacoes-gestor">
+        <Link to="/gestor/solicitacoes">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={calendar}></img>
             <span>Solicitações</span>
           </div>
         </Link>
-        <Link to="/pagina-do-time-gestor">
+        <Link to="/gestor/time">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={accountGroup}></img>
             <span>Time</span>
           </div>
         </Link>
-        <Link to="/pagina-de-historico-solicitacoes-gestor">
+        <Link to="/gestor/historico">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={historyIcon}></img>
             <span>Histórico</span>

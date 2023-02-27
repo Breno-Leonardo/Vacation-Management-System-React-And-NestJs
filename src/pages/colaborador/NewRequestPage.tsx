@@ -9,10 +9,7 @@ import calendar from "../../assets/calendar-month-outline-black.svg";
 
 export function NewRequestPage() {
   return (
-    <div className="App">
-      <Header forWho="Colaborador"></Header>
-
-      <div className="content">
+    
         <Container title="Solicitação">
           <div className={styles.infos}>
             <div className={styles.infosContent}>
@@ -34,7 +31,6 @@ export function NewRequestPage() {
 
           <Button content="SOLICITAR" size="Big"></Button>
         </Container>
-      </div>
-    </div>
+      
   );
 }

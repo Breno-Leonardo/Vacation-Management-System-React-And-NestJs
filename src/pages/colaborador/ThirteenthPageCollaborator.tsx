@@ -6,9 +6,7 @@ import { Button } from "../../components/Button";
 
 export function ThirteenthPageCollaborator() {
   return (
-    <div className="App">
-      <Header forWho="Colaborador"></Header>
-      <div className="content">
+    
         <Container title="Solicitar Décimo Terceiro ">
           <></>
           <div className={styles.divRequest}>
@@ -17,7 +15,6 @@ export function ThirteenthPageCollaborator() {
           </div>
          
         </Container>
-      </div>
-    </div>
+      
   );
 }

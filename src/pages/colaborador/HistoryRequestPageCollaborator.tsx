@@ -34,9 +34,7 @@ const solicitacoes = [
 
 export function HistoryRequestsPageCollaborator() {
   return (
-    <div className="App">
-      <Header forWho="Colaborador"></Header>
-      <div className="content">
+    
         <Container title="Histórico de solicitações">
           <></>
           <div className={styles.topics}>
@@ -59,7 +57,6 @@ export function HistoryRequestsPageCollaborator() {
           })
           }
         </Container>
-      </div>
-    </div>
+     
   );
 }
