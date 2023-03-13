@@ -62,30 +62,30 @@ export function Header({ forWho }: HeaderProps) {
     );
   } 
   else if (forWho == "Colaborador Gestor") {
-    //Colaborador
+    //Colaborador Gestor
     return (
       <header className={styles.header}>
         <img className={styles.logo} src={logo}></img>
 
-        <Link to="/colaborador/solicitacoes">
+        <Link to="/colaborador-gestor/solicitacoes">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={calendar}></img>
             <span>Solicitações</span>
           </div>
         </Link>
-        <Link to="/colaborador/time">
+        <Link to="/colaborador-gestor/time">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={accountGroup}></img>
             <span>Time</span>
           </div>
         </Link>
-        <Link to="/colaborador/decimo-terceiro">
+        <Link to="/colaborador-gestor/decimo-terceiro">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={decimoTerceiroIcon}></img>
             <span>Décimo Terceiro</span>
           </div>
         </Link>
-        <Link to="/colaborador/historico">
+        <Link to="/colaborador-gestor/historico">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={historyIcon}></img>
             <span>Histórico</span>
