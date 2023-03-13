@@ -1,7 +1,7 @@
-import { Header } from "../../components/Header";
 import { Container } from "../../components/Container";
 import styles from "./TeamPageManager.module.css";
 import { EmployeeLine } from "../../components/EmployeeLine";
+import { Select } from "../../components/Select";
 const funcionario = {
   nome: "Breno Leonardo",
   saldo: "10",
@@ -31,6 +31,10 @@ const funcionarios = [
 export function TeamPageManager() {
   return (
         <Container title="Time" >
+          <div className={styles.divSearch}>
+            <span>Time: </span>
+            <Select optionsDouble={[["123","Front-end"],["456","QQTech"]]}></Select>
+          </div>
           <div className={styles.topics}>
             <p>Nome</p>
             <p>Saldo</p>

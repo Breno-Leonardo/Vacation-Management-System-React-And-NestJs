@@ -16,3 +16,10 @@
   text-align: center; 
   word-break: break-word;
 }
+.divSearch {
+margin: 1.5rem 0rem;
+
+}
+.divSearch span{
+  font-size:1.5rem;
+}

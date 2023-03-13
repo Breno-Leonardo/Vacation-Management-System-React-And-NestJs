@@ -10,11 +10,12 @@ const options = [
   ["789", "Adriana"],
 ];
 
-interface solicitacao{
+interface solicitacao {
   nome: string;
   dataSolicitacao: string;
   inicio: string;
   fim: string;
+    status:string
 }
 const solicitacoes = [
   {
@@ -22,12 +23,14 @@ const solicitacoes = [
     dataSolicitacao: "15/01/2023",
     inicio: "17/01/2023",
     fim: "27/01/2023",
+    status:" Aprovada"
   },
   {
     nome: "Breno Leonardo",
     dataSolicitacao: "15/01/2023",
     inicio: "17/01/2023",
     fim: "27/01/2023",
+    status:" Aprovada"
   },
 ];
 
@@ -42,16 +45,16 @@ export function HistoryRequestsPageCollaborator() {
             <p>Data Solicitação</p>
             <p>Início</p>
             <p>Fim</p>
+            <p>Status</p>
           </div>
           {
           solicitacoes.map((soli) => {
             return (
                 
-                <EmployeeLine
-                  fields={[soli.nome, soli.dataSolicitacao, soli.inicio, soli.fim]}
-                  colorsFields={["black", "black", "green", "red"]}
-                  
-                ></EmployeeLine>
+              <EmployeeLine
+              fields={[soli.nome, soli.dataSolicitacao, soli.inicio, soli.fim, soli.status]}
+              colorsFields={["black", "black", "green", "red", "black"]}
+            ></EmployeeLine>
                 
             );
           })

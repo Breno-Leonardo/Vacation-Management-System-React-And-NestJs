@@ -27,20 +27,20 @@ export function RegisterManagerPage() {
 
             </div>
             <div className={styles.infosContent}>
-              <span>E-mail</span>
-              <Input  placeholder="E-mail" type="text" size="Small"></Input>
+            <span>Senha</span>
+              <Input  placeholder="Senha" type="text" size="Small"></Input>
             </div>
 
           </div>
           <div className={styles.infos}>
             <div className={styles.infosContent}>
               <span>Cargo</span>
-              <Select optionsUnique={["Desenvolvedor", "Analista", "Design"]}></Select>
+              <Input  placeholder="Cargo" type="text" size="Small"></Input>
 
             </div>
             <div className={styles.infosContent}>
-              <span>Telefone</span>
-              <Input  placeholder="Matrícula" type="text" size="Small"></Input>
+            <span>E-mail</span>
+              <Input  placeholder="E-mail" type="text" size="Small"></Input>
 
             </div>
           </div>

@@ -16,6 +16,7 @@ import { ManagerLayout } from "./layouts/ManagerLayout";
 import { RHLayout } from "./layouts/RHLayout";
 import { RegisterManagerPage } from "./pages/rh/RegisterManagerPage";
 import { RemovePage } from "./pages/rh/RemovePage";
+import { ManagerCollaboratorLayout } from "./layouts/ManagerCollaboratorLayout";
 
 export function Router() {
   return (
@@ -47,8 +48,40 @@ export function Router() {
       </Route>
 
       <Route
-        path="/colaborador"
+        path="/colaborador" 
         element={<CollaboratorLayout></CollaboratorLayout>}
+      >
+        <Route
+          path=""
+          element={<RequestsPageCollaborator></RequestsPageCollaborator>}
+        ></Route>
+        <Route
+          path="time"
+          element={<TeamPageCollaborator></TeamPageCollaborator>}
+        ></Route>
+        <Route
+          path="nova-solicitacao"
+          element={<NewRequestPage></NewRequestPage>}
+        ></Route>
+        <Route
+          path="solicitacoes"
+          element={<RequestsPageCollaborator></RequestsPageCollaborator>}
+        ></Route>
+        <Route
+          path="historico"
+          element={
+            <HistoryRequestsPageCollaborator></HistoryRequestsPageCollaborator>
+          }
+        ></Route>
+        <Route
+          path="decimo-terceiro"
+          element={<ThirteenthPageCollaborator></ThirteenthPageCollaborator>}
+        ></Route>
+      </Route>
+
+      <Route
+        path="/colaborador-gestor"
+        element={<ManagerCollaboratorLayout></ManagerCollaboratorLayout>}
       >
         <Route
           path=""
