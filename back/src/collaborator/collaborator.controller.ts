@@ -8,16 +8,17 @@ import {
 } from '@nestjs/common';
 import { CreateCollaboratorDto } from './dto/createCollaborator.dto';
 import { CollaboratorService } from './collaborator.service';
-@Controller('collaborator')
+@Controller('colaborador')
 export class CollaboratorController {
   constructor(private readonly collaboratorService: CollaboratorService) {}
 
-  @Get()
+  @Get('lista-colaboradores')
   async getAllCollaborators() {
     return this.collaboratorService.getAllCollaborators();
   }
+
   @UsePipes(ValidationPipe)
-  @Post()
+  @Post('cadastro')
   async createCollaborator(
     @Body() createCollaboratorDto: CreateCollaboratorDto,
   ) {

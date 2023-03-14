@@ -13,6 +13,7 @@ import { ThirteenthRequestEntity } from './thirteenth_request/entities/thirteent
 import { ThirteenthRequestModule } from './thirteenth_request/thirteenth_request.module';
 import { VacationRequestEntity } from './vacation_request/entities/vacation_request.entity';
 import { VacationRequestModule } from './vacation_request/vacation_request.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { VacationRequestModule } from './vacation_request/vacation_request.modul
     CollaboratorModule,
     ThirteenthRequestModule,
     VacationRequestModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

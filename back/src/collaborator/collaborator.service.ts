@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCollaboratorDto } from './dto/createCollaborator.dto';
@@ -36,4 +36,16 @@ export class CollaboratorService {
   //     await this.collaboratorRepository.find({ relations: ['time'] })
   //   ).map((collaborator) => new ReturnCollaboratorDto(collaborator));
   // }
+
+  async findCollaboratorByMatricula(
+    matricula: string,
+  ): Promise<CollaboratorEntity> {
+    const collaborator = await this.collaboratorRepository.findOne({
+      where: { matricula },
+    });
+    if (!collaborator) {
+      throw new NotFoundException(`Collaborator: ${matricula} not found`);
+    }
+    return collaborator;
+  }
 }

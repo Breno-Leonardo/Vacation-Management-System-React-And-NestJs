@@ -8,16 +8,16 @@ import {
 } from '@nestjs/common';
 import { CreateTeamDto } from './dto/createTeam.dto';
 import { TeamService } from './team.service';
-@Controller('team')
+@Controller('times')
 export class TeamController {
   constructor(private readonly teamService: TeamService) {}
 
-  @Get()
+  @Get('lista-times')
   async getAllTeams() {
     return this.teamService.getAllTeams();
   }
   @UsePipes(ValidationPipe)
-  @Post()
+  @Post('cadastro')
   async createTeam(@Body() createTeam: CreateTeamDto) {
     return this.teamService.createTeam(createTeam);
   }

@@ -8,19 +8,19 @@ import {
 } from '@nestjs/common';
 import { CreateThirteenthRequestDto } from './dto/thirteenth_request.dto';
 import { ThirteenthRequestService } from './thirteenth_request.service';
-@Controller('thirteenth-request')
+@Controller('decimo-terceiro')
 export class ThirteenthRequestController {
   constructor(
     private readonly thirteenthRequestService: ThirteenthRequestService,
   ) {}
 
-  @Get()
-  async getAllTeams() {
+  @Get('lista-solicitacoes')
+  async getAllRequest() {
     return this.thirteenthRequestService.getAllRequests();
   }
   @UsePipes(ValidationPipe)
-  @Post()
-  async createTeam(
+  @Post('nova-solicitacao')
+  async createRequest(
     @Body() createThirteenthRequest: CreateThirteenthRequestDto,
   ) {
     return this.thirteenthRequestService.createThirteenthRequest(

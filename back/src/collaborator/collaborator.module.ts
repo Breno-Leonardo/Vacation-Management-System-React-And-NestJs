@@ -8,5 +8,6 @@ import { CollaboratorService } from './collaborator.service';
   imports: [TypeOrmModule.forFeature([CollaboratorEntity])],
   controllers: [CollaboratorController],
   providers: [CollaboratorService],
+  exports: [CollaboratorService],
 })
 export class CollaboratorModule {}
