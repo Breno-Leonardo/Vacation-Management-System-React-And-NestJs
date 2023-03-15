@@ -16,6 +16,7 @@ import { VacationRequestModule } from './vacation_request/vacation_request.modul
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './collaborator/guards/roles.guards';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { RolesGuard } from './collaborator/guards/roles.guards';
     ThirteenthRequestModule,
     VacationRequestModule,
     AuthModule,
+    JwtModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: RolesGuard }],

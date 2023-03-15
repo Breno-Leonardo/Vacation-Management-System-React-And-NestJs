@@ -2,8 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 import { CollaboratorService } from 'src/collaborator/collaborator.service';
-import { ReturnCollaboratorDto } from 'src/collaborator/dto/returnCollaborator.dto';
 import { CollaboratorEntity } from 'src/collaborator/entities/collaborator.entity';
+import { CollaboratorType } from 'src/collaborator/enum/collaborator-type';
 import { TeamService } from 'src/team/team.service';
 import { LoginDto } from './dto/login.dto';
 import { ReturnLoginDto } from './dto/returnLogin.dto';
@@ -25,12 +25,13 @@ export class AuthService {
         collaborator: {
           matricula: process.env.ADMIN_LOGIN,
           nome: process.env.ADMIN_LOGIN,
+          typeCollaborator: CollaboratorType.Rh,
         },
-        typeCollaborator: 'Admin',
         acessToken: this.jwtService.sign({
           ...{
             matricula: process.env.ADMIN_LOGIN,
             nome: process.env.ADMIN_LOGIN,
+            typeCollaborator: CollaboratorType.Rh,
           },
         }),
       };
@@ -46,7 +47,7 @@ export class AuthService {
     if (!collaborator || !isMatch) {
       throw new NotFoundException(`Matricula ou senha invalida`);
     }
-    console.log('Colaborador login:', collaborator);
+
     // defining user type
 
     // looking if any team has the past enrollment as manager
@@ -64,13 +65,28 @@ export class AuthService {
       isManager = true;
     }
 
-    let typeCollaborator = 'Colaborador';
+    let typeCollaborator = 0;
+
+    if (isCollaborator && isManager) {
+      typeCollaborator = CollaboratorType.CollaboratorManager;
+    } else if (isCollaborator) {
+      typeCollaborator = CollaboratorType.Collaborator;
+    } else if (isManager) {
+      typeCollaborator = CollaboratorType.Manager;
+    }
 
     return {
-      collaborator: new ReturnCollaboratorDto(collaborator),
-      typeCollaborator: typeCollaborator,
+      collaborator: {
+        matricula: collaborator.matricula,
+        nome: collaborator.nome,
+        typeCollaborator: typeCollaborator,
+      },
       acessToken: this.jwtService.sign({
-        ...new ReturnCollaboratorDto(collaborator),
+        ...{
+          matricula: collaborator.matricula,
+          nome: collaborator.nome,
+          typeCollaborator: typeCollaborator,
+        },
       }),
     };
   }
