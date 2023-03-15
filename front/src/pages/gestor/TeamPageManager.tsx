@@ -33,7 +33,7 @@ export function TeamPageManager() {
         <Container title="Time" >
           <div className={styles.divSearch}>
             <span>Time: </span>
-            <Select  size="Medium" optionsDouble={[["123","Front-end"],["456","QQTech"]]}></Select>
+            <Select  size="Medium" width="Medium" optionsDouble={[["123","Front-end"],["456","QQTech"]]}></Select>
           </div>
           <div className={styles.topics}>
             <p>Nome</p>

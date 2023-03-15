@@ -3,14 +3,14 @@
   display: flex;
   font-size: 1.3rem;
   justify-content:space-between;
-  width: 50rem;
+  
   margin-left:2rem;
 }
 .infosContent{
   display: flex;
   flex-direction: column;
  justify-content: center;
- 
+ margin: 0rem 1rem;
  
 }
 .infos p {

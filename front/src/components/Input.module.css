@@ -25,6 +25,9 @@
   font-size: 1.3rem;
   outline: 2.5px solid #cacaca;
 }
+.widthMedium {
+  width: 15rem;
+}
 .Input::placeholder {
   color: #949090;
 }

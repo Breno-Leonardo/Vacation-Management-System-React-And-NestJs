@@ -17,6 +17,7 @@ import { RHLayout } from "./layouts/RHLayout";
 import { RegisterTeamPage } from "./pages/rh/RegisterTeamPage";
 import { RemovePage } from "./pages/rh/RemovePage";
 import { ManagerCollaboratorLayout } from "./layouts/ManagerCollaboratorLayout";
+import { RequestsPageCollaboratorManager } from "./pages/colaborador/RequestsPageCollaboratorManager";
 
 export function Router() {
   return (
@@ -97,7 +98,7 @@ export function Router() {
         ></Route>
         <Route
           path="solicitacoes"
-          element={<RequestsPageCollaborator></RequestsPageCollaborator>}
+          element={<RequestsPageCollaboratorManager></RequestsPageCollaboratorManager>}
         ></Route>
         <Route
           path="historico"

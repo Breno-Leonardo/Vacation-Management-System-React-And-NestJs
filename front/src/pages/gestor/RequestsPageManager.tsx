@@ -65,6 +65,7 @@ export function RequestsPageManager() {
         <span>Time: </span>
         <Select
           size="Medium"
+          width="Medium"
           optionsDouble={[
             ["123", "Front-end"],
             ["456", "QQTech"],

@@ -1,7 +1,7 @@
-import { Container } from "../../components/Container";
+import {Container} from "../../components/Container";
 import styles from "./HistoryRequestPageManager.module.css";
-import { EmployeeLine } from "../../components/EmployeeLine";
-import { Select } from "../../components/Select";
+import {EmployeeLine} from "../../components/EmployeeLine";
+import {Select} from "../../components/Select";
 
 const options = [
   ["123", "Breno"],
@@ -41,7 +41,8 @@ export function HistoryRequestsPageManager() {
       <div className={styles.divSearch}>
         <span>Time: </span>
         <Select
-        size="Medium"
+          size="Medium"
+          width="Medium"
           optionsDouble={[
             ["123", "Front-end"],
             ["456", "QQTech"],
@@ -59,18 +60,7 @@ export function HistoryRequestsPageManager() {
         <p>Status</p>
       </div>
       {solicitacoes.map((soli) => {
-        return (
-          <EmployeeLine
-            fields={[
-              soli.nome,
-              soli.dataSolicitacao,
-              soli.inicio,
-              soli.fim,
-              soli.status,
-            ]}
-            colorsFields={["black", "black", "green", "red", "black"]}
-          ></EmployeeLine>
-        );
+        return <EmployeeLine fields={[soli.nome, soli.dataSolicitacao, soli.inicio, soli.fim, soli.status]} colorsFields={["black", "black", "green", "red", "black"]}></EmployeeLine>;
       })}
     </Container>
   );
