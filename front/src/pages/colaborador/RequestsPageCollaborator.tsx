@@ -1,10 +1,11 @@
-import { Header } from "../../components/Header";
-import { Container } from "../../components/Container";
+import {Header} from "../../components/Header";
+import {Container} from "../../components/Container";
 import styles from "./RequestsPageCollaborator.module.css";
-import { EmployeeLine } from "../../components/EmployeeLine";
-import { Button } from "../../components/Button";
-import { Card } from "../../components/Card";
-import { Link } from "react-router-dom";
+import {EmployeeLine} from "../../components/EmployeeLine";
+import {Button} from "../../components/Button";
+import {Card} from "../../components/Card";
+import {Link} from "react-router-dom";
+import {Topics} from "../../components/Topics";
 
 const solicitacao = {
   nome: "Breno Leonardo",
@@ -16,50 +17,22 @@ const solicitacao = {
   attentionFlag: false,
 };
 
-const solicitacoes = [
-  solicitacao,
-  solicitacao,
-  solicitacao,
-  solicitacao,
-  solicitacao,
-];
+const solicitacoes = [solicitacao, solicitacao, solicitacao, solicitacao, solicitacao];
 
 export function RequestsPageCollaborator() {
   return (
     <>
       <div className={styles.divCards}>
         <Card content="30" size="Medium" title="Saldo De Dias"></Card>
-        <Card
-          content=""
-          initialDateContent="07/07/2022"
-          size="Medium"
-          title="Período Aquisitivo"
-        ></Card>
-        <Card
-          content=""
-          initialDateContent="07/07/2023"
-          size="Medium"
-          title="Período Concessivo"
-        ></Card>
+        <Card content="" initialDateContent="07/07/2022" size="Medium" title="Período Aquisitivo"></Card>
+        <Card content="" initialDateContent="07/07/2023" size="Medium" title="Período Concessivo"></Card>
       </div>
 
       <Container title="Solicitações">
-        <div className={styles.topicsCenter}>
-          <p>Data Solicitação</p>
-          <p>Início</p>
-          <p>Fim</p>
-          <p>Status</p>
-        </div>
+        <Topics fields={["Data Solicitação", "Início", "Fim", "Status"]} position="center"></Topics>
 
         {solicitacoes.map((f) => {
-          return (
-            <EmployeeLine
-              fields={[f.dataSolicitacao, f.inicio, f.fim, f.status]}
-              colorsFields={["black", "green", "red"]}
-              positionCenter="center"
-              hasIcon={false}
-            ></EmployeeLine>
-          );
+          return <EmployeeLine fields={[f.dataSolicitacao, f.inicio, f.fim, f.status]} colorsFields={["black", "green", "red"]} position="center" hasIcon={false}></EmployeeLine>;
         })}
         <Link to="/colaborador/nova-solicitacao">
           <Button content="Nova Solicitação" size="ExtraBig"></Button>

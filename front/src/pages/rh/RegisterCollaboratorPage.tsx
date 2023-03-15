@@ -6,36 +6,36 @@ import { Input } from "../../components/Input";
 
 export function RegisterCollaboratorPage() {
   return (
-    <Container title="Cadastro de Funcionário">
+    <Container title="Cadastro de Colaborador">
       <div className={styles.infos}>
         <div className={styles.infosContent}>
           <span>Nome</span>
-          <Input placeholder="Nome" type="text" size="Small"></Input>
+          <Input placeholder="Nome" type="text" size="Medium"></Input>
         </div>
         <div className={styles.infosContent}>
           <span>CPF</span>
-          <Input placeholder="CPF" type="text" size="Small"></Input>
+          <Input placeholder="CPF" type="text" size="Medium"></Input>
         </div>
       </div>
 
       <div className={styles.infos}>
         <div className={styles.infosContent}>
           <span>Matrícula</span>
-          <Input placeholder="Matrícula" type="text" size="Small"></Input>
+          <Input placeholder="Matrícula" type="text" size="Medium"></Input>
         </div>
         <div className={styles.infosContent}>
           <span>Senha</span>
-          <Input placeholder="Senha" type="text" size="Small"></Input>
+          <Input placeholder="Senha" type="text" size="Medium"></Input>
         </div>
       </div>
       <div className={styles.infos}>
         <div className={styles.infosContent}>
-          <span>Cargo</span>
-          <Input placeholder="Cargo" type="text" size="Small"></Input>
+          <span>E-mail</span>
+          <Input placeholder="E-mail" type="text" size="Medium"></Input>
         </div>
         <div className={styles.infosContent}>
-          <span>E-mail</span>
-          <Input placeholder="E-mail" type="text" size="Small"></Input>
+          <span>Gmail</span>
+          <Input placeholder="Gmail" type="text" size="Medium"></Input>
         </div>
       </div>
 
@@ -45,32 +45,43 @@ export function RegisterCollaboratorPage() {
           <Input
             placeholder="Matrícula do gestor"
             type="text"
-            size="Small"
+            size="Medium"
           ></Input>
         </div>
         <div className={styles.infosContent}>
           <span>Time</span>
-          <Select optionsUnique={["Mobile", "QQTech"]}></Select>
+          <Select size="Medium" optionsUnique={["Mobile", "QQTech"]}></Select>
         </div>
       </div>
       <div className={styles.infos}>
         <div className={styles.infosContent}>
           <span>Data admissão</span>
-          <Input placeholder="dd/mm/aaaa" type="date" size="Small"></Input>
+          <Input placeholder="dd/mm/aaaa" type="date" size="Medium"></Input>
         </div>
         <div className={styles.infosContent}>
-          <span>Saldo atual de dias para férias</span>
-          <Select optionsUnique={[0, 5, 10, 15, 20, 25, 30]}></Select>
+          <span>Cargo</span>
+          <Input placeholder="Cargo" type="text" size="Medium"></Input>
         </div>
       </div>
       <div className={styles.infos}>
         <div className={styles.infosContent}>
           <span>Modelo de contratação</span>
-          <Select optionsUnique={["CLT", "PJ"]}></Select>
+          <Select size="Medium" optionsUnique={["CLT", "PJ"]}></Select>
         </div>
         <div className={styles.infosContent}>
           <span>Data do ultimo 13º Salário</span>
-          <Input placeholder="dd/mm/aaaa" type="date" size="Small"></Input>
+          <Input placeholder="dd/mm/aaaa" type="date" size="Medium"></Input>
+        </div>
+      </div>
+      <div className={styles.infos}>
+        
+        <div className={styles.infosContent}>
+          <span>Fim aquisitivo atual</span>
+          <Input placeholder="dd/mm/aaaa" type="date" size="Medium"></Input>
+        </div>
+        <div className={styles.infosContent}>
+          <span>Saldo atual de dias para férias</span>
+          <Select size="Medium" optionsUnique={[0, 5, 10, 15, 20, 25, 30]}></Select>
         </div>
       </div>
 

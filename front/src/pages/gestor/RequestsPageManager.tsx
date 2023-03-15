@@ -1,19 +1,14 @@
-import { Container } from "../../components/Container";
+import {Container} from "../../components/Container";
 import styles from "./RequestsPageManager.module.css";
-import { EmployeeLine } from "../../components/EmployeeLine";
-import { Button } from "../../components/Button";
-import { Card } from "../../components/Card";
-import { Link } from "react-router-dom";
-import {
-  Gantt,
-  Task,
-  EventOption,
-  StylingOption,
-  ViewMode,
-  DisplayOption,
-} from "gantt-task-react";
+import {EmployeeLine} from "../../components/EmployeeLine";
+import {Button} from "../../components/Button";
+import {Card} from "../../components/Card";
+import {Link} from "react-router-dom";
+import {Gantt, Task, EventOption, StylingOption, ViewMode, DisplayOption} from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
-import { StandardTooltipContent } from "../../components/Tooltip";
+import {StandardTooltipContent} from "../../components/Tooltip";
+import {Select} from "../../components/Select";
+import {Topics} from "../../components/Topics";
 
 const solicitacao = {
   nome: "Breno Leonardo",
@@ -32,13 +27,7 @@ const solicitacao2 = {
   attentionFlag: true,
 };
 
-const solicitacoes = [
-  solicitacao,
-  solicitacao2,
-  solicitacao,
-  solicitacao2,
-  solicitacao,
-];
+const solicitacoes = [solicitacao, solicitacao2, solicitacao, solicitacao2, solicitacao];
 const tasks: Task[] = [
   {
     start: new Date(2020, 0, 1), // mes é -1 o mes normal (janeiro = 0)
@@ -46,12 +35,7 @@ const tasks: Task[] = [
     name: "Breno Leonardo",
     id: "Task 0",
     type: "task",
-    progress: Math.ceil(
-      Math.abs(
-        new Date(2020, 1, 1).getTime() - new Date(2020, 1, 20).getTime()
-      ) /
-        (1000 * 3600 * 24)
-    ),
+    progress: Math.ceil(Math.abs(new Date(2020, 1, 1).getTime() - new Date(2020, 1, 20).getTime()) / (1000 * 3600 * 24)),
     isDisabled: true,
   },
   {
@@ -60,12 +44,7 @@ const tasks: Task[] = [
     name: "Sofia Lima",
     id: "Task 0",
     type: "task",
-    progress: Math.ceil(
-      Math.abs(
-        new Date(2020, 1, 1).getTime() - new Date(2020, 1, 20).getTime()
-      ) /
-        (1000 * 3600 * 24)
-    ),
+    progress: Math.ceil(Math.abs(new Date(2020, 1, 1).getTime() - new Date(2020, 1, 20).getTime()) / (1000 * 3600 * 24)),
     isDisabled: false,
   },
   {
@@ -74,12 +53,7 @@ const tasks: Task[] = [
     name: "Sofia Lima",
     id: "Task 0",
     type: "task",
-    progress: Math.ceil(
-      Math.abs(
-        new Date(2020, 1, 1).getTime() - new Date(2020, 1, 20).getTime()
-      ) /
-        (1000 * 3600 * 24)
-    ),
+    progress: Math.ceil(Math.abs(new Date(2020, 1, 1).getTime() - new Date(2020, 1, 20).getTime()) / (1000 * 3600 * 24)),
     isDisabled: true,
   },
 ];
@@ -87,6 +61,16 @@ const tasks: Task[] = [
 export function RequestsPageManager() {
   return (
     <>
+      <div className={styles.divSearch}>
+        <span>Time: </span>
+        <Select
+          size="Medium"
+          optionsDouble={[
+            ["123", "Front-end"],
+            ["456", "QQTech"],
+          ]}
+        ></Select>
+      </div>
       <div className={styles.divCards}>
         <Card content="3" size="Medium" title="Funcionários de férias"></Card>
         <Card content="3" size="Medium" title="Solicitações"></Card>
@@ -110,28 +94,15 @@ export function RequestsPageManager() {
         />
       </div>
       <Container title="Solicitações">
-        <div className={styles.topicsWithButton}>
-          <p>Nome</p>
-          <p>Data da Solicitação</p>
-          <p>Início</p>
-          <p>Fim</p>
-          <p>Data Limite Concessiva</p>
+        <div className={styles.divForButton}>
+          <Topics fields={["Nome", "Data da Solicitação", "Início", "Fim", "Data Limite Concessiva"]} position="spaced"></Topics>
+          <Button content="Responder" size="Small" visibility="Invisible" onClick={() => {}}></Button>
         </div>
 
         {solicitacoes.map((f) => {
           return (
             <div className={styles.divForButton}>
-              <EmployeeLine
-                fields={[
-                  f.nome,
-                  f.dataSolicitacao,
-                  f.inicio,
-                  f.fim,
-                  f.dataLimiteConcessiva,
-                ]}
-                colorsFields={["black", "black", "greee", "red", "blue"]}
-                attentionFlag={f.attentionFlag}
-              ></EmployeeLine>
+              <EmployeeLine fields={[f.nome, f.dataSolicitacao, f.inicio, f.fim, f.dataLimiteConcessiva]} colorsFields={["black", "black", "greee", "red", "blue"]} attentionFlag={f.attentionFlag}></EmployeeLine>
               <Link to="/gestor/resposta">
                 <Button content="Responder" size="Small"></Button>
               </Link>
@@ -141,38 +112,18 @@ export function RequestsPageManager() {
       </Container>
 
       <Container title="Funcionários de férias">
-        <div className={styles.topicsCenter}>
-          <p>Nome</p>
-          <p>Início</p>
-          <p>Fim</p>
-        </div>
+        <Topics fields={["Nome", "Início", "Fim"]} position="center"></Topics>
 
         {solicitacoes.map((f) => {
-          return (
-            <EmployeeLine
-              fields={[f.nome, f.inicio, f.fim]}
-              colorsFields={["black", "green", "red"]}
-              positionCenter="center"
-            ></EmployeeLine>
-          );
+          return <EmployeeLine fields={[f.nome, f.inicio, f.fim]} colorsFields={["black", "green", "red"]} position="center"></EmployeeLine>;
         })}
       </Container>
 
       <Container title="Férias agendadas">
-        <div className={styles.topicsCenter}>
-          <p>Nome</p>
-          <p>Início</p>
-          <p>Fim</p>
-        </div>
+        <Topics fields={["Nome", "Início", "Fim"]} position="center"></Topics>
 
         {solicitacoes.map((f) => {
-          return (
-            <EmployeeLine
-              fields={[f.nome, f.inicio, f.fim]}
-              colorsFields={["black", "green", "red"]}
-              positionCenter="center"
-            ></EmployeeLine>
-          );
+          return <EmployeeLine fields={[f.nome, f.inicio, f.fim]} colorsFields={["black", "green", "red"]} position="center"></EmployeeLine>;
         })}
       </Container>
     </>

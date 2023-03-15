@@ -43,7 +43,7 @@
   align-items: center;
 }
 .divGantt{
- padding:3rem;
+ padding:3.5rem;
 }
 .divCards{
   display: flex;
@@ -51,7 +51,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: space-between;
-  margin: 2rem 6rem;
+  margin: 0rem 6rem 2rem 6rem ;
 }
 
 .topicsWithButton {
@@ -71,3 +71,11 @@
   text-align: center;
   word-break: break-word;
 }
+.divSearch {
+  margin: 3rem 0rem 1rem 0rem;
+  align-self: center;
+  
+  }
+  .divSearch span{
+    font-size:1.75rem;
+  }

@@ -4,7 +4,7 @@ interface InputProps {
   placeholder: string;
   icon?: string;  
   type?: "text"| "date";
-  size?: "Big"| "Small" 
+  size?: "Big"| "Medium" | "Small" 
   disabled?: boolean; 
 }
 export function Input({ placeholder, icon="",type="text",size="Big",disabled=false }: InputProps) {

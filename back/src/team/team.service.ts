@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CollaboratorEntity } from 'src/collaborator/entities/collaborator.entity';
 import { Repository } from 'typeorm';
 import { CreateTeamDto } from './dto/createTeam.dto';
 import { ReturnTeamDto } from './dto/returnTeam.dto';
@@ -22,6 +23,22 @@ export class TeamService {
   async getAllTeams(): Promise<ReturnTeamDto[]> {
     return (await this.teamRepository.find({ relations: ['gestor'] })).map(
       (t) => new ReturnTeamDto(t),
+    );
+  }
+
+  async getTeamsByMatriculaManager(
+    matricula: string,
+  ): Promise<ReturnTeamDto[]> {
+    return (
+      (
+        await this.teamRepository.find({
+          //get with the included manager
+          relations: ['gestor'],
+        })
+      )
+        //filtering the teams that have the manager with the same registration
+        .filter((t) => t.gestor.matricula == matricula)
+        .map((t) => new ReturnTeamDto(t))
     );
   }
 }

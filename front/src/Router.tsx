@@ -14,7 +14,7 @@ import { RegisterCollaboratorPage } from "./pages/rh/RegisterCollaboratorPage";
 import { CollaboratorLayout } from "./layouts/CollaboratorLayout";
 import { ManagerLayout } from "./layouts/ManagerLayout";
 import { RHLayout } from "./layouts/RHLayout";
-import { RegisterManagerPage } from "./pages/rh/RegisterManagerPage";
+import { RegisterTeamPage } from "./pages/rh/RegisterTeamPage";
 import { RemovePage } from "./pages/rh/RemovePage";
 import { ManagerCollaboratorLayout } from "./layouts/ManagerCollaboratorLayout";
 
@@ -118,10 +118,10 @@ export function Router() {
           element={<RegisterCollaboratorPage></RegisterCollaboratorPage>}
         ></Route>
         <Route
-          path="cadastrar-gestor"
-          element={<RegisterManagerPage></RegisterManagerPage>}
+          path="cadastrar-time"
+          element={<RegisterTeamPage></RegisterTeamPage>}
         ></Route>
-        <Route path="remover" element={<RemovePage></RemovePage>}></Route>
+        <Route path="remover-colaborador" element={<RemovePage></RemovePage>}></Route>
       </Route>
     </Routes>
   );

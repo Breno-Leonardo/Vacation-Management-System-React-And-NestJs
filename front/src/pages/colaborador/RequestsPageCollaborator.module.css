@@ -9,31 +9,12 @@
   font-weight: 800;
 }
 
-.topics > p {
-  width: 15%;
-  align-items: center;
-  text-align: center;
-  word-break: break-word;
-}
 
 
-.topicsCenter {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2rem;
-  width: 100%;
-  font-size: 1.35rem;
-  font-weight: 800;
-}
 
-.topicsCenter > p{
-  width:15%;
-  align-items:center;
-  text-align: center;
-  word-break: break-word;
-}
+
+
+
 
 .divForButton{
   display: flex;

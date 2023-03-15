@@ -6,6 +6,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { Param } from '@nestjs/common/decorators';
 import { CreateTeamDto } from './dto/createTeam.dto';
 import { TeamService } from './team.service';
 @Controller('times')
@@ -16,6 +17,12 @@ export class TeamController {
   async getAllTeams() {
     return this.teamService.getAllTeams();
   }
+
+  @Get('lista-times/:matricula')
+  async getTeamsByManagerRegistration(@Param('matricula') matricula) {
+    return this.teamService.getTeamsByMatriculaManager(matricula);
+  }
+
   @UsePipes(ValidationPipe)
   @Post('cadastro')
   async createTeam(@Body() createTeam: CreateTeamDto) {

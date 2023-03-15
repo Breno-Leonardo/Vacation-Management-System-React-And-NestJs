@@ -3,7 +3,7 @@ import styles from "./HomeRH.module.css";
 import { Card } from "../../components/Card";
 import { Link } from "react-router-dom";
 import collaborator from "../../assets/account-white.svg";
-import manager from "../../assets/account-tie.svg";
+import team from "../../assets/account-group-white.svg";
 import remove from "../../assets/account-remove.svg";
 export function HomeRH() {
   return (
@@ -11,12 +11,12 @@ export function HomeRH() {
       
         <div className={styles.divCards}>
           <Link to="/rh/cadastrar-colaborador">
-            <Card icon={collaborator} content="" size="Medium" title="Cadastrar Fucionário"></Card>
+            <Card icon={collaborator} content="" size="Medium" title="Cadastrar Colaborador"></Card>
           </Link>
-          <Link to="/rh/cadastrar-gestor">
-            <Card icon={manager} content="" size="Medium" title="Cadastrar Gestor"></Card>
+          <Link to="/rh/cadastrar-time">
+            <Card icon={team} content="" size="Medium" title="Cadastrar Time"></Card>
           </Link>
-          <Link to="/rh/remover">
+          <Link to="/rh/remover-colaborador">
             <Card icon={remove} content="" size="Medium" title="Remover" color="Red"></Card>
           </Link>
         </div>

@@ -4,6 +4,7 @@ import { compare } from 'bcrypt';
 import { CollaboratorService } from 'src/collaborator/collaborator.service';
 import { ReturnCollaboratorDto } from 'src/collaborator/dto/returnCollaborator.dto';
 import { CollaboratorEntity } from 'src/collaborator/entities/collaborator.entity';
+import { TeamService } from 'src/team/team.service';
 import { LoginDto } from './dto/login.dto';
 import { ReturnLoginDto } from './dto/returnLogin.dto';
 
@@ -11,6 +12,7 @@ import { ReturnLoginDto } from './dto/returnLogin.dto';
 export class AuthService {
   constructor(
     private readonly collaboratorService: CollaboratorService,
+    private readonly teamService: TeamService,
     private jwtService: JwtService,
   ) {}
   async login(loginDto: LoginDto): Promise<ReturnLoginDto> {
@@ -24,6 +26,7 @@ export class AuthService {
           matricula: process.env.ADMIN_LOGIN,
           nome: process.env.ADMIN_LOGIN,
         },
+        typeCollaborator: 'Admin',
         acessToken: this.jwtService.sign({
           ...{
             matricula: process.env.ADMIN_LOGIN,
@@ -43,8 +46,29 @@ export class AuthService {
     if (!collaborator || !isMatch) {
       throw new NotFoundException(`Matricula ou senha invalida`);
     }
+    console.log('Colaborador login:', collaborator);
+    // defining user type
+
+    // looking if any team has the past enrollment as manager
+    let isCollaborator = false;
+    if (collaborator.time != null) {
+      isCollaborator = true;
+    }
+    //checking if participate in any team
+    let isManager = false;
+    const teams = await this.teamService.getTeamsByMatriculaManager(
+      collaborator.matricula,
+    );
+    // if the enrollment is leader of any team
+    if (teams.length > 0) {
+      isManager = true;
+    }
+
+    let typeCollaborator = 'Colaborador';
+
     return {
       collaborator: new ReturnCollaboratorDto(collaborator),
+      typeCollaborator: typeCollaborator,
       acessToken: this.jwtService.sign({
         ...new ReturnCollaboratorDto(collaborator),
       }),

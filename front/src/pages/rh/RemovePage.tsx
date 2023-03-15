@@ -33,11 +33,11 @@ const solicitacoes = [
 
 export function RemovePage() {
   return (
-    <Container title="Histórico de solicitações">
+    <Container title="Remover Colaborador">
       <></>
       <div className={styles.divSearch}>
         <span>Matrícula: </span>
-        <Input placeholder="Insira a matrícula"size="Small" type="text"></Input>
+        <Input placeholder="Insira a matrícula"size="Medium" type="text"></Input>
       </div>
       <Button content="Pesquisar" size="Big"></Button>
       <div className={styles.infosResult}>

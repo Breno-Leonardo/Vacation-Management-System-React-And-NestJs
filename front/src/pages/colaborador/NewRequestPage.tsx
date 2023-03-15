@@ -14,16 +14,16 @@ export function NewRequestPage() {
           <div className={styles.infos}>
             <div className={styles.infosContent}>
               <span>Data de Início</span>
-              <Input icon={calendar} placeholder="dd/mm/aaaa" type="date" size="Small"></Input>
+              <Input icon={calendar} placeholder="dd/mm/aaaa" type="date" size="Medium"></Input>
 
             </div>
             <div className={styles.infosContent}>
               <span>Dias</span>
-              <Select optionsUnique={[5,10,15,20,30]}></Select>
+              <Select size="Medium" optionsUnique={[5,10,15,20,30]}></Select>
             </div>
             <div className={styles.infosContent}>
               <span>Data de Término</span>
-              <Input icon={calendar} placeholder="Insira o início" type="text" size="Small" disabled={true}></Input>
+              <Input icon={calendar} placeholder="Insira o início" type="text" size="Medium" disabled={true}></Input>
             </div>
           </div>
 

@@ -4,7 +4,7 @@ interface EmployeeLine {
   fields: string[];
   colorsFields?: string[]; // uma cor para cada field
   attentionFlag?: boolean;
-  positionCenter?: "center" | "spaced";
+  position?: "center" | "spaced";
   hasIcon?: boolean;
 }
 
@@ -22,11 +22,11 @@ export function EmployeeLine({
   fields,
   attentionFlag = false,
   colorsFields = [],
-  positionCenter = "spaced",
+  position = "spaced",
   hasIcon = true,
 }: EmployeeLine) {
   return (
-    <div className={choicePosition(positionCenter)}>
+    <div className={choicePosition(position)}>
       <>
         {/* Checando se tem que colocar o icone */}
         {hasIcon ? (

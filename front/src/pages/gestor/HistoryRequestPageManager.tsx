@@ -41,13 +41,14 @@ export function HistoryRequestsPageManager() {
       <div className={styles.divSearch}>
         <span>Time: </span>
         <Select
+        size="Medium"
           optionsDouble={[
             ["123", "Front-end"],
             ["456", "QQTech"],
           ]}
         ></Select>
         <span>Funcionário: </span>
-        <Select optionsDouble={options}></Select>
+        <Select size="Medium" optionsDouble={options}></Select>
       </div>
 
       <div className={styles.topics}>

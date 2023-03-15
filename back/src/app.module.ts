@@ -14,6 +14,8 @@ import { ThirteenthRequestModule } from './thirteenth_request/thirteenth_request
 import { VacationRequestEntity } from './vacation_request/entities/vacation_request.entity';
 import { VacationRequestModule } from './vacation_request/vacation_request.module';
 import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './collaborator/guards/roles.guards';
 
 @Module({
   imports: [
@@ -46,6 +48,6 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_GUARD, useClass: RolesGuard }],
 })
 export class AppModule {}

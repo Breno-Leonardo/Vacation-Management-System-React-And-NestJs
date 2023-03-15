@@ -14,8 +14,11 @@
   outline: 2.5px solid #cacaca;
 }
 .Small {
+  
+}
+.Medium {
   height: 2.5rem;
-  width: 15rem;
+  width: 20rem;
   
   padding-left: 3.25rem;
   padding-right: 1rem;
@@ -36,7 +39,7 @@
   margin-left: 3rem;
   margin-top: 2.6rem;
 }
-.iconSmall {
+.iconMedium {
   height: 1.5rem;
   position: absolute;
   margin-left: 1rem;

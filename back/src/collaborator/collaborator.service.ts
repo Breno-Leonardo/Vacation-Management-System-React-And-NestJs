@@ -41,6 +41,7 @@ export class CollaboratorService {
     matricula: string,
   ): Promise<CollaboratorEntity> {
     const collaborator = await this.collaboratorRepository.findOne({
+      relations: ['time'],
       where: { matricula },
     });
     if (!collaborator) {
