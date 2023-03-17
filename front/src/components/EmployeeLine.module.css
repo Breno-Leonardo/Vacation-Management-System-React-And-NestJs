@@ -17,25 +17,10 @@
   text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
 }
 
-.employeeLineCenter {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.center { 
   justify-content: center;
-  margin-top: 3rem;
-  width: 100%;
-  font-size: 1.3rem;
-  font-weight: 500;
-
 }
 
-.employeeLineCenter > p {
-  width: 15%;
-  align-items: center;
-  text-align: center;
-  word-break: break-word;
-  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
-}
 .nameDiv {
   width: 15%;
   display: flex;
@@ -88,4 +73,59 @@
   justify-content: space-between;
 
   width: 14.4rem;
+}
+@media(max-width:1024px){
+  .icon {
+    height: 1.5rem;
+    
+  }
+  .nameDiv > img {
+    margin-left: 0rem;
+    margin-right: 0rem;
+  }
+  .employeeLine { 
+    margin-top: 2rem;
+    font-size: 1rem;
+    justify-content: space-around;
+  }
+  .employeeLine > p {
+    width: 17%;
+  }
+}
+@media(max-width:768px){
+  .icon {
+    display: none;
+  }
+  .employeeLine { 
+    margin-top: 2rem;
+    font-size: 1rem;
+  }
+  .employeeLine > p {
+    width: 17%;
+  }
+}
+@media(max-width:600px){
+ 
+  .employeeLine { 
+    margin-top: 2rem;
+    font-size: 0.84rem;
+  }
+  .employeeLine > p {
+    width: 17%;
+  }
+}
+
+@media(max-width:375px){
+  .employeeLine {
+    font-size: 0.74rem;
+  }
+}
+
+@media(max-width:350px){
+  .employeeLine > p {
+    width: 18%;
+  }
+  .employeeLine {
+    font-size: 0.674rem;
+  }
 }

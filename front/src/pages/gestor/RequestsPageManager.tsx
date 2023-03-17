@@ -4,7 +4,7 @@ import {EmployeeLine} from "../../components/EmployeeLine";
 import {Button} from "../../components/Button";
 import {Card} from "../../components/Card";
 import {Link} from "react-router-dom";
-import {Gantt, Task, EventOption, StylingOption, ViewMode, DisplayOption} from "gantt-task-react";
+import {Gantt, Task, ViewMode} from "gantt-task-react";
 import "gantt-task-react/dist/index.css";
 import {StandardTooltipContent} from "../../components/Tooltip";
 import {Select} from "../../components/Select";
@@ -64,7 +64,7 @@ export function RequestsPageManager() {
       <div className={styles.divSearch}>
         <span>Time: </span>
         <Select
-          size="Medium"
+          sizeSelect="Medium"
           width="Medium"
           optionsDouble={[
             ["123", "Front-end"],
@@ -73,9 +73,10 @@ export function RequestsPageManager() {
         ></Select>
       </div>
       <div className={styles.divCards}>
-        <Card content="3" size="Medium" title="Funcionários de férias"></Card>
+        <Card content="3" size="Medium"  title="Em Férias"></Card>
         <Card content="3" size="Medium" title="Solicitações"></Card>
         <Card content="4" size="Medium" title="Férias agendadas"></Card>
+        <Card content="1" size="Medium" title="Em alerta"></Card>
       </div>
       <div className={styles.divGantt}>
         <Gantt
@@ -90,13 +91,13 @@ export function RequestsPageManager() {
           barProgressColor="#33a457"
           barProgressSelectedColor="#33a457"
           fontSize="16"
-          onSelect={() => console.log("dasd")}
+          onSelect={() => console.log()}
           TooltipContent={StandardTooltipContent}
         />
       </div>
       <Container title="Solicitações">
         <div className={styles.divForButton}>
-          <Topics fields={["Nome", "Data da Solicitação", "Início", "Fim", "Data Limite Concessiva"]} position="spaced"></Topics>
+          <Topics fields={["Nome", "Data", "Início", "Fim", "Data Limite Concessiva"]} position="spaced"></Topics>
           <Button content="Responder" size="Small" visibility="Invisible" onClick={() => {}}></Button>
         </div>
 

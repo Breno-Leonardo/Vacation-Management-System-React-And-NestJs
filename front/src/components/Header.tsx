@@ -7,7 +7,7 @@ import exitIcon from "../assets/exit.svg";
 import styles from "./Header.module.css";
 import accountGroup from "../assets/account-group-white.svg";
 import calendar from "../assets/calendar-month-outline.svg";
-import { Routes, Route, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 
 interface HeaderProps {
   forWho: "Colaborador" | "Gestor" | "Login" | "RH" | "Colaborador Gestor";

@@ -1,7 +1,5 @@
-import { Header } from "../../components/Header";
 import { Container } from "../../components/Container";
 import styles from "./ThirteenthPageCollaborator.module.css";
-import { EmployeeLine } from "../../components/EmployeeLine";
 import { Button } from "../../components/Button";
 
 export function ThirteenthPageCollaborator() {

@@ -12,3 +12,13 @@
   border-radius: 25px;
 }
 
+@media(max-width:425px){
+  .containerCenter{
+    padding: 0rem 0rem 3rem 0rem;
+    margin: 1.5rem 0rem 0rem 0rem;
+    display: flex;
+    box-shadow: none;
+    
+    
+  }
+}

@@ -5,7 +5,7 @@ import { Button } from "../../components/Button";
 import { TextArea } from "../../components/TextArea";
 
 const solicitacao = {
-  nome: "Breno Leonardo",
+  nome: "Breno Leonardo ",
   dataSolicitacao: "15/01/2022",
   inicio: "17/01/2022",
   fim: "27/01/2022",
@@ -38,7 +38,7 @@ export function ResponsePageManager() {
             <EmployeeLine
               fields={[f.nome, f.inicio, f.fim]}
               colorsFields={["black", "green", "red"]}
-              positionCenter="center"
+              position="center"
             ></EmployeeLine>
           );
         })}

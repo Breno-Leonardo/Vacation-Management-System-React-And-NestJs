@@ -29,7 +29,7 @@ export function RequestsPageCollaborator() {
       </div>
 
       <Container title="Solicitações">
-        <Topics fields={["Data Solicitação", "Início", "Fim", "Status"]} position="center"></Topics>
+        <Topics fields={["Data", "Início", "Fim", "Status"]} position="center"></Topics>
 
         {solicitacoes.map((f) => {
           return <EmployeeLine fields={[f.dataSolicitacao, f.inicio, f.fim, f.status]} colorsFields={["black", "green", "red"]} position="center" hasIcon={false}></EmployeeLine>;

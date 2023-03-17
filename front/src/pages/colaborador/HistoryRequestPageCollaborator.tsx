@@ -39,10 +39,10 @@ export function HistoryRequestsPageCollaborator() {
   return (
     <Container title="Histórico de solicitações">
       <></>
-      <Topics fields={["Nome", "Data Solicitação", "Início", "Fim", "Status"]} position="spaced"></Topics>
+      <Topics fields={["Nome", "Data", "Início", "Fim", "Status"]} position="spaced"></Topics>
 
       {solicitacoes.map((soli) => {
-        return <EmployeeLine fields={[soli.nome, soli.dataSolicitacao, soli.inicio, soli.fim, soli.status]} colorsFields={["black", "black", "green", "red", "black"]}></EmployeeLine>;
+        return <EmployeeLine fields={[soli.nome, soli.dataSolicitacao, soli.inicio, soli.fim, soli.status]} colorsFields={["black", "black", "green", "red", "black"]} ></EmployeeLine>;
       })}
     </Container>
   );

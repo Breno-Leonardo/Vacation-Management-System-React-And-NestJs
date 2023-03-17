@@ -41,7 +41,7 @@ export function HistoryRequestsPageManager() {
       <div className={styles.divSearch}>
         <span>Time: </span>
         <Select
-          size="Medium"
+          sizeSelect="Medium"
           width="Medium"
           optionsDouble={[
             ["123", "Front-end"],
@@ -49,7 +49,7 @@ export function HistoryRequestsPageManager() {
           ]}
         ></Select>
         <span>Funcionário: </span>
-        <Select size="Medium" optionsDouble={options}></Select>
+        <Select sizeSelect="Medium" optionsDouble={options}></Select>
       </div>
 
       <div className={styles.topics}>

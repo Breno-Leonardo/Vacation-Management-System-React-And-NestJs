@@ -5,6 +5,7 @@ interface CardProps {
   size: "Big" | "Medium" | "Small";
   color?: "Green" | "Red";
   icon?: string;
+  miniIcon?: string;
   initialDateContent?: string;
 }
 function setContent(content: string, initialDateContent: string) {
@@ -21,14 +22,7 @@ function setContent(content: string, initialDateContent: string) {
   }
 }
 
-export function Card({
-  title,
-  content,
-  size,
-  color = "Green",
-  icon = "",
-  initialDateContent = "",
-}: CardProps) {
+export function Card({title, content, size, color = "Green", icon = "", miniIcon = "", initialDateContent = ""}: CardProps) {
   return icon != "" ? (
     <div className={`${styles.Card} ${styles[size]} ${styles[color]} `}>
       <img className={styles.icon} src={icon}></img>

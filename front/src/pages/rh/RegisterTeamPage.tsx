@@ -10,12 +10,12 @@ export function RegisterTeamPage() {
           <div className={styles.infos}>
             <div className={styles.infosContent}>
               <span>Nome do time</span>
-              <Input  placeholder="Nome" type="text" size="Medium"></Input>
+              <Input  placeholder="Nome" type="text" sizeInput="Medium"></Input>
 
             </div>
             <div className={styles.infosContent}>
               <span>Matrícula do Gestor</span>
-              <Input  placeholder="Matrícula" type="text" size="Medium"></Input>
+              <Input  placeholder="Matrícula" type="text" sizeInput="Medium"></Input>
 
             </div>
           </div>

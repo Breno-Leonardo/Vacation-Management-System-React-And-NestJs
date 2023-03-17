@@ -5,14 +5,11 @@ interface Topics {
   position?: "center" | "spaced";
 }
 
-function choicePosition(positionCenter: string): string {
-  if (positionCenter === "center") return styles.topicsCenter;
-  else return styles.topics;
-}
+
 
 export function Topics({fields, colorsFields = [], position = "spaced"}: Topics) {
   return (
-    <div className={choicePosition(position)}>
+    <div className={`${styles.topics} ${styles[position]}`}>
       <>
         {fields.map((field, index) => {
           return (

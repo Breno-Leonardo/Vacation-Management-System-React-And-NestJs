@@ -18,7 +18,7 @@
 }
 .divCards{
   display: flex;
-  
+  flex-wrap:wrap;
   flex-direction: row;
   justify-content: space-between;
   align-items: space-between;
@@ -41,4 +41,10 @@
   align-items:center;
   text-align: center;
   word-break: break-word;
+}
+@media (max-width: 768px) {
+  .divCards {
+    justify-content: space-around;
+    margin: 0rem 0rem 0rem 0rem;
+  }
 }

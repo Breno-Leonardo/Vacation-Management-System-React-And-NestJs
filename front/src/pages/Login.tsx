@@ -11,7 +11,7 @@ export function Login() {
       <div className="content">
         <ContainerLogin>
           <Input icon={account} placeholder="Usuário"></Input>
-          <Input icon={key} placeholder="Senha"></Input>
+          <Input icon={key} type="password" placeholder="Senha"></Input>
           <Button content="LOGIN" size="Big"></Button>
         </ContainerLogin>
       </div>

@@ -19,7 +19,7 @@ const solicitacoes = [solicitacao, solicitacao, solicitacao];
 export function TeamPageCollaborator() {
   return (
     <Container title="Solicitações e Férias do Time">
-      <Topics fields={["Nome", "Data Solicitação", "Início", "Fim", "Status"]} position="spaced"></Topics>
+      <Topics fields={["Nome", "Data", "Início", "Fim", "Status"]} position="spaced"></Topics>
 
       {solicitacoes.map((f) => {
         return <EmployeeLine key={f.nome + f.dataLimiteConcessiva} fields={[f.nome, f.dataSolicitacao, f.inicio, f.fim, f.status]} colorsFields={["black", "white", "green", "red", "blue"]} attentionFlag={f.attentionFlag}></EmployeeLine>;

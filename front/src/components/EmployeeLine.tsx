@@ -13,10 +13,7 @@ function isFlaged(attentionFlag: boolean) {
   if (attentionFlag) return <span className={styles.alertSpan}>Atenção</span>;
 }
 
-function choicePosition(positionCenter: string): string {
-  if (positionCenter === "center") return styles.employeeLineCenter;
-  else return styles.employeeLine;
-}
+
 
 export function EmployeeLine({
   fields,
@@ -26,7 +23,7 @@ export function EmployeeLine({
   hasIcon = true,
 }: EmployeeLine) {
   return (
-    <div className={choicePosition(position)}>
+    <div className={`${styles.employeeLine} ${styles[position]}`}>
       <>
         {/* Checando se tem que colocar o icone */}
         {hasIcon ? (

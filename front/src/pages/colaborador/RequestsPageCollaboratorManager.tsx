@@ -1,4 +1,3 @@
-import {Header} from "../../components/Header";
 import {Container} from "../../components/Container";
 import styles from "./RequestsPageCollaborator.module.css";
 import {EmployeeLine} from "../../components/EmployeeLine";

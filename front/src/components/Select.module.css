@@ -1,12 +1,9 @@
 .Select {
  
   border-radius: 20px;
-  
   border: none;
   outline-color: transparent;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  height: 2.5rem;
-  width: 15rem;
   
 }
 .Medium{
@@ -15,8 +12,12 @@
   padding-left: 1rem;
   font-size: 1.3rem;
 }
+
 .widthMedium {
   width: 15rem;
+}
+.widthSmall {
+  width: 10rem;
 }
 
 .Select:focus {
@@ -26,4 +27,9 @@
 }
 
 
-
+@media(max-width:768px){
+  
+}
+@media(max-width:425px){
+  
+}
