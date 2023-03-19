@@ -1,5 +1,5 @@
 import { Header } from "../../components/Header";
-import styles from "./HomeRH.module.css";
+import styles from "./css/HomeRH.module.css";
 import { Card } from "../../components/Card";
 import { Link } from "react-router-dom";
 import collaborator from "../../assets/account-white.svg";

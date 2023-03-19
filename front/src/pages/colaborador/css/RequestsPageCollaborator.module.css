@@ -9,47 +9,19 @@
   font-weight: 800;
 }
 
-.topics > p {
-  width: 15%;
-  align-items: center;
-  text-align: center;
-  word-break: break-word;
-}
-
-.topicsCenter {
+.divForButton{
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2rem;
-  width: 100%;
-  font-size: 1.35rem;
-  font-weight: 800;
-}
-
-.topicsCenter > p {
-  width: 15%;
-  align-items: center;
-  text-align: center;
-  word-break: break-word;
-}
-
-.divForButton {
-  display: flex;
-  width: 100%;
+  width:100%;
   flex-direction: row;
   align-items: center;
 }
-.divGantt {
-  padding: 3.5rem;
-}
-.divCards {
+.divCards{
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap:wrap;
   flex-direction: row;
   justify-content: space-between;
   align-items: space-between;
-  margin: 0rem 6rem 2rem 6rem;
+  margin: 2rem 6rem;
 }
 
 .topicsWithButton {
@@ -57,26 +29,18 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-right: 5rem;
+  margin-right:5rem;
   margin-top: 2rem;
   width: 100%;
   font-size: 1.35rem;
   font-weight: 800;
 }
-.topicsWithButton > p {
-  width: 15%;
-  align-items: center;
+.topicsWithButton > p{
+  width:15%;
+  align-items:center;
   text-align: center;
   word-break: break-word;
 }
-.divSearch {
-  margin: 3rem 0rem 1rem 0rem;
-  align-self: center;
-}
-.divSearch span {
-  font-size: 1.75rem;
-}
-
 @media (max-width: 768px) {
   .divCards {
     justify-content: space-around;

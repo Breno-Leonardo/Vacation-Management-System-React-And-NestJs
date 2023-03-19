@@ -40,10 +40,26 @@
   
   .topics {
     margin-top: 1rem;
-    font-size: 1rem;
+    font-size: 0.9rem;
     justify-content: space-around;
   }
   .topics > p {
-    width: 17%;
+    width: 19%;
+  }
+}
+@media(max-width:375px){
+  
+  .topics {
+    font-size: 0.85rem;
+    justify-content: space-around;
+  }
+  .topics > p {
+    width: 19%;
+  }
+}
+@media(max-width:375px){
+  .topics {
+    font-size: 0.73rem;
+    justify-content: space-around;
   }
 }

@@ -1,5 +1,5 @@
 import {Container} from "../../components/Container";
-import styles from "./RequestsPageManager.module.css";
+import styles from "./css/RequestsPageManager.module.css";
 import {EmployeeLine} from "../../components/EmployeeLine";
 import {Button} from "../../components/Button";
 import {Card} from "../../components/Card";
@@ -9,13 +9,15 @@ import "gantt-task-react/dist/index.css";
 import {StandardTooltipContent} from "../../components/Tooltip";
 import {Select} from "../../components/Select";
 import {Topics} from "../../components/Topics";
+import {formatDateRequestTopic, formatName} from "../../auxFunctions";
+import React from "react";
 
 const solicitacao = {
   nome: "Breno Leonardo",
-  dataSolicitacao: "15/01/2022",
-  inicio: "17/01/2022",
-  fim: "27/01/2022",
-  dataLimiteConcessiva: "26/02/2022",
+  dataSolicitacao: "15/01/22",
+  inicio: "17/01/22",
+  fim: "27/01/22",
+  dataLimiteConcessiva: "26/02/22",
   attentionFlag: false,
 };
 const solicitacao2 = {
@@ -59,6 +61,8 @@ const tasks: Task[] = [
 ];
 
 export function RequestsPageManager() {
+  const [viewMode, setViewMode] = React.useState(ViewMode.Day);
+  const [columnWidth, setColumnWidth] = React.useState(window.innerWidth / 20);
   return (
     <>
       <div className={styles.divSearch}>
@@ -73,18 +77,28 @@ export function RequestsPageManager() {
         ></Select>
       </div>
       <div className={styles.divCards}>
-        <Card content="3" size="Medium"  title="Em Férias"></Card>
+        <Card content="3" size="Medium" title="Em Férias"></Card>
         <Card content="3" size="Medium" title="Solicitações"></Card>
         <Card content="4" size="Medium" title="Férias agendadas"></Card>
         <Card content="1" size="Medium" title="Em alerta"></Card>
       </div>
       <div className={styles.divGantt}>
+        <div className={styles.divGanttButtons}>
+          <Button content="Dias" size="Small" onClick={() => {
+            setViewMode(ViewMode.Day)
+            setColumnWidth(window.innerWidth / 20)
+          }}></Button>
+          <Button content="Meses" size="Small" onClick={() => {
+            setViewMode(ViewMode.Month)
+            setColumnWidth(window.innerWidth / 9)
+            }}></Button>
+        </div>
         <Gantt
           tasks={tasks}
-          viewMode={ViewMode.Day}
+          viewMode={viewMode}
           headerHeight={100}
           locale={"pt"}
-          columnWidth={70}
+          columnWidth={columnWidth}
           listCellWidth={""}
           barBackgroundColor="#33a457"
           barBackgroundSelectedColor="#33a457"
@@ -92,22 +106,32 @@ export function RequestsPageManager() {
           barProgressSelectedColor="#33a457"
           fontSize="16"
           onSelect={() => console.log()}
-          TooltipContent={StandardTooltipContent}
         />
+      </div>
+      <div className={styles.divGanttMobile}>
+        <Gantt tasks={tasks} viewMode={ViewMode.Month} headerHeight={50} locale={"pt"} columnWidth={70} listCellWidth={""} barBackgroundColor="#33a457" barBackgroundSelectedColor="#33a457" barProgressColor="#33a457" barProgressSelectedColor="#33a457" fontSize="12" onSelect={() => console.log()} />
       </div>
       <Container title="Solicitações">
         <div className={styles.divForButton}>
-          <Topics fields={["Nome", "Data", "Início", "Fim", "Data Limite Concessiva"]} position="spaced"></Topics>
-          <Button content="Responder" size="Small" visibility="Invisible" onClick={() => {}}></Button>
+          <Topics fields={["Nome", formatDateRequestTopic(), "Início", "Fim", "Data Limite Concessiva"]} position="spaced"></Topics>
+          <div className={styles.buttonRequest}>
+            <Button content="Responder" size="Small" visibility="Invisible" onClick={() => {}}></Button>
+          </div>
         </div>
 
         {solicitacoes.map((f) => {
           return (
             <div className={styles.divForButton}>
-              <EmployeeLine fields={[f.nome, f.dataSolicitacao, f.inicio, f.fim, f.dataLimiteConcessiva]} colorsFields={["black", "black", "greee", "red", "blue"]} attentionFlag={f.attentionFlag}></EmployeeLine>
-              <Link to="/gestor/resposta">
-                <Button content="Responder" size="Small"></Button>
-              </Link>
+              <div className={styles.divLink}>
+                <Link to="/gestor/resposta">
+                  <EmployeeLine fields={[formatName(f.nome), f.dataSolicitacao, f.inicio, f.fim, f.dataLimiteConcessiva]} colorsFields={["black", "black", "greee", "red", "blue"]} attentionFlag={f.attentionFlag}></EmployeeLine>
+                </Link>
+              </div>
+              <div className={styles.buttonRequest}>
+                <Link to="/gestor/resposta">
+                  <Button content="Responder" size="Small"></Button>
+                </Link>
+              </div>
             </div>
           );
         })}
@@ -117,7 +141,7 @@ export function RequestsPageManager() {
         <Topics fields={["Nome", "Início", "Fim"]} position="center"></Topics>
 
         {solicitacoes.map((f) => {
-          return <EmployeeLine fields={[f.nome, f.inicio, f.fim]} colorsFields={["black", "green", "red"]} position="center"></EmployeeLine>;
+          return <EmployeeLine fields={[formatName(f.nome), f.inicio, f.fim]} colorsFields={["black", "green", "red"]} position="center"></EmployeeLine>;
         })}
       </Container>
 
@@ -125,7 +149,7 @@ export function RequestsPageManager() {
         <Topics fields={["Nome", "Início", "Fim"]} position="center"></Topics>
 
         {solicitacoes.map((f) => {
-          return <EmployeeLine fields={[f.nome, f.inicio, f.fim]} colorsFields={["black", "green", "red"]} position="center"></EmployeeLine>;
+          return <EmployeeLine fields={[formatName(f.nome), f.inicio, f.fim]} colorsFields={["black", "green", "red"]} position="center"></EmployeeLine>;
         })}
       </Container>
     </>

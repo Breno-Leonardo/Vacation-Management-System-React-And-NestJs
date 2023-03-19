@@ -13,7 +13,7 @@
   text-align: center;
 }
 .Card span {
-  font-size: 2rem;
+  font-size: 1.9rem;
   margin-top: 0.5rem;
 }
 .Card div {
@@ -59,15 +59,16 @@
   font-size: 2rem;
 }
 
-.icon {
-  height: 10rem;
-}
+
 @media (max-width: 1440px) {
   .Medium {
     width: 18rem;
   }
 }
 @media (max-width: 768px) {
+  .icon {
+    height: 5rem;
+  }
   .divDates {
     font-size: 1.3rem;
   }

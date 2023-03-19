@@ -26,7 +26,6 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  text-align: center;
   word-break: break-word;
 }
 .nameDiv > img {
@@ -50,7 +49,7 @@
   font-size: 0.7rem;
   background-color: red;
   padding: 0.2rem;
-  border-radius: 20px;
+  border-radius: 5px;
   box-shadow: 0px 0px 2px black;
 }
 .icon {
@@ -91,6 +90,14 @@
   .employeeLine > p {
     width: 17%;
   }
+  .alertDiv{
+    width: 22%;
+  }
+  .nameDiv{
+    width: 22%;
+    text-align:center ;
+
+  }
 }
 @media(max-width:768px){
   .icon {
@@ -99,33 +106,39 @@
   .employeeLine { 
     margin-top: 2rem;
     font-size: 1rem;
+    
   }
   .employeeLine > p {
-    width: 17%;
+    width: 19%;
+  }
+  .alertSpan {
+    font-size: 0.5rem;
+    
   }
 }
 @media(max-width:600px){
  
   .employeeLine { 
-    margin-top: 2rem;
-    font-size: 0.84rem;
+    margin-top: 1.75rem;
+    font-size: 1rem;
+    
   }
   .employeeLine > p {
-    width: 17%;
+    width: 19%;
   }
 }
 
 @media(max-width:375px){
   .employeeLine {
-    font-size: 0.74rem;
+    font-size: 0.9rem;
   }
 }
 
-@media(max-width:350px){
+@media(max-width:325px){
   .employeeLine > p {
-    width: 18%;
+    width: 19%;
   }
   .employeeLine {
-    font-size: 0.674rem;
+    font-size: 0.75rem;
   }
 }

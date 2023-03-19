@@ -13,4 +13,8 @@
   padding:0;
   color:white;
 }
-
+@media (max-width: 768px) {
+.divCards{
+  flex-direction: column;
+}
+}

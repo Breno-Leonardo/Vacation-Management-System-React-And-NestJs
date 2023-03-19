@@ -1,4 +1,4 @@
-import styles from "./Select.module.css";
+import styles from "./css/Select.module.css";
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   optionsDouble?: string[][];
   optionsUnique?: string[] | number[];

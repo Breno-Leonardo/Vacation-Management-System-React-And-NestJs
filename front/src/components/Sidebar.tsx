@@ -1,6 +1,6 @@
 import accountGroup from '../assets/account-group-white.svg';
 import calendar from '../assets/calendar-month-outline.svg';
-import styles from './Sidebar.module.css';
+import styles from './css/Sidebar.module.css';
 
 const sidebarSmaller= (
 <aside className={styles.sidebar}>

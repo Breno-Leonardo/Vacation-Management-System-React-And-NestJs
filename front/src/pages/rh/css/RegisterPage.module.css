@@ -23,3 +23,23 @@
   margin-bottom: 0.4rem;
  
 }
+
+@media (max-width: 768px) {
+  .infos {
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    margin-left:0rem;
+    margin-top:0rem;
+  }
+  
+  .infosContent span{
+    margin-left: 1rem;
+    margin-bottom: 0.4rem;
+   font-size: 1.2rem;
+  }
+  .infosContent{
+   width: auto;
+   margin-top: 1.5rem;
+  }
+}

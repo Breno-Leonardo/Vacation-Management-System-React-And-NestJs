@@ -28,7 +28,11 @@
 
 
 @media(max-width:768px){
-  
+  .Medium {
+    height: 2.5rem;
+    width: 15rem;
+    font-size: 1.1rem;
+  }
 }
 @media(max-width:425px){
   

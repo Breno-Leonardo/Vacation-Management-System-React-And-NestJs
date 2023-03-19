@@ -1,4 +1,4 @@
-import styles from "./Topics.module.css";
+import styles from "./css/Topics.module.css";
 interface Topics {
   fields: string[];
   colorsFields?: string[]; // uma cor para cada field

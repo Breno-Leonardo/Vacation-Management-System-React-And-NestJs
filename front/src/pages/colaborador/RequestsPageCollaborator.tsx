@@ -1,11 +1,11 @@
-import {Header} from "../../components/Header";
 import {Container} from "../../components/Container";
-import styles from "./RequestsPageCollaborator.module.css";
+import styles from "./css/RequestsPageCollaborator.module.css";
 import {EmployeeLine} from "../../components/EmployeeLine";
 import {Button} from "../../components/Button";
 import {Card} from "../../components/Card";
 import {Link} from "react-router-dom";
 import {Topics} from "../../components/Topics";
+import { formatDateRequestTopic } from "../../auxFunctions";
 
 const solicitacao = {
   nome: "Breno Leonardo",
@@ -29,7 +29,7 @@ export function RequestsPageCollaborator() {
       </div>
 
       <Container title="Solicitações">
-        <Topics fields={["Data", "Início", "Fim", "Status"]} position="center"></Topics>
+        <Topics fields={[formatDateRequestTopic(), "Início", "Fim", "Status"]} position="center"></Topics>
 
         {solicitacoes.map((f) => {
           return <EmployeeLine fields={[f.dataSolicitacao, f.inicio, f.fim, f.status]} colorsFields={["black", "green", "red"]} position="center" hasIcon={false}></EmployeeLine>;

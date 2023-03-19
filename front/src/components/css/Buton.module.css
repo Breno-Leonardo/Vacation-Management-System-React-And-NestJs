@@ -32,7 +32,9 @@
     font-size:0.8rem;
     font-weight: 500;
     width:5rem;
-    height:2rem;    
+    height:2rem;  
+    margin-top:1.7rem;
+    border-radius:10px;
 }
 .ExtraBig{
     margin-top: 3rem;

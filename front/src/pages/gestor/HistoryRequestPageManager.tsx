@@ -1,7 +1,9 @@
 import {Container} from "../../components/Container";
-import styles from "./HistoryRequestPageManager.module.css";
+import styles from "./css/HistoryRequestPageManager.module.css";
 import {EmployeeLine} from "../../components/EmployeeLine";
 import {Select} from "../../components/Select";
+import {formatDateRequestTopic, formatName} from "../../auxFunctions";
+import {Topics} from "../../components/Topics";
 
 const options = [
   ["123", "Breno"],
@@ -19,16 +21,16 @@ interface solicitacao {
 const solicitacoes = [
   {
     nome: "Breno Leonardo",
-    dataSolicitacao: "15/01/2023",
-    inicio: "17/01/2023",
-    fim: "27/01/2023",
+    dataSolicitacao: "15/01/23",
+    inicio: "17/01/23",
+    fim: "27/01/23",
     status: " Aprovada",
   },
   {
     nome: "Breno Leonardo",
-    dataSolicitacao: "15/01/2023",
-    inicio: "17/01/2023",
-    fim: "27/01/2023",
+    dataSolicitacao: "15/01/23",
+    inicio: "17/01/23",
+    fim: "27/01/23",
     status: " Aprovada",
   },
 ];
@@ -39,28 +41,26 @@ export function HistoryRequestsPageManager() {
       <></>
 
       <div className={styles.divSearch}>
-        <span>Time: </span>
-        <Select
-          sizeSelect="Medium"
-          width="Medium"
-          optionsDouble={[
-            ["123", "Front-end"],
-            ["456", "QQTech"],
-          ]}
-        ></Select>
-        <span>Funcionário: </span>
-        <Select sizeSelect="Medium" optionsDouble={options}></Select>
+        <div>
+          <span>Time: </span>
+          <Select
+            sizeSelect="Medium"
+            width="Medium"
+            optionsDouble={[
+              ["123", "Front-end"],
+              ["456", "QQTech"],
+            ]}
+          ></Select>
+        </div>
+        <div>
+          <span>Funcionário: </span>
+          <Select sizeSelect="Medium" optionsDouble={options}></Select>
+        </div>
       </div>
+      <Topics fields={["Nome", formatDateRequestTopic(), "Início", "Fim", "Status"]} position="spaced"></Topics>
 
-      <div className={styles.topics}>
-        <p>Nome</p>
-        <p>Data Solicitação</p>
-        <p>Início</p>
-        <p>Fim</p>
-        <p>Status</p>
-      </div>
       {solicitacoes.map((soli) => {
-        return <EmployeeLine fields={[soli.nome, soli.dataSolicitacao, soli.inicio, soli.fim, soli.status]} colorsFields={["black", "black", "green", "red", "black"]}></EmployeeLine>;
+        return <EmployeeLine fields={[formatName(soli.nome), soli.dataSolicitacao, soli.inicio, soli.fim, soli.status]} colorsFields={["black", "black", "green", "red", "black"]}></EmployeeLine>;
       })}
     </Container>
   );

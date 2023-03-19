@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { FooterMenu } from "../components/FooterMenu";
 import { Header } from "../components/Header";
 
 export function ManagerCollaboratorLayout() {
@@ -8,6 +9,8 @@ export function ManagerCollaboratorLayout() {
       <div className="content">
         <Outlet></Outlet>
       </div>
+      <FooterMenu forWho="Colaborador Gestor"></FooterMenu>
+      
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import styles from "./Buton.module.css";
+import styles from "./css/Buton.module.css";
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   content: string;
   size: "ExtraBig" | "Big" | "Medium" | "Small";

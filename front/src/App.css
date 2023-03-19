@@ -28,6 +28,7 @@ button {
 }
 
 .App {
+  position: relative;
   display: flex;
   min-height: calc(100vh - 8.2rem);
   flex-direction: column;

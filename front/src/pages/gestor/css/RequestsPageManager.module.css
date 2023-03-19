@@ -1,0 +1,114 @@
+
+
+.divForButton {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+}
+.divGantt {
+  padding: 3.5rem;
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.divGanttButtons {
+  display: flex;
+  gap:1.5rem;
+  justify-content: center;
+  margin-bottom:1rem;
+}
+.divGanttMobile {
+  display:none
+}
+.divCards {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: space-between;
+  margin: 0rem 6rem 2rem 6rem;
+}
+
+.topicsWithButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 5rem;
+  margin-top: 2rem;
+  width: 100%;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+.topicsWithButton > p {
+  width: 15%;
+  align-items: center;
+  text-align: center;
+  word-break: break-word;
+}
+.divSearch {
+  margin: 3rem 0rem 1rem 0rem;
+  align-self: center;
+}
+.divSearch span {
+  font-size: 1.75rem;
+}
+.divLink{
+  width: 100%;
+}
+.divLink a{
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    color:black;
+}
+
+@media(max-width:768px){
+  .buttonRequest{
+    display: none;
+  }
+  .divCards {
+    justify-content: space-around;
+    margin: 0rem 0rem 0rem 0rem;
+  }
+  .divForButton{
+    flex-direction: column;
+  }
+  .topics {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    justify-content: space-around;
+  }
+  .topics > p {
+    width: 19%;
+  }
+  .divSearch span {
+    font-size: 1.5rem;
+  }
+  .divGantt, .divGanttButtons {
+    display:none;
+  }
+  .divGanttMobile {
+    display:block;
+    margin-top:2rem;
+  }
+}
+@media(max-width:375px){
+  
+  .topics {
+    font-size: 0.85rem;
+    justify-content: space-around;
+  }
+  .topics > p {
+    width: 19%;
+  }
+}
+@media(max-width:375px){
+  .topics {
+    font-size: 0.73rem;
+    justify-content: space-around;
+  }
+}
+

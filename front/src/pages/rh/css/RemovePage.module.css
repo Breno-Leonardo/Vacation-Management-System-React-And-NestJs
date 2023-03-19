@@ -1,7 +1,7 @@
 .divSearch{
   display: flex;
   margin-top:0.5rem;
-  align-items: center;
+  
   
 }
 .divSearch span{
@@ -10,7 +10,7 @@
 }
 
 .infosResult{
-  width:20rem;
+  width:17.5rem;
   display: flex;
   justify-content:center;
   align-items : center;
@@ -33,4 +33,28 @@
   height: 5rem;
   margin-top:0.5rem;
   
+}
+@media (max-width: 768px) {
+  .divSearch{
+   flex-direction: column;
+    margin-top:0.5rem;
+    align-items: center;
+    
+  }
+  .divSearch span{
+    
+    font-size: 1.5rem;
+    margin-bottom:0.5rem;
+  }
+  .infosResult{
+    width:17.5rem;
+    display: flex;
+    margin-top:3rem;
+    font-size: 1.2rem;
+  }
+  .infosResult img{
+    height: 3.5rem;
+    margin-top:0.5rem;
+    
+  }
 }

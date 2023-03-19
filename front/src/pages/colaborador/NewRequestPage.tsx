@@ -1,6 +1,6 @@
 import { Header } from "../../components/Header";
 import { Container } from "../../components/Container";
-import styles from "./NewRequestPage.module.css";
+import styles from "./css/NewRequestPage.module.css";
 import { Button } from "../../components/Button";
 import { TextArea } from "../../components/TextArea";
 import { Select } from "../../components/Select";

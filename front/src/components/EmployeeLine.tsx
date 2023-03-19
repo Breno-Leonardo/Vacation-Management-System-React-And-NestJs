@@ -1,4 +1,4 @@
-import styles from "./EmployeeLine.module.css";
+import styles from "./css/EmployeeLine.module.css";
 import accountIcon from "../assets/account.svg";
 interface EmployeeLine {
   fields: string[];

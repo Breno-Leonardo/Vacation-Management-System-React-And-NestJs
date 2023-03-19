@@ -1,4 +1,4 @@
-import styles from "./TextArea.module.css";
+import styles from "./css/TextArea.module.css";
 interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   
   placeholder: string;

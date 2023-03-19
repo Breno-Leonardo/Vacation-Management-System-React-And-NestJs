@@ -1,6 +1,6 @@
 
 import { Container } from "../../components/Container";
-import styles from "./RemovePage.module.css";
+import styles from "./css/RemovePage.module.css";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import icon from "../../assets/account.svg";
@@ -37,7 +37,7 @@ export function RemovePage() {
       <></>
       <div className={styles.divSearch}>
         <span>Matrícula: </span>
-        <Input placeholder="Insira a matrícula"size="Medium" type="text"></Input>
+        <Input placeholder="Insira a matrícula" sizeInput="Medium" type="text"></Input>
       </div>
       <Button content="Pesquisar" size="Big"></Button>
       <div className={styles.infosResult}>

@@ -1,11 +1,13 @@
 import { Container } from "../../components/Container";
-import styles from "./ResponsePageManager.module.css";
+import styles from "./css/ResponsePageManager.module.css";
 import { EmployeeLine } from "../../components/EmployeeLine";
 import { Button } from "../../components/Button";
 import { TextArea } from "../../components/TextArea";
+import { formatName } from "../../auxFunctions";
+import { Topics } from "../../components/Topics";
 
 const solicitacao = {
-  nome: "Breno Leonardo ",
+  nome: "Breno Leonardo",
   dataSolicitacao: "15/01/2022",
   inicio: "17/01/2022",
   fim: "27/01/2022",
@@ -27,16 +29,15 @@ export function ResponsePageManager() {
   return (
     <>
       <Container title="Interseções de Férias">
-        <div className={styles.topicsCenter}>
-          <p>Nome</p>
-          <p>Início</p>
-          <p>Fim</p>
-        </div>
+        
+        <Topics fields={["Nome", "Início", "Fim"]} position="center"></Topics>
+
+        
 
         {solicitacoes.map((f) => {
           return (
             <EmployeeLine
-              fields={[f.nome, f.inicio, f.fim]}
+              fields={[formatName(f.nome), f.inicio, f.fim]}
               colorsFields={["black", "green", "red"]}
               position="center"
             ></EmployeeLine>
@@ -46,7 +47,7 @@ export function ResponsePageManager() {
 
       <Container title="Solicitação">
         <div className={styles.infos}>
-          <div className={styles.infoPrimary}>Nome: {solicitacao.nome}</div>
+          <div className={styles.infoPrimary}>Nome: {formatName(solicitacao.nome)}</div>
           <div className={styles.infoSecondary}>
             Cargo: Desenvolvedor Mobile
           </div>

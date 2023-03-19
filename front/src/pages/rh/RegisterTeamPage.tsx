@@ -1,5 +1,5 @@
 import { Container } from "../../components/Container";
-import styles from "./RegisterPage.module.css";
+import styles from "./css/RegisterPage.module.css";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 

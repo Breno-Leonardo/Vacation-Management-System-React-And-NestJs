@@ -1,5 +1,5 @@
 import { Container } from "../../components/Container";
-import styles from "./RegisterPage.module.css";
+import styles from "./css/RegisterPage.module.css";
 import { Button } from "../../components/Button";
 import { Select } from "../../components/Select";
 import { Input } from "../../components/Input";
@@ -80,7 +80,7 @@ export function RegisterCollaboratorPage() {
           <Input placeholder="dd/mm/aaaa" type="date" sizeInput="Medium"></Input>
         </div>
         <div className={styles.infosContent}>
-          <span>Saldo atual de dias para férias</span>
+          <span>{window.innerWidth>768 ? ("Saldo atual de dias para férias") :("Saldo atual dias de férias")}</span>
           <Select sizeSelect="Medium" optionsUnique={[0, 5, 10, 15, 20, 25, 30]}></Select>
         </div>
       </div>

@@ -35,9 +35,7 @@
 .logoLogin {
   height: 7rem;
 }
-.menuAccount {
-  margin-right: 4rem;
-}
+
 .icon {
   height: 2rem;
 }
@@ -56,6 +54,7 @@
 .account span,
 .exit span {
   margin-left: 0.4rem;
+ 
 }
 
 .itemMenu {
