@@ -62,10 +62,13 @@
 
 @media (max-width: 1440px) {
   .Medium {
-    width: 18rem;
+    width: 17rem;
+  }
+  .icon {
+    height: 9rem;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .icon {
     height: 5rem;
   }
