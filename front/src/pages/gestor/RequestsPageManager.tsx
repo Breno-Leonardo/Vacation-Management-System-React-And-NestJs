@@ -93,20 +93,22 @@ export function RequestsPageManager() {
             setColumnWidth(window.innerWidth / 9)
             }}></Button>
         </div>
-        <Gantt
-          tasks={tasks}
-          viewMode={viewMode}
-          headerHeight={100}
-          locale={"pt"}
-          columnWidth={columnWidth}
-          listCellWidth={""}
-          barBackgroundColor="#33a457"
-          barBackgroundSelectedColor="#33a457"
-          barProgressColor="#33a457"
-          barProgressSelectedColor="#33a457"
-          fontSize="16"
-          onSelect={() => console.log()}
-        />
+        <div className={styles.divShadowBorder}>
+          <Gantt
+            tasks={tasks}
+            viewMode={viewMode}
+            headerHeight={100}
+            locale={"pt"}
+            columnWidth={columnWidth}
+            listCellWidth={""}
+            barBackgroundColor="#33a457"
+            barBackgroundSelectedColor="#33a457"
+            barProgressColor="#33a457"
+            barProgressSelectedColor="#33a457"
+            fontSize="16"
+            onSelect={() => console.log()}
+          />
+        </div>
       </div>
       <div className={styles.divGanttMobile}>
         <Gantt tasks={tasks} viewMode={ViewMode.Month} headerHeight={50} locale={"pt"} columnWidth={70} listCellWidth={""} barBackgroundColor="#33a457" barBackgroundSelectedColor="#33a457" barProgressColor="#33a457" barProgressSelectedColor="#33a457" fontSize="12" onSelect={() => console.log()} />
