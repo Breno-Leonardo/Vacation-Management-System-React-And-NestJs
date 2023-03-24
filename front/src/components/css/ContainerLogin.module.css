@@ -12,6 +12,20 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
   border-radius: 25px;
 }
+.loading {
+  animation: is-rotating 1s infinite;
+  border: 6px solid #e5e5e5;
+  border-radius: 50%;
+  border-top-color: var(--green-light);
+  height: 4rem;
+  width: 4rem;
+}
+
+@keyframes is-rotating {
+  to {
+    transform: rotate(1turn);
+  }
+}
 
 @media(max-width:425px){
   .containerCenter{

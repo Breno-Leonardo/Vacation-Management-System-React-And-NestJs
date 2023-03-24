@@ -1,13 +1,16 @@
 import "./App.css";
 import { Router } from "./Router";
-import { BrowserRouter } from "react-router-dom";
+import {  createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    Router()
+  )
+);
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Router></Router>
-      </BrowserRouter>
+    <div className="App">     
+      <RouterProvider router={router} />
     </div>
   );
 }

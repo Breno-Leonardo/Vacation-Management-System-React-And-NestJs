@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useRouteError } from "react-router-dom";
 import { RequestsPageManager } from "./pages/gestor/RequestsPageManager";
 import { Login } from "./pages/Login";
 import { HistoryRequestsPageManager } from "./pages/gestor/HistoryRequestPageManager";
@@ -21,11 +21,19 @@ import { RequestsPageCollaboratorManager } from "./pages/colaborador/RequestsPag
 
 export function Router() {
   return (
-    <Routes>
-      <Route path="/" element={<Login></Login>}></Route>
+    <>
+      <Route
+        path="/"
+        element={<Login></Login>}
+        errorElement={<h1>Página não encontrada</h1>}
+      ></Route>
       <Route path="/login" element={<Login></Login>}></Route>
 
-      <Route path="/gestor" element={<ManagerLayout></ManagerLayout>}>
+      <Route
+        path="/gestor"
+        errorElement={<h1>Página não encontrada</h1>}
+        element={<ManagerLayout></ManagerLayout>}
+      >
         <Route
           path="time"
           element={<TeamPageManager></TeamPageManager>}
@@ -49,8 +57,9 @@ export function Router() {
       </Route>
 
       <Route
-        path="/colaborador" 
+        path="/colaborador"
         element={<CollaboratorLayout></CollaboratorLayout>}
+        errorElement={<h1>Página não encontrada</h1>}
       >
         <Route
           path=""
@@ -83,6 +92,7 @@ export function Router() {
       <Route
         path="/colaborador-gestor"
         element={<ManagerCollaboratorLayout></ManagerCollaboratorLayout>}
+        errorElement={<h1>Página não encontrada</h1>}
       >
         <Route
           path=""
@@ -98,7 +108,9 @@ export function Router() {
         ></Route>
         <Route
           path="solicitacoes"
-          element={<RequestsPageCollaboratorManager></RequestsPageCollaboratorManager>}
+          element={
+            <RequestsPageCollaboratorManager></RequestsPageCollaboratorManager>
+          }
         ></Route>
         <Route
           path="historico"
@@ -112,7 +124,11 @@ export function Router() {
         ></Route>
       </Route>
 
-      <Route path="/rh" element={<RHLayout></RHLayout>}>
+      <Route
+        path="/rh"
+        errorElement={<h1>Página não encontrada</h1>}
+        element={<RHLayout></RHLayout>}
+      >
         <Route path="" element={<HomeRH></HomeRH>}></Route>
         <Route
           path="cadastrar-colaborador"
@@ -122,8 +138,11 @@ export function Router() {
           path="cadastrar-time"
           element={<RegisterTeamPage></RegisterTeamPage>}
         ></Route>
-        <Route path="remover-colaborador" element={<RemovePage></RemovePage>}></Route>
+        <Route
+          path="remover-colaborador"
+          element={<RemovePage></RemovePage>}
+        ></Route>
       </Route>
-    </Routes>
+    </>
   );
 }

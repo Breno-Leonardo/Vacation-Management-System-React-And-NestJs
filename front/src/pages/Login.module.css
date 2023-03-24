@@ -1,0 +1,9 @@
+.visible{
+    color:var(--green);
+    font-size: 1.3rem;
+    margin-top:1rem;
+}
+.invisible{
+    visibility:hidden;
+
+}

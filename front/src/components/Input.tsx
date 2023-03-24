@@ -7,17 +7,17 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement>{
   width?: "Big" | "Medium" | "Small";
   disabled?: boolean;
 }
-export function Input({placeholder, icon = "", type = "text", sizeInput = "Big", disabled = false, width = "Big"}: InputProps) {
+export function Input({placeholder, icon = "", type = "text", sizeInput = "Big", disabled = false, width = "Big", onChange, value}: InputProps) {
   const sizeInputIcon = "icon" + sizeInput;
   const sizeInputWidth = "width" + width;
   return icon != "" ? (
     <div>
       <img src={icon} className={`${styles[sizeInputIcon]}`}></img>
-      <input type={type} className={`${styles.Input} ${styles[sizeInput]} ${styles[sizeInputWidth]}`} placeholder={placeholder} disabled={disabled}></input>
+      <input onChange={onChange} value={value} type={type} className={`${styles.Input} ${styles[sizeInput]} ${styles[sizeInputWidth]}`} placeholder={placeholder} disabled={disabled}></input>
     </div>
   ) : (
     <div>
-      <input type={type} className={`${styles.Input} ${styles[sizeInput]} ${styles[sizeInputWidth]} ${styles.NoIcon}`} placeholder={placeholder} disabled={disabled}></input>
+      <input onChange={onChange} value={value} type={type} className={`${styles.Input} ${styles[sizeInput]} ${styles[sizeInputWidth]} ${styles.NoIcon}`} placeholder={placeholder} disabled={disabled}></input>
     </div>
   );
 }
