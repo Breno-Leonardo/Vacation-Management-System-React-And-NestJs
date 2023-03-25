@@ -31,12 +31,6 @@ export class CollaboratorService {
     ).map((collaborator) => new ReturnCollaboratorDtoWithoutKey(collaborator));
   }
 
-  // async getAllCollaborators(): Promise<ReturnCollaboratorDto[]> {
-  //   return (
-  //     await this.collaboratorRepository.find({ relations: ['time'] })
-  //   ).map((collaborator) => new ReturnCollaboratorDto(collaborator));
-  // }
-
   async findCollaboratorByMatricula(
     matricula: string,
   ): Promise<CollaboratorEntity> {

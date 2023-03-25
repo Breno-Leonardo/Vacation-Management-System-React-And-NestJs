@@ -90,4 +90,8 @@ export class AuthService {
       }),
     };
   }
+
+  async checkToken(): Promise<void> {
+    return;
+  }
 }
