@@ -1,6 +1,6 @@
 import { Routes, Route, useRouteError } from "react-router-dom";
 import { RequestsPageManager } from "./pages/gestor/RequestsPageManager";
-import { Login } from "./pages/Login";
+import { ErrorPage } from "./pages/ErrorPage";
 import { HistoryRequestsPageManager } from "./pages/gestor/HistoryRequestPageManager";
 import { TeamPageManager } from "./pages/gestor/TeamPageManager";
 import { ResponsePageManager } from "./pages/gestor/ResponsePageManager";
@@ -18,6 +18,7 @@ import { RegisterTeamPage } from "./pages/rh/RegisterTeamPage";
 import { RemovePage } from "./pages/rh/RemovePage";
 import { ManagerCollaboratorLayout } from "./layouts/ManagerCollaboratorLayout";
 import { RequestsPageCollaboratorManager } from "./pages/colaborador/RequestsPageCollaboratorManager";
+import { Login } from "./pages/Login copy";
 
 export function Router() {
   return (
@@ -25,13 +26,17 @@ export function Router() {
       <Route
         path="/"
         element={<Login></Login>}
-        errorElement={<h1>Página não encontrada</h1>}
+        errorElement={<ErrorPage></ErrorPage>}
       ></Route>
-      <Route path="/login" element={<Login></Login>}></Route>
+       <Route
+        path="error"
+        element={<ErrorPage></ErrorPage>}
+        errorElement={<ErrorPage></ErrorPage>}
+      ></Route>
 
       <Route
         path="/gestor"
-        errorElement={<h1>Página não encontrada</h1>}
+        errorElement={<ErrorPage></ErrorPage>}
         element={<ManagerLayout></ManagerLayout>}
       >
         <Route

@@ -58,7 +58,9 @@
   align-items: center;
   font-size: 2rem;
 }
-
+.icon {
+  height: 10rem;
+}
 
 @media (max-width: 1440px) {
   .Medium {

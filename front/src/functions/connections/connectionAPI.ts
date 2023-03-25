@@ -11,7 +11,7 @@ export default class ConnectionAPI {
     const config: AxiosRequestConfig = {
       headers: {
         Authorization: getAuthorization(),
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
 

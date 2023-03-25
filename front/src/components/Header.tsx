@@ -8,6 +8,8 @@ import styles from "./css/Header.module.css";
 import accountGroup from "../assets/account-group-white.svg";
 import calendar from "../assets/calendar-month-outline.svg";
 import {  Link } from "react-router-dom";
+import { removeItemStorage } from "../functions/connections/storageProxy";
+import { AUTHORIZATION_KEY, COLLABORATOR_KEY } from "../constants/constants";
 
 interface HeaderProps {
   forWho: "Colaborador" | "Gestor" | "Login" | "RH" | "Colaborador Gestor";
@@ -51,8 +53,11 @@ export function Header({ forWho }: HeaderProps) {
             <img className={styles.icon} src={accountIcon}></img>
             <span>Breno Leonardo</span>
           </div>
-          <Link to="/login">
-            <div className={styles.exit}>
+          <Link to="/">
+            <div className={styles.exit} onClick={()=>{
+              removeItemStorage(AUTHORIZATION_KEY)
+              removeItemStorage(COLLABORATOR_KEY)
+            }}>
               <img className={styles.icon} src={exitIcon}></img>
               <span>Sair</span>
             </div>
@@ -103,8 +108,11 @@ export function Header({ forWho }: HeaderProps) {
             <img className={styles.icon} src={accountIcon}></img>
             <span>Breno Leonardo</span>
           </div>
-          <Link to="/login">
-            <div className={styles.exit}>
+          <Link to="/">
+            <div className={styles.exit}onClick={()=>{
+              removeItemStorage(AUTHORIZATION_KEY)
+              removeItemStorage(COLLABORATOR_KEY)
+            }}>
               <img className={styles.icon} src={exitIcon}></img>
               <span>Sair</span>
             </div>
@@ -149,7 +157,10 @@ export function Header({ forWho }: HeaderProps) {
             <img className={styles.icon} src={accountIcon}></img>
             <span>Breno Leonardo</span>
           </div>
-          <Link to="/login">
+          <Link to="/"onClick={()=>{
+              removeItemStorage(AUTHORIZATION_KEY)
+              removeItemStorage(COLLABORATOR_KEY)
+            }}>
             <div className={styles.exit}>
               <img className={styles.icon} src={exitIcon}></img>
               <span>Sair</span>
@@ -168,7 +179,10 @@ export function Header({ forWho }: HeaderProps) {
             <img className={styles.icon} src={accountIcon}></img>
             <span>Breno Leonardo</span>
           </div>
-          <Link to="/login">
+          <Link to="/"onClick={()=>{
+              removeItemStorage(AUTHORIZATION_KEY)
+              removeItemStorage(COLLABORATOR_KEY)
+            }}>
             <div className={styles.exit}>
               <img className={styles.icon} src={exitIcon}></img>
               <span>Sair</span>

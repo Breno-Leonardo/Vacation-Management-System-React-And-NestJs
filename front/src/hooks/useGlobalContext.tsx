@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getAuthorization, setAuthorization } from "../functions/connections/auth";
+import {  setCollaboratorStorage } from "../functions/connections/auth";
+import { CollaboratorType } from "../types/CollaboratorTypes";
 
 interface GlobalData {
-  acessToken?: string;
+  collaborator?: CollaboratorType;
 }
 interface GlobalContextProps {
   globalData: GlobalData;
@@ -28,21 +29,17 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
 
 export const useGlobalContext = () => {
   const { globalData, setGlobalData } = useContext(GlobalContext);
-  useEffect(()=>{
-    const token= getAuthorization()
-    if(token){
-      setAcessToken(token)
-    }
-  }, [])
-  const setAcessToken= (acessToken: string) =>{
-    setAuthorization(acessToken);
+  
+  
+  const setCollaboratorStorageContext= (collaborator: CollaboratorType) =>{
+    setCollaboratorStorage(collaborator);
     setGlobalData({
         ...globalData,
-        acessToken,
+        collaborator,
     })
   }
   return{
-    acessToken: globalData?.acessToken,
-    setAcessToken,
+    collaborator: globalData?.collaborator,
+    setCollaboratorStorageContext,
   };
 };

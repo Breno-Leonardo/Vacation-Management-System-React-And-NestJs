@@ -1,42 +1,41 @@
-import axios from "axios";
 import { useState } from "react";
-import { connectionAPIPost } from "../functions/connections/connectionAPI";
+import { connectionAPIPost , connectionAPIGet} from "../functions/connections/connectionAPI";
 
 export function useRequests() {
-  const [loading, setLoading] = useState(false);
-
+  const [loadingPost, setLoadingPost] = useState(false);
+  const [loadingGet, setLoadingGet] = useState(false);
   const getRequest = async <T,>(url: string): Promise<T | any | undefined> => {
-    setLoading(true);
-    return await axios({
-      method: "get",
-      url: url,
-    })
+    setLoadingGet(true);
+    const returnData = await connectionAPIGet(url)
       .then((result) => {
-        return result.data;
+        console.log(result);
+        return result;
       })
       .catch((error) => {
         console.log(error);
       });
+    setLoadingGet(false);
+    return returnData;
   };
   const postRequest = async <T,>(
     url: string,
     body: any
   ): Promise<T | any | undefined> => {
-    setLoading(true);
+    setLoadingPost(true);
     const returnData = await connectionAPIPost(url, body)
       .then((result) => {
-        console.log("body",body)
-        console.log("rwesult",result)
         return result;
       })
       .catch((error) => {
         return undefined;
       });
-    setLoading(false);
+    setLoadingPost(false);
     return returnData;
   };
+
   return {
-    loading,
+    loadingPost,
+    loadingGet,
     getRequest,
     postRequest,
   };

@@ -1,7 +1,12 @@
 export const AUTHORIZATION_KEY = 'AUTHORIZATION_KEY';
+export const COLLABORATOR_KEY = 'COLLABORATOR_KEY';
 
-const URL_BASE="http://localhost:3000"
+
+
+//Requests
+export const URL_BASE="http://localhost:3000"
 export const URL_LOGIN = URL_BASE+'/auth/login';
+export const URL_CHECK_TOKEN = URL_BASE+'/auth/check';
 
 export const URL_GET_ALL_COLLABORATORS  = URL_BASE+'/colaborador/lista-colaboradores';
 export const URL_CREATE_COLLABORATOR= URL_BASE+'/colaborador/cadastro';
