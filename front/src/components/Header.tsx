@@ -7,16 +7,22 @@ import exitIcon from "../assets/exit.svg";
 import styles from "./css/Header.module.css";
 import accountGroup from "../assets/account-group-white.svg";
 import calendar from "../assets/calendar-month-outline.svg";
-import {  Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { removeItemStorage } from "../functions/connections/storageProxy";
 import { AUTHORIZATION_KEY, COLLABORATOR_KEY } from "../constants/constants";
+import { getCollaboratorStorage } from "../functions/connections/auth";
+import { formatName } from "../functions/auxFunctions";
+import { CollaboratorTypeEnum } from "../enums/collaborator-type";
 
 interface HeaderProps {
-  forWho: "Colaborador" | "Gestor" | "Login" | "RH" | "Colaborador Gestor";
+  forWho: "Colaborador" | "Gestor" | "Login" | "RH" ;
 }
 
-
 export function Header({ forWho }: HeaderProps) {
+  const collaborator = getCollaboratorStorage();
+  let name = "Usuário";
+  if (collaborator) name = formatName(collaborator.nome);
+
   if (forWho == "Colaborador") {
     //Colaborador
     return (
@@ -48,16 +54,30 @@ export function Header({ forWho }: HeaderProps) {
           </div>
         </Link>
 
+        {collaborator?.typeCollaborator ==
+        CollaboratorTypeEnum.CollaboratorManager ? (
+          <Link to="/gestor/solicitacoes">
+            <div className={styles.itemMenu}>
+              <img className={styles.icon} src={swapIcon}></img>
+              <span>Mudar Perfil</span>
+            </div>
+          </Link>
+        ) : (
+          <></>
+        )}
         <div className={styles.menuAccount}>
           <div className={styles.account}>
             <img className={styles.icon} src={accountIcon}></img>
-            <span>Breno Leonardo</span>
+            <span>{name}</span>
           </div>
           <Link to="/">
-            <div className={styles.exit} onClick={()=>{
-              removeItemStorage(AUTHORIZATION_KEY)
-              removeItemStorage(COLLABORATOR_KEY)
-            }}>
+            <div
+              className={styles.exit}
+              onClick={() => {
+                removeItemStorage(AUTHORIZATION_KEY);
+                removeItemStorage(COLLABORATOR_KEY);
+              }}
+            >
               <img className={styles.icon} src={exitIcon}></img>
               <span>Sair</span>
             </div>
@@ -65,63 +85,7 @@ export function Header({ forWho }: HeaderProps) {
         </div>
       </header>
     );
-  } 
-  else if (forWho == "Colaborador Gestor") {
-    //Colaborador Gestor
-    return (
-      <header className={styles.header}>
-        <img className={styles.logo} src={logo}></img>
-
-        <Link to="/colaborador-gestor/solicitacoes">
-          <div className={styles.itemMenu}>
-            <img className={styles.icon} src={calendar}></img>
-            <span>Solicitações</span>
-          </div>
-        </Link>
-        <Link to="/colaborador-gestor/time">
-          <div className={styles.itemMenu}>
-            <img className={styles.icon} src={accountGroup}></img>
-            <span>Time</span>
-          </div>
-        </Link>
-        <Link to="/colaborador-gestor/decimo-terceiro">
-          <div className={styles.itemMenu}>
-            <img className={styles.icon} src={decimoTerceiroIcon}></img>
-            <span>Décimo Terceiro</span>
-          </div>
-        </Link>
-        <Link to="/colaborador-gestor/historico">
-          <div className={styles.itemMenu}>
-            <img className={styles.icon} src={historyIcon}></img>
-            <span>Histórico</span>
-          </div>
-        </Link>
-        <Link to="/gestor/solicitacoes">
-          <div className={styles.itemMenu}>
-            <img className={styles.icon} src={swapIcon}></img>
-            <span>Mudar Perfil</span>
-          </div>
-        </Link>
-
-        <div className={styles.menuAccount}>
-          <div className={styles.account}>
-            <img className={styles.icon} src={accountIcon}></img>
-            <span>Breno Leonardo</span>
-          </div>
-          <Link to="/">
-            <div className={styles.exit}onClick={()=>{
-              removeItemStorage(AUTHORIZATION_KEY)
-              removeItemStorage(COLLABORATOR_KEY)
-            }}>
-              <img className={styles.icon} src={exitIcon}></img>
-              <span>Sair</span>
-            </div>
-          </Link>
-        </div>
-      </header>
-    );
-  } 
-  else if (forWho == "Gestor") {
+  } else if (forWho == "Gestor") {
     //Gestor
     return (
       <header className={styles.header}>
@@ -145,22 +109,30 @@ export function Header({ forWho }: HeaderProps) {
             <span>Histórico</span>
           </div>
         </Link>
-        <Link to="/colaborador-gestor/solicitacoes">
+
+        {collaborator?.typeCollaborator ==
+        CollaboratorTypeEnum.CollaboratorManager ? (
+          <Link to="/colaborador/solicitacoes">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={swapIcon}></img>
             <span>Mudar Perfil</span>
           </div>
         </Link>
-
+        ) : (
+          <></>
+        )}
         <div className={styles.menuAccount}>
           <div className={styles.account}>
             <img className={styles.icon} src={accountIcon}></img>
-            <span>Breno Leonardo</span>
+            <span>{name}</span>
           </div>
-          <Link to="/"onClick={()=>{
-              removeItemStorage(AUTHORIZATION_KEY)
-              removeItemStorage(COLLABORATOR_KEY)
-            }}>
+          <Link
+            to="/"
+            onClick={() => {
+              removeItemStorage(AUTHORIZATION_KEY);
+              removeItemStorage(COLLABORATOR_KEY);
+            }}
+          >
             <div className={styles.exit}>
               <img className={styles.icon} src={exitIcon}></img>
               <span>Sair</span>
@@ -177,12 +149,15 @@ export function Header({ forWho }: HeaderProps) {
         <div className={styles.menuAccount}>
           <div className={styles.account}>
             <img className={styles.icon} src={accountIcon}></img>
-            <span>Breno Leonardo</span>
+            <span>{name}</span>
           </div>
-          <Link to="/"onClick={()=>{
-              removeItemStorage(AUTHORIZATION_KEY)
-              removeItemStorage(COLLABORATOR_KEY)
-            }}>
+          <Link
+            to="/"
+            onClick={() => {
+              removeItemStorage(AUTHORIZATION_KEY);
+              removeItemStorage(COLLABORATOR_KEY);
+            }}
+          >
             <div className={styles.exit}>
               <img className={styles.icon} src={exitIcon}></img>
               <span>Sair</span>

@@ -9,13 +9,12 @@ import { useGlobalContext } from "../hooks/useGlobalContext";
 import { useRequests } from "../hooks/useRequests";
 
 export function CollaboratorLayout() {
-  
   const { collaborator, setCollaboratorStorageContext } = useGlobalContext();
-  const { loadingGet, getRequest, loadingPost, postRequest } = useRequests();
+  const { getRequest } = useRequests();
 
   const navigate = useNavigate();
   useEffect(() => {
-    const collaboratorStorage= getCollaboratorStorage();
+    const collaboratorStorage = getCollaboratorStorage();
     //testing if it is valid token
     const verifyToken = async () =>
       await getRequest(URL_CHECK_TOKEN)
@@ -23,15 +22,15 @@ export function CollaboratorLayout() {
           if (result.status === 403) {
             navigate("");
           } else {
-            console.log("entrei nesse", collaborator?.typeCollaborator);
             if (collaboratorStorage) {
               if (
                 collaboratorStorage.typeCollaborator ==
-                CollaboratorTypeEnum.Collaborator
-              ) { 
-                
+                  CollaboratorTypeEnum.Collaborator ||
+                collaboratorStorage.typeCollaborator ==
+                  CollaboratorTypeEnum.CollaboratorManager
+              ) {
               } else {
-                navigate( "error");
+                navigate("error");
               }
             } else {
               navigate("error");

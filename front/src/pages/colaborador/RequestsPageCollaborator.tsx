@@ -5,7 +5,7 @@ import {Button} from "../../components/Button";
 import {Card} from "../../components/Card";
 import {Link} from "react-router-dom";
 import {Topics} from "../../components/Topics";
-import { formatDateRequestTopic } from "../../auxFunctions";
+import { formatDateRequestTopic } from "../../functions/auxFunctions";
 
 const solicitacao = {
   nome: "Breno Leonardo",

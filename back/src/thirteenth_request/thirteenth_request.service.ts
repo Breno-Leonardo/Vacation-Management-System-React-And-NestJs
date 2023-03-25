@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ReturnThirteenthRequestDto } from './dto/returnThirteenthRequest.dto';
@@ -10,14 +11,23 @@ export class ThirteenthRequestService {
   constructor(
     @InjectRepository(ThirteenthRequestEntity)
     private readonly thirteenthRequestRepository: Repository<ThirteenthRequestEntity>,
+    private jwtService: JwtService,
   ) {}
 
   async createThirteenthRequest(
     createThirteenthRequestDto: CreateThirteenthRequestDto,
+    token: string,
+    matriculaBody: string,
   ): Promise<ThirteenthRequestEntity> {
-    return this.thirteenthRequestRepository.save({
-      ...createThirteenthRequestDto,
-    });
+    //testing if registration in token is equals registration in body request
+    const matriculaToken = Object.values(this.jwtService.decode(token))[0];
+
+    if (matriculaToken == matriculaBody) {
+      return this.thirteenthRequestRepository.save({
+        ...createThirteenthRequestDto,
+      });
+    }
+    return;
   }
 
   async getAllRequests(): Promise<ReturnThirteenthRequestDto[]> {

@@ -2,7 +2,7 @@ import { Container } from "../../components/Container";
 import styles from "./css/TeamPageManager.module.css";
 import { EmployeeLine } from "../../components/EmployeeLine";
 import { Select } from "../../components/Select";
-import { formatName } from "../../auxFunctions";
+import { formatNameForMobile } from "../../functions/auxFunctions";
 import { Topics } from "../../components/Topics";
 const funcionario = {
   nome: "Breno Leonardo",
@@ -45,7 +45,7 @@ export function TeamPageManager() {
             return (
               <EmployeeLine
                 key={f.nome+f.dataLimiteConcessiva}
-                fields={[formatName(f.nome),f.saldo,f.periodoConcessivo,f.periodoAquisitivo,f.dataLimiteConcessiva]}
+                fields={[formatNameForMobile(f.nome),f.saldo,f.periodoConcessivo,f.periodoAquisitivo,f.dataLimiteConcessiva]}
                 attentionFlag={f.attentionFlag}
               ></EmployeeLine>
             );

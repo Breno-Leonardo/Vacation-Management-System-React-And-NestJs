@@ -17,8 +17,7 @@ import { RHLayout } from "./layouts/RHLayout";
 import { RegisterTeamPage } from "./pages/rh/RegisterTeamPage";
 import { RemovePage } from "./pages/rh/RemovePage";
 import { ManagerCollaboratorLayout } from "./layouts/ManagerCollaboratorLayout";
-import { RequestsPageCollaboratorManager } from "./pages/colaborador/RequestsPageCollaboratorManager";
-import { Login } from "./pages/Login copy";
+import { Login } from "./pages/Login";
 
 export function Router() {
   return (
@@ -94,40 +93,6 @@ export function Router() {
         ></Route>
       </Route>
 
-      <Route
-        path="/colaborador-gestor"
-        element={<ManagerCollaboratorLayout></ManagerCollaboratorLayout>}
-        errorElement={<h1>Página não encontrada</h1>}
-      >
-        <Route
-          path=""
-          element={<RequestsPageCollaborator></RequestsPageCollaborator>}
-        ></Route>
-        <Route
-          path="time"
-          element={<TeamPageCollaborator></TeamPageCollaborator>}
-        ></Route>
-        <Route
-          path="nova-solicitacao"
-          element={<NewRequestPage></NewRequestPage>}
-        ></Route>
-        <Route
-          path="solicitacoes"
-          element={
-            <RequestsPageCollaboratorManager></RequestsPageCollaboratorManager>
-          }
-        ></Route>
-        <Route
-          path="historico"
-          element={
-            <HistoryRequestsPageCollaborator></HistoryRequestsPageCollaborator>
-          }
-        ></Route>
-        <Route
-          path="decimo-terceiro"
-          element={<ThirteenthPageCollaborator></ThirteenthPageCollaborator>}
-        ></Route>
-      </Route>
 
       <Route
         path="/rh"

@@ -2,7 +2,7 @@ import {Container} from "../../components/Container";
 import styles from "./css/HistoryRequestPageManager.module.css";
 import {EmployeeLine} from "../../components/EmployeeLine";
 import {Select} from "../../components/Select";
-import {formatDateRequestTopic, formatName} from "../../auxFunctions";
+import {formatDateRequestTopic, formatNameForMobile} from "../../functions/auxFunctions";
 import {Topics} from "../../components/Topics";
 
 const options = [
@@ -60,7 +60,7 @@ export function HistoryRequestsPageManager() {
       <Topics fields={["Nome", formatDateRequestTopic(), "Início", "Fim", "Status"]} position="spaced"></Topics>
 
       {solicitacoes.map((soli) => {
-        return <EmployeeLine fields={[formatName(soli.nome), soli.dataSolicitacao, soli.inicio, soli.fim, soli.status]} colorsFields={["black", "black", "green", "red", "black"]}></EmployeeLine>;
+        return <EmployeeLine fields={[formatNameForMobile(soli.nome), soli.dataSolicitacao, soli.inicio, soli.fim, soli.status]} colorsFields={["black", "black", "green", "red", "black"]}></EmployeeLine>;
       })}
     </Container>
   );

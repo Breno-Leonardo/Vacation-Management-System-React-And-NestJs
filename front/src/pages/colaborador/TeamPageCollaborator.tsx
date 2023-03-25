@@ -3,7 +3,7 @@ import {Container} from "../../components/Container";
 import styles from "./css/TeamPageCollaborator.module.css";
 import {EmployeeLine} from "../../components/EmployeeLine";
 import {Topics} from "../../components/Topics";
-import { formatDateRequestTopic, formatName } from "../../auxFunctions";
+import { formatDateRequestTopic, formatNameForMobile } from "../../functions/auxFunctions";
 
 const solicitacao = {
   nome: "Breno Leonardo",
@@ -23,7 +23,7 @@ export function TeamPageCollaborator() {
       <Topics fields={["Nome", formatDateRequestTopic(), "Início", "Fim", "Status"]} position="spaced"></Topics>
 
       {solicitacoes.map((f) => {
-        return <EmployeeLine key={f.nome + f.dataLimiteConcessiva} fields={[formatName(f.nome), f.dataSolicitacao, f.inicio, f.fim, f.status]} colorsFields={["black", "white", "green", "red", "blue"]} attentionFlag={f.attentionFlag}></EmployeeLine>;
+        return <EmployeeLine key={f.nome + f.dataLimiteConcessiva} fields={[formatNameForMobile(f.nome), f.dataSolicitacao, f.inicio, f.fim, f.status]} colorsFields={["black", "white", "green", "red", "blue"]} attentionFlag={f.attentionFlag}></EmployeeLine>;
       })}
     </Container>
   );

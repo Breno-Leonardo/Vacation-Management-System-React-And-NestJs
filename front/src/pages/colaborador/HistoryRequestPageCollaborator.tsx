@@ -1,16 +1,17 @@
-import {Header} from "../../components/Header";
-import {Container} from "../../components/Container";
+import { Header } from "../../components/Header";
+import { Container } from "../../components/Container";
 import styles from "./css/HistoryRequestPageCollaborator.module.css";
-import {EmployeeLine} from "../../components/EmployeeLine";
-import {Select} from "../../components/Select";
-import {Topics} from "../../components/Topics";
-import { formatName, formatDateRequestTopic } from "../../auxFunctions";
-
-const options = [
-  ["123", "Breno"],
-  ["456", "Sofia"],
-  ["789", "Adriana"],
-];
+import { EmployeeLine } from "../../components/EmployeeLine";
+import { Select } from "../../components/Select";
+import { Topics } from "../../components/Topics";
+import {
+  formatNameForMobile,
+  formatDateRequestTopic,
+} from "../../functions/auxFunctions";
+import { useEffect } from "react";
+import { useRequests } from "../../hooks/useRequests";
+import { getCollaboratorStorage } from "../../functions/connections/auth";
+import { URL_CHECK_TOKEN } from "../../constants/constants";
 
 interface solicitacao {
   nome: string;
@@ -35,15 +36,40 @@ const solicitacoes = [
     status: " Aprovada",
   },
 ];
-
+// const collaboratorStorage = getCollaboratorStorage();
+// const { getRequest } = useRequests();
+// useEffect(() => {
+//   async () =>
+//       await getRequest(URL_CHECK_TOKEN)
+//         .then((result) => {
+          
+//         })
+//         .catch(() => {
+          
+//         });
+// }, []);
 export function HistoryRequestsPageCollaborator() {
   return (
     <Container title="Histórico de solicitações">
       <></>
-      <Topics fields={["Nome", formatDateRequestTopic(), "Início", "Fim", "Status"]} position="spaced"></Topics>
+      <Topics
+        fields={["Nome", formatDateRequestTopic(), "Início", "Fim", "Status"]}
+        position="spaced"
+      ></Topics>
 
       {solicitacoes.map((soli) => {
-        return <EmployeeLine fields={[formatName(soli.nome), soli.dataSolicitacao, soli.inicio, soli.fim, soli.status]} colorsFields={["black", "black", "green", "red", "black"]}></EmployeeLine>;
+        return (
+          <EmployeeLine
+            fields={[
+              formatNameForMobile(soli.nome),
+              soli.dataSolicitacao,
+              soli.inicio,
+              soli.fim,
+              soli.status,
+            ]}
+            colorsFields={["black", "black", "green", "red", "black"]}
+          ></EmployeeLine>
+        );
       })}
     </Container>
   );

@@ -3,7 +3,7 @@ import styles from "./css/ResponsePageManager.module.css";
 import { EmployeeLine } from "../../components/EmployeeLine";
 import { Button } from "../../components/Button";
 import { TextArea } from "../../components/TextArea";
-import { formatName } from "../../auxFunctions";
+import { formatNameForMobile } from "../../functions/auxFunctions";
 import { Topics } from "../../components/Topics";
 
 const solicitacao = {
@@ -37,7 +37,7 @@ export function ResponsePageManager() {
         {solicitacoes.map((f) => {
           return (
             <EmployeeLine
-              fields={[formatName(f.nome), f.inicio, f.fim]}
+              fields={[formatNameForMobile(f.nome), f.inicio, f.fim]}
               colorsFields={["black", "green", "red"]}
               position="center"
             ></EmployeeLine>
@@ -47,7 +47,7 @@ export function ResponsePageManager() {
 
       <Container title="Solicitação">
         <div className={styles.infos}>
-          <div className={styles.infoPrimary}>Nome: {formatName(solicitacao.nome)}</div>
+          <div className={styles.infoPrimary}>Nome: {formatNameForMobile(solicitacao.nome)}</div>
           <div className={styles.infoSecondary}>
             Cargo: Desenvolvedor Mobile
           </div>

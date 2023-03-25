@@ -6,7 +6,7 @@ export function formatDateRequestTopic(): string {
   return "Data Solicitação";
 }
 
-export function formatName(name: string): string {
+export function formatNameForMobile(name: string): string {
   const width = window.innerWidth;
   const names = name.split(" ");
   if (width < 768) {
@@ -14,6 +14,15 @@ export function formatName(name: string): string {
       return names[0] + " " + names[names.length - 1];
     }
   }
+  return name;
+}
+
+export function formatName(name: string): string {
+  const names = name.split(" ");
+    if (name.length > 2) {
+      return names[0] + " " + names[names.length - 1];
+    }
+  
   return name;
 }
 

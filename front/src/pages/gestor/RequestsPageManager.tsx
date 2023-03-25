@@ -9,7 +9,7 @@ import "gantt-task-react/dist/index.css";
 import {StandardTooltipContent} from "../../components/Tooltip";
 import {Select} from "../../components/Select";
 import {Topics} from "../../components/Topics";
-import {formatDateRequestTopic, formatName} from "../../auxFunctions";
+import {formatDateRequestTopic, formatNameForMobile} from "../../functions/auxFunctions";
 import React from "react";
 
 const solicitacao = {
@@ -126,7 +126,7 @@ export function RequestsPageManager() {
             <div className={styles.divForButton}>
               <div className={styles.divLink}>
                 <Link to="/gestor/resposta">
-                  <EmployeeLine fields={[formatName(f.nome), f.dataSolicitacao, f.inicio, f.fim, f.dataLimiteConcessiva]} colorsFields={["black", "black", "greee", "red", "blue"]} attentionFlag={f.attentionFlag}></EmployeeLine>
+                  <EmployeeLine fields={[formatNameForMobile(f.nome), f.dataSolicitacao, f.inicio, f.fim, f.dataLimiteConcessiva]} colorsFields={["black", "black", "greee", "red", "blue"]} attentionFlag={f.attentionFlag}></EmployeeLine>
                 </Link>
               </div>
               <div className={styles.buttonRequest}>
@@ -143,7 +143,7 @@ export function RequestsPageManager() {
         <Topics fields={["Nome", "Início", "Fim"]} position="center"></Topics>
 
         {solicitacoes.map((f) => {
-          return <EmployeeLine fields={[formatName(f.nome), f.inicio, f.fim]} colorsFields={["black", "green", "red"]} position="center"></EmployeeLine>;
+          return <EmployeeLine fields={[formatNameForMobile(f.nome), f.inicio, f.fim]} colorsFields={["black", "green", "red"]} position="center"></EmployeeLine>;
         })}
       </Container>
 
@@ -151,7 +151,7 @@ export function RequestsPageManager() {
         <Topics fields={["Nome", "Início", "Fim"]} position="center"></Topics>
 
         {solicitacoes.map((f) => {
-          return <EmployeeLine fields={[formatName(f.nome), f.inicio, f.fim]} colorsFields={["black", "green", "red"]} position="center"></EmployeeLine>;
+          return <EmployeeLine fields={[formatNameForMobile(f.nome), f.inicio, f.fim]} colorsFields={["black", "green", "red"]} position="center"></EmployeeLine>;
         })}
       </Container>
     </>

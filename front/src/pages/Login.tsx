@@ -41,31 +41,27 @@ export function Login() {
           if (result.status === 403) {
             navigate("");
           } else {
-            
             if (collaboratorLS)
-            if (token) {
-              if (
-                collaboratorLS.typeCollaborator ==
-                CollaboratorTypeEnum.Manager
-              ) {
-                navigate("gestor");
-              } else if (
-                collaboratorLS.typeCollaborator ==
-                CollaboratorTypeEnum.Collaborator
-              ) {
-                navigate("colaborador");
-              } else if (
-                collaboratorLS.typeCollaborator ==
-                CollaboratorTypeEnum.CollaboratorManager
-              ) {
-                navigate("colaborador-gestor");
-              } else if (
-                collaboratorLS.typeCollaborator == CollaboratorTypeEnum.Rh
-              ) {
-                navigate("rh");
+              if (token) {
+                if (
+                  collaboratorLS.typeCollaborator ==
+                    CollaboratorTypeEnum.Manager ||
+                  collaboratorLS.typeCollaborator ==
+                    CollaboratorTypeEnum.CollaboratorManager
+                ) {
+                  navigate("gestor");
+                } else if (
+                  collaboratorLS.typeCollaborator ==
+                  CollaboratorTypeEnum.Collaborator
+                ) {
+                  navigate("colaborador");
+                } else if (
+                  collaboratorLS.typeCollaborator == CollaboratorTypeEnum.Rh
+                ) {
+                  navigate("rh");
+                }
+              } else {
               }
-            } else {
-            }
           }
         })
         .catch(() => {

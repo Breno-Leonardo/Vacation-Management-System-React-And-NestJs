@@ -26,3 +26,4 @@ export const setCollaboratorStorage = (collaborator: CollaboratorType) => {
     setItemStorage(COLLABORATOR_KEY, JSON.stringify(collaborator));
   }
 };
+
