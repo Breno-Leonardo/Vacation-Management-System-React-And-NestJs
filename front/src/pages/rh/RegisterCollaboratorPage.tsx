@@ -3,6 +3,7 @@ import styles from "./css/RegisterPage.module.css";
 import { Button } from "../../components/Button";
 import { Select } from "../../components/Select";
 import { Input } from "../../components/Input";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
 
 export function RegisterCollaboratorPage() {
   return (

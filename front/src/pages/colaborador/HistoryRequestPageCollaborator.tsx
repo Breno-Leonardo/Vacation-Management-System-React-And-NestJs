@@ -1,17 +1,14 @@
-import { Header } from "../../components/Header";
 import { Container } from "../../components/Container";
-import styles from "./css/HistoryRequestPageCollaborator.module.css";
 import { EmployeeLine } from "../../components/EmployeeLine";
-import { Select } from "../../components/Select";
 import { Topics } from "../../components/Topics";
 import {
   formatNameForMobile,
   formatDateRequestTopic,
 } from "../../functions/auxFunctions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRequests } from "../../hooks/useRequests";
-import { getCollaboratorStorage } from "../../functions/connections/auth";
-import { URL_CHECK_TOKEN } from "../../constants/constants";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
+import { URL_GET_ALL_VACATION_REQUEST } from "../../constants/constants";
 
 interface solicitacao {
   nome: string;
@@ -36,19 +33,23 @@ const solicitacoes = [
     status: " Aprovada",
   },
 ];
-// const collaboratorStorage = getCollaboratorStorage();
-// const { getRequest } = useRequests();
-// useEffect(() => {
-//   async () =>
-//       await getRequest(URL_CHECK_TOKEN)
-//         .then((result) => {
-          
-//         })
-//         .catch(() => {
-          
-//         });
-// }, []);
+
 export function HistoryRequestsPageCollaborator() {
+  const { collaborator } = useGlobalContext();
+  const { getRequest } = useRequests();
+  const [requests, setRequests] = useState();
+
+  useEffect(() => {
+    const getRequests = async () =>
+      await getRequest(
+        URL_GET_ALL_VACATION_REQUEST + "/" + collaborator?.matricula
+      )
+        .then((result) => {
+          console.log("adasdahjfghfghfsd", result);
+        })
+        .catch(() => {});
+    getRequests();
+  }, []);
   return (
     <Container title="Histórico de solicitações">
       <></>

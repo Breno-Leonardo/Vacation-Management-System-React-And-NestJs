@@ -5,6 +5,7 @@ import {
   Post,
   UsePipes,
   ValidationPipe,
+  Param,
 } from '@nestjs/common';
 import { CreateCollaboratorDto } from './dto/createCollaborator.dto';
 import { CollaboratorService } from './collaborator.service';
@@ -24,6 +25,17 @@ export class CollaboratorController {
   @Get('lista-colaboradores')
   async getAllCollaborators() {
     return this.collaboratorService.getAllCollaborators();
+  }
+
+  @Roles([
+    CollaboratorType.CollaboratorManager,
+    CollaboratorType.Rh,
+    CollaboratorType.Manager,
+    CollaboratorType.Collaborator,
+  ])
+  @Get('lista-colaboradores/:matricula')
+  async getCollaboratorByRegistration(@Param('matricula') matricula) {
+    return this.collaboratorService.getCollaboratorByMatricula(matricula);
   }
 
   @Roles([CollaboratorType.Rh])

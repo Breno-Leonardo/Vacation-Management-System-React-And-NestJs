@@ -7,6 +7,7 @@ import {
   ValidationPipe,
   Headers,
 } from '@nestjs/common';
+import { Param } from '@nestjs/common/decorators';
 
 import { CollaboratorType } from 'src/collaborator/enum/collaborator-type';
 import { Roles } from 'src/decorators/roles.decorator';
@@ -28,6 +29,17 @@ export class VacationRequestController {
   @Get('lista-solicitacoes')
   async getAllRequests() {
     return this.vacationRequestService.getAllRequests();
+  }
+
+  @Roles([
+    CollaboratorType.CollaboratorManager,
+    CollaboratorType.Rh,
+    CollaboratorType.Manager,
+    CollaboratorType.Collaborator,
+  ])
+  @Get('lista-solicitacoes/:matricula')
+  async getAllRequestsByRegistration(@Param('matricula') matricula) {
+    return this.vacationRequestService.getAllRequestsByRegistration(matricula);
   }
 
   @Roles([

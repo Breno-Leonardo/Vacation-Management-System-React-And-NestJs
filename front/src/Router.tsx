@@ -16,7 +16,6 @@ import { ManagerLayout } from "./layouts/ManagerLayout";
 import { RHLayout } from "./layouts/RHLayout";
 import { RegisterTeamPage } from "./pages/rh/RegisterTeamPage";
 import { RemovePage } from "./pages/rh/RemovePage";
-import { ManagerCollaboratorLayout } from "./layouts/ManagerCollaboratorLayout";
 import { Login } from "./pages/Login";
 
 export function Router() {

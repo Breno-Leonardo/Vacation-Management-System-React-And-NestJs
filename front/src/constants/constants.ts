@@ -14,6 +14,10 @@ export const URL_CREATE_COLLABORATOR= URL_BASE+'/colaborador/cadastro';
 export const URL_GET_ALL_TEAMS  = URL_BASE+'/times/lista-times';
 export const URL_CREATE_TEAM= URL_BASE+'/times/cadastro';
 
+export const URL_GET_ALL_VACATION_REQUEST  = URL_BASE+'/solicitacao-ferias/lista-solicitacoes';
+export const URL_CREATE_VACATION_REQUEST= URL_BASE+'/solicitacao-ferias/nova-solicitacao';
+
+
 
 export const ERROR_ACCESS_DANIED = 'Sem permissão.';
 export const ERROR_CONNECTION = 'Erro de conexão';

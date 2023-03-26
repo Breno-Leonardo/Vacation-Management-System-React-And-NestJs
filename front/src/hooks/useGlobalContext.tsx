@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import {  setCollaboratorStorage } from "../functions/connections/auth";
+import { CollaboratorTokenType } from "../types/CollaboratorTokenType";
 import { CollaboratorType } from "../types/CollaboratorTypes";
 
 interface GlobalData {
@@ -13,7 +13,7 @@ interface GlobalContextProps {
 interface GlobalProviderProps {
   children: React.ReactNode;
 }
- const GlobalContext = createContext<GlobalContextProps>(
+const GlobalContext = createContext<GlobalContextProps>(
   {} as GlobalContextProps
 );
 
@@ -29,16 +29,21 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
 
 export const useGlobalContext = () => {
   const { globalData, setGlobalData } = useContext(GlobalContext);
-  
-  
-  const setCollaboratorStorageContext= (collaborator: CollaboratorType) =>{
-    setCollaboratorStorage(collaborator);
+
+  const setCollaboratorStorageContext = (collaborator: CollaboratorTokenType) => {
     setGlobalData({
-        ...globalData,
-        collaborator,
-    })
-  }
-  return{
+      ...globalData,
+      collaborator: {
+        matricula: collaborator.matricula,
+        nome: collaborator.nome,
+        typeCollaborator:collaborator.typeCollaborator
+      },
+      
+    });
+  };
+  return {
+    
+    globalData,
     collaborator: globalData?.collaborator,
     setCollaboratorStorageContext,
   };

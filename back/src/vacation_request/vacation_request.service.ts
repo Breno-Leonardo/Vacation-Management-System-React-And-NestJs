@@ -34,4 +34,19 @@ export class VacationRequestService {
       await this.vacationRepository.find({ relations: ['colaborador'] })
     ).map((t) => new ReturnVacationRequestDto(t));
   }
+
+  async getAllRequestsByRegistration(
+    matricula: string,
+  ): Promise<ReturnVacationRequestDto[]> {
+    return (
+      (
+        await this.vacationRepository.find({
+          relations: ['colaborador'],
+        })
+      )
+        //filtering the teams that have the manager with the same registration
+        .filter((t) => t.colaborador.matricula == matricula)
+        .map((t) => new ReturnVacationRequestDto(t))
+    );
+  }
 }

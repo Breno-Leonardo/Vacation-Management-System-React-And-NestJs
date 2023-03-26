@@ -6,6 +6,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { Headers } from '@nestjs/common/decorators';
 import { CollaboratorType } from 'src/collaborator/enum/collaborator-type';
 import { Roles } from 'src/decorators/roles.decorator';
 import { AuthService } from './auth.service';
@@ -29,7 +30,7 @@ export class AuthController {
     CollaboratorType.Collaborator,
   ])
   @Get('check')
-  async check(): Promise<void> {
-    return await this.authService.checkToken();
+  async check(@Headers() headers): Promise<void> {
+    return await this.authService.checkToken(headers.authorization);
   }
 }

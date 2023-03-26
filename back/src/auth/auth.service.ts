@@ -91,7 +91,8 @@ export class AuthService {
     };
   }
 
-  async checkToken(): Promise<void> {
-    return;
+  async checkToken(token: string): Promise<any> {
+    const decode = this.jwtService.decode(token);
+    return decode;
   }
 }

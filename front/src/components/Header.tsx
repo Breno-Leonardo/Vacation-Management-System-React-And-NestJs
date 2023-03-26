@@ -10,18 +10,19 @@ import calendar from "../assets/calendar-month-outline.svg";
 import { Link } from "react-router-dom";
 import { removeItemStorage } from "../functions/connections/storageProxy";
 import { AUTHORIZATION_KEY, COLLABORATOR_KEY } from "../constants/constants";
-import { getCollaboratorStorage } from "../functions/connections/auth";
 import { formatName } from "../functions/auxFunctions";
 import { CollaboratorTypeEnum } from "../enums/collaborator-type";
+import { useGlobalContext } from "../hooks/useGlobalContext";
 
 interface HeaderProps {
   forWho: "Colaborador" | "Gestor" | "Login" | "RH" ;
 }
 
 export function Header({ forWho }: HeaderProps) {
-  const collaborator = getCollaboratorStorage();
+  const { collaborator } = useGlobalContext();
   let name = "Usuário";
-  if (collaborator) name = formatName(collaborator.nome);
+  if (collaborator) 
+    name = formatName(collaborator.nome);
 
   if (forWho == "Colaborador") {
     //Colaborador
@@ -149,7 +150,7 @@ export function Header({ forWho }: HeaderProps) {
         <div className={styles.menuAccount}>
           <div className={styles.account}>
             <img className={styles.icon} src={accountIcon}></img>
-            <span>{name}</span>
+            <span>admin</span>
           </div>
           <Link
             to="/"

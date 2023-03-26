@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { connectionAPIPost , connectionAPIGet} from "../functions/connections/connectionAPI";
+import {
+  connectionAPIPost,
+  connectionAPIGet,
+} from "../functions/connections/connectionAPI";
 
 export function useRequests() {
   const [loadingPost, setLoadingPost] = useState(false);
@@ -8,12 +11,9 @@ export function useRequests() {
     setLoadingGet(true);
     const returnData = await connectionAPIGet(url)
       .then((result) => {
-        console.log(result);
         return result;
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
     setLoadingGet(false);
     return returnData;
   };

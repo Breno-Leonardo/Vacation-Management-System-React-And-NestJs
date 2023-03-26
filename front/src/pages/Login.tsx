@@ -9,7 +9,6 @@ import { useGlobalContext } from "../hooks/useGlobalContext";
 import { useRequests } from "../hooks/useRequests";
 import {
   getAuthorization,
-  getCollaboratorStorage,
   setAuthorization,
 } from "../functions/connections/auth";
 import { useNavigate } from "react-router-dom";
@@ -32,7 +31,6 @@ export function Login() {
 
   useEffect(() => {
     let token = getAuthorization();
-    const collaboratorLS = getCollaboratorStorage();
 
     //testing if it is valid token
     const verifyToken = async () =>
@@ -41,27 +39,27 @@ export function Login() {
           if (result.status === 403) {
             navigate("");
           } else {
-            if (collaboratorLS)
-              if (token) {
-                if (
-                  collaboratorLS.typeCollaborator ==
-                    CollaboratorTypeEnum.Manager ||
-                  collaboratorLS.typeCollaborator ==
-                    CollaboratorTypeEnum.CollaboratorManager
-                ) {
-                  navigate("gestor");
-                } else if (
-                  collaboratorLS.typeCollaborator ==
-                  CollaboratorTypeEnum.Collaborator
-                ) {
-                  navigate("colaborador");
-                } else if (
-                  collaboratorLS.typeCollaborator == CollaboratorTypeEnum.Rh
-                ) {
-                  navigate("rh");
-                }
-              } else {
+            const collaboratorLS = result;
+            if (token) {
+              if (
+                collaboratorLS.typeCollaborator ==
+                  CollaboratorTypeEnum.Manager ||
+                collaboratorLS.typeCollaborator ==
+                  CollaboratorTypeEnum.CollaboratorManager
+              ) {
+                navigate("gestor");
+              } else if (
+                collaboratorLS.typeCollaborator ==
+                CollaboratorTypeEnum.Collaborator
+              ) {
+                navigate("colaborador");
+              } else if (
+                collaboratorLS.typeCollaborator == CollaboratorTypeEnum.Rh
+              ) {
+                navigate("rh");
               }
+            } else {
+            }
           }
         })
         .catch(() => {
@@ -84,7 +82,6 @@ export function Login() {
     if (authLogin == undefined) {
       setMensageErrorVisibility("visible");
     } else {
-      setCollaboratorStorageContext(authLogin?.collaborator);
       setAuthorization(authLogin.acessToken);
       setGoLogin(true);
     }

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CollaboratorEntity } from 'src/collaborator/entities/collaborator.entity';
 import { Repository } from 'typeorm';
 import { CreateTeamDto } from './dto/createTeam.dto';
 import { ReturnTeamDto } from './dto/returnTeam.dto';
