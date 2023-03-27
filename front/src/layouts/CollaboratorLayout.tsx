@@ -21,11 +21,13 @@ export function CollaboratorLayout() {
           if (result.status === 403) {
             navigate("error");
           } else {
+            
             const c: CollaboratorTokenType = result;
             setCollaboratorStorageContext(c);
           }
         })
         .catch(() => {
+          console.log("deu erro na verificacao do token")
           navigate("error");
         });
     verifyToken();
@@ -38,6 +40,8 @@ export function CollaboratorLayout() {
       collaborator.typeCollaborator ==
         CollaboratorTypeEnum.CollaboratorManager) {
       } else {
+        console.log("deu erro no tipo colaborador",collaborator)
+
         navigate("error");
       }
     } 

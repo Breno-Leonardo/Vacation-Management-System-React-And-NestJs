@@ -31,6 +31,21 @@ export class CollaboratorService {
     ).map((collaborator) => new ReturnCollaboratorDtoWithoutKey(collaborator));
   }
 
+  async getAllTeamCollaborators(
+    idTime: number,
+  ): Promise<ReturnCollaboratorDtoWithoutKey[]> {
+    return (
+      (await this.collaboratorRepository.find({ relations: ['time'] }))
+        //filtering collaborators that have the same team
+        .filter((c) => {
+          if (c.time != null) return c.time.id == idTime;
+        })
+        .map(
+          (collaborator) => new ReturnCollaboratorDtoWithoutKey(collaborator),
+        )
+    );
+  }
+
   async findCollaboratorByMatricula(
     matricula: string,
   ): Promise<CollaboratorEntity> {
@@ -47,11 +62,16 @@ export class CollaboratorService {
   async getCollaboratorByMatricula(
     matricula: string,
   ): Promise<ReturnCollaboratorDtoWithoutKey[]> {
-    return (
+    const collaborator = (
       await this.collaboratorRepository.find({
         relations: ['time'],
         where: { matricula: matricula },
       })
     ).map((t) => new ReturnCollaboratorDtoWithoutKey(t));
+
+    if (!collaborator) {
+      throw new NotFoundException(`Collaborator: ${matricula} not found`);
+    }
+    return collaborator;
   }
 }

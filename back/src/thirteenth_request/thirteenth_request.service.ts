@@ -26,7 +26,7 @@ export class ThirteenthRequestService {
       return this.thirteenthRequestRepository.save({
         ...createThirteenthRequestDto,
       });
-    }
+    } else throw new Error(`Incorrect Token`);
     return;
   }
 
@@ -36,5 +36,20 @@ export class ThirteenthRequestService {
         relations: ['colaborador'],
       })
     ).map((t) => new ReturnThirteenthRequestDto(t));
+  }
+
+  async getAllRequestsByRegistration(
+    matricula: string,
+  ): Promise<ReturnThirteenthRequestDto[]> {
+    return (
+      (
+        await this.thirteenthRequestRepository.find({
+          relations: ['colaborador'],
+        })
+      )
+        //filtering the teams that have the manager with the same registration
+        .filter((t) => t.colaborador.matricula == matricula)
+        .map((t) => new ReturnThirteenthRequestDto(t))
+    );
   }
 }

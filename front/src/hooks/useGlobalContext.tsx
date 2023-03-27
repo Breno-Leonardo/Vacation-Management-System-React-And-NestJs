@@ -3,7 +3,7 @@ import { CollaboratorTokenType } from "../types/CollaboratorTokenType";
 import { CollaboratorType } from "../types/CollaboratorTypes";
 
 interface GlobalData {
-  collaborator?: CollaboratorType;
+  collaborator?: CollaboratorTokenType;
 }
 interface GlobalContextProps {
   globalData: GlobalData;
@@ -30,19 +30,23 @@ export const GlobalProvider = ({ children }: GlobalProviderProps) => {
 export const useGlobalContext = () => {
   const { globalData, setGlobalData } = useContext(GlobalContext);
 
-  const setCollaboratorStorageContext = (collaborator: CollaboratorTokenType) => {
-    setGlobalData({
-      ...globalData,
-      collaborator: {
-        matricula: collaborator.matricula,
-        nome: collaborator.nome,
-        typeCollaborator:collaborator.typeCollaborator
-      },
-      
-    });
+  const setCollaboratorStorageContext = (
+    collaborator: CollaboratorTokenType | undefined
+  ) => {
+    if (collaborator != undefined) {
+      setGlobalData({
+        ...globalData,
+        collaborator: collaborator,
+      });
+    }
+    else{
+      setGlobalData({
+        ...globalData,
+        collaborator: undefined,
+      });
+    }
   };
   return {
-    
     globalData,
     collaborator: globalData?.collaborator,
     setCollaboratorStorageContext,

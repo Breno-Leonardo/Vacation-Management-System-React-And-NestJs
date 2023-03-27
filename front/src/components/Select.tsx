@@ -6,11 +6,11 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   width?: "Big" | "Medium" | "Small";
 }
 // cada option do array de options é constituido por duas opções, cpf e nome
-export function Select({optionsDouble = [], optionsUnique = [], sizeSelect = "Medium", width = "Big"}: SelectProps) {
+export function Select({optionsDouble = [], optionsUnique = [], sizeSelect = "Medium", width = "Big",onChange}: SelectProps) {
   const sizeWidth = "width" + width;
   if (optionsDouble.length > 0) {
     return (
-      <select className={`${styles.Select} ${styles[sizeSelect]} ${styles[sizeWidth]}`}>
+      <select onChange={onChange} className={`${styles.Select} ${styles[sizeSelect]} ${styles[sizeWidth]}`}>
         {optionsDouble.map((option) => {
           return (
             <option key={option[0]} value={option[0]}>
@@ -22,7 +22,7 @@ export function Select({optionsDouble = [], optionsUnique = [], sizeSelect = "Me
     );
   } else {
     return (
-      <select className={`${styles.Select} ${styles[sizeSelect]} ${styles[sizeWidth]}`}>
+      <select onChange={onChange}  className={`${styles.Select} ${styles[sizeSelect]} ${styles[sizeWidth]}`}>
         {optionsUnique.map((option) => {
           return (
             <option key={option} value={option}>

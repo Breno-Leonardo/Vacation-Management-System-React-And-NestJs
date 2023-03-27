@@ -19,20 +19,25 @@ export function formatNameForMobile(name: string): string {
 
 export function formatName(name: string): string {
   const names = name.split(" ");
-    if (name.length > 2) {
-      return names[0] + " " + names[names.length - 1];
-    }
-  
+  if (name.length > 2) {
+    return names[0] + " " + names[names.length - 1];
+  }
+
   return name;
 }
 
-export function formatDateYearForMobile(name: string): string {
-  const width = window.innerWidth;
-  const names = name.split(" ");
-  if (width < 768) {
-    if (name.length > 2) {
-      return names[0] + " " + names[names.length - 1];
-    }
+export function formatDate(date: string): string {
+  const dateConvert = new Date(date);
+  
+  let day = dateConvert.getUTCDate().toString();
+  let month = (dateConvert.getUTCMonth() + 1).toString();
+  const year = dateConvert.getUTCFullYear();
+  if (month.length == 1) {
+    month = "0" + month;
   }
-  return name;
+  if (day.length == 1) {
+    day = "0" + day;
+  }
+  return day + "/" + month + "/" + year;
 }
+

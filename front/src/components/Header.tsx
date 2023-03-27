@@ -15,14 +15,13 @@ import { CollaboratorTypeEnum } from "../enums/collaborator-type";
 import { useGlobalContext } from "../hooks/useGlobalContext";
 
 interface HeaderProps {
-  forWho: "Colaborador" | "Gestor" | "Login" | "RH" ;
+  forWho: "Colaborador" | "Gestor" | "Login" | "RH";
 }
 
 export function Header({ forWho }: HeaderProps) {
-  const { collaborator } = useGlobalContext();
+  const { collaborator, setCollaboratorStorageContext } = useGlobalContext();
   let name = "Usuário";
-  if (collaborator) 
-    name = formatName(collaborator.nome);
+  if (collaborator) name = formatName(collaborator.nome);
 
   if (forWho == "Colaborador") {
     //Colaborador
@@ -42,12 +41,16 @@ export function Header({ forWho }: HeaderProps) {
             <span>Time</span>
           </div>
         </Link>
-        <Link to="/colaborador/decimo-terceiro">
-          <div className={styles.itemMenu}>
-            <img className={styles.icon} src={decimoTerceiroIcon}></img>
-            <span>Décimo Terceiro</span>
-          </div>
-        </Link>
+        {collaborator?.modeloContratacao == "CLT" ? (
+          <Link to="/colaborador/decimo-terceiro">
+            <div className={styles.itemMenu}>
+              <img className={styles.icon} src={decimoTerceiroIcon}></img>
+              <span>Décimo Terceiro</span>
+            </div>
+          </Link>
+        ) : (
+          <></>
+        )}
         <Link to="/colaborador/historico">
           <div className={styles.itemMenu}>
             <img className={styles.icon} src={historyIcon}></img>
@@ -77,6 +80,7 @@ export function Header({ forWho }: HeaderProps) {
               onClick={() => {
                 removeItemStorage(AUTHORIZATION_KEY);
                 removeItemStorage(COLLABORATOR_KEY);
+                setCollaboratorStorageContext(undefined);
               }}
             >
               <img className={styles.icon} src={exitIcon}></img>
@@ -114,11 +118,11 @@ export function Header({ forWho }: HeaderProps) {
         {collaborator?.typeCollaborator ==
         CollaboratorTypeEnum.CollaboratorManager ? (
           <Link to="/colaborador/solicitacoes">
-          <div className={styles.itemMenu}>
-            <img className={styles.icon} src={swapIcon}></img>
-            <span>Mudar Perfil</span>
-          </div>
-        </Link>
+            <div className={styles.itemMenu}>
+              <img className={styles.icon} src={swapIcon}></img>
+              <span>Mudar Perfil</span>
+            </div>
+          </Link>
         ) : (
           <></>
         )}
@@ -132,6 +136,7 @@ export function Header({ forWho }: HeaderProps) {
             onClick={() => {
               removeItemStorage(AUTHORIZATION_KEY);
               removeItemStorage(COLLABORATOR_KEY);
+              setCollaboratorStorageContext(undefined);
             }}
           >
             <div className={styles.exit}>
@@ -157,6 +162,7 @@ export function Header({ forWho }: HeaderProps) {
             onClick={() => {
               removeItemStorage(AUTHORIZATION_KEY);
               removeItemStorage(COLLABORATOR_KEY);
+              setCollaboratorStorageContext(undefined);
             }}
           >
             <div className={styles.exit}>

@@ -54,12 +54,11 @@ export class VacationRequestController {
     @Headers() headers,
   ) {
     //values to check if registration  in the token is the same as in the body of the request
-    const bodyValues = Object.values(createVacationRequest);
-    const bodyMatricula = bodyValues[bodyValues.length - 1];
+    const bodyValues = new Map(Object.entries(createVacationRequest));
     return this.vacationRequestService.createVacationRequest(
       createVacationRequest,
       headers.authorization,
-      bodyMatricula,
+      bodyValues.get('colaborador'),
     );
   }
 }

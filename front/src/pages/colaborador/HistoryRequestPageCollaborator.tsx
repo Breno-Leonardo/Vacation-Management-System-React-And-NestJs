@@ -4,40 +4,18 @@ import { Topics } from "../../components/Topics";
 import {
   formatNameForMobile,
   formatDateRequestTopic,
+  formatDate,
 } from "../../functions/auxFunctions";
 import { useEffect, useState } from "react";
 import { useRequests } from "../../hooks/useRequests";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { URL_GET_ALL_VACATION_REQUEST } from "../../constants/constants";
 
-interface solicitacao {
-  nome: string;
-  dataSolicitacao: string;
-  inicio: string;
-  fim: string;
-  status: string;
-}
-const solicitacoes = [
-  {
-    nome: "Breno Leonardo Lima Macedo",
-    dataSolicitacao: "15/01/2023",
-    inicio: "17/01/2023",
-    fim: "27/01/2023",
-    status: " Aprovada",
-  },
-  {
-    nome: "Breno Leonardo",
-    dataSolicitacao: "15/01/2023",
-    inicio: "17/01/2023",
-    fim: "27/01/2023",
-    status: " Aprovada",
-  },
-];
-
 export function HistoryRequestsPageCollaborator() {
   const { collaborator } = useGlobalContext();
   const { getRequest } = useRequests();
-  const [requests, setRequests] = useState();
+  const [requests, setRequests] = useState<any>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getRequests = async () =>
@@ -45,33 +23,44 @@ export function HistoryRequestsPageCollaborator() {
         URL_GET_ALL_VACATION_REQUEST + "/" + collaborator?.matricula
       )
         .then((result) => {
-          console.log("adasdahjfghfghfsd", result);
+          setLoading(false);
+          setRequests(result);
         })
         .catch(() => {});
-    getRequests();
-  }, []);
+    if (collaborator != undefined) {
+
+      getRequests();
+    }
+  }, [collaborator]);
+
+  
+
   return (
-    <Container title="Histórico de solicitações">
+    <Container title="Histórico de solicitações" loading={loading}>
       <></>
       <Topics
         fields={["Nome", formatDateRequestTopic(), "Início", "Fim", "Status"]}
         position="spaced"
       ></Topics>
 
-      {solicitacoes.map((soli) => {
-        return (
-          <EmployeeLine
-            fields={[
-              formatNameForMobile(soli.nome),
-              soli.dataSolicitacao,
-              soli.inicio,
-              soli.fim,
-              soli.status,
-            ]}
-            colorsFields={["black", "black", "green", "red", "black"]}
-          ></EmployeeLine>
-        );
-      })}
+      {requests != undefined ? (
+        requests.map((soli: any) => {
+          return (
+            <EmployeeLine
+              fields={[
+                formatNameForMobile(soli.colaborador.nome),
+                formatDate(soli.dataSolicitacao),
+                formatDate(soli.dataInicio),
+                formatDate(soli.dataTermino),
+                soli.statusSolicitacao,
+              ]}
+              colorsFields={["black", "black", "green", "red", "black"]}
+            ></EmployeeLine>
+          );
+        })
+      ) : (
+        <></>
+      )}
     </Container>
   );
 }

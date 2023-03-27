@@ -38,6 +38,17 @@ export class CollaboratorController {
     return this.collaboratorService.getCollaboratorByMatricula(matricula);
   }
 
+  @Roles([
+    CollaboratorType.CollaboratorManager,
+    CollaboratorType.Rh,
+    CollaboratorType.Manager,
+    CollaboratorType.Collaborator,
+  ])
+  @Get('lista-colaboradores/time/:idTime')
+  async getAllTeamCollaborators(@Param('idTime') idTime) {
+    return this.collaboratorService.getAllTeamCollaborators(idTime);
+  }
+
   @Roles([CollaboratorType.Rh])
   @UsePipes(ValidationPipe)
   @Post('cadastro')

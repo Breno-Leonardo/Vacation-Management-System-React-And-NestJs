@@ -25,7 +25,7 @@ export class VacationRequestService {
       return this.vacationRepository.save({
         ...createVacationRequestDto,
       });
-    }
+    } else throw new Error(`Incorrect Token`);
     return;
   }
 

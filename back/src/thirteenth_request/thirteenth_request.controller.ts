@@ -6,6 +6,7 @@ import {
   UsePipes,
   ValidationPipe,
   Headers,
+  Param,
 } from '@nestjs/common';
 import { CollaboratorType } from 'src/collaborator/enum/collaborator-type';
 import { Roles } from 'src/decorators/roles.decorator';
@@ -30,6 +31,19 @@ export class ThirteenthRequestController {
 
   @Roles([
     CollaboratorType.CollaboratorManager,
+    CollaboratorType.Rh,
+    CollaboratorType.Manager,
+    CollaboratorType.Collaborator,
+  ])
+  @Get('lista-solicitacoes/:matricula')
+  async getAllRequestsByRegistration(@Param('matricula') matricula) {
+    return this.thirteenthRequestService.getAllRequestsByRegistration(
+      matricula,
+    );
+  }
+
+  @Roles([
+    CollaboratorType.CollaboratorManager,
     CollaboratorType.Manager,
     CollaboratorType.Collaborator,
   ])
@@ -40,12 +54,11 @@ export class ThirteenthRequestController {
     @Headers() headers,
   ) {
     //values to check if registration  in the token is the same as in the body of the request
-    const bodyValues = Object.values(createThirteenthRequest);
-    const bodyMatricula = bodyValues[bodyValues.length - 1];
+    const bodyValues = new Map(Object.entries(createThirteenthRequest));
     return this.thirteenthRequestService.createThirteenthRequest(
       createThirteenthRequest,
       headers.authorization,
-      bodyMatricula,
+      bodyValues.get('colaborador'),
     );
   }
 }

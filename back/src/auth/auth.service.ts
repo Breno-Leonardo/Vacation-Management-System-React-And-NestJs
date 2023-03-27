@@ -92,7 +92,23 @@ export class AuthService {
   }
 
   async checkToken(token: string): Promise<any> {
-    const decode = this.jwtService.decode(token);
+    const decode: any = this.jwtService.decode(token);
+    if (decode.matricula != process.env.ADMIN_LOGIN) {
+      let collaboratorReturn = await this.collaboratorService
+        .findCollaboratorByMatricula(decode.matricula)
+        .catch(() => undefined);
+      collaboratorReturn = {
+        matricula: collaboratorReturn.matricula,
+        nome: collaboratorReturn.nome,
+        dataAdmissao: collaboratorReturn.dataAdmissao,
+        saldoDiasFerias: collaboratorReturn.saldoDiasFerias,
+        modeloContratacao: collaboratorReturn.modeloContratacao,
+        fimAquisitivo: collaboratorReturn.fimAquisitivo,
+        time: collaboratorReturn.time,
+        typeCollaborator: decode.typeCollaborator,
+      };
+      return collaboratorReturn;
+    }
     return decode;
   }
 }
