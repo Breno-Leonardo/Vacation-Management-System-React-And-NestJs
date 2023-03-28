@@ -48,13 +48,13 @@ CREATE TABLE projetoqq.solicitacao_ferias (
 	CONSTRAINT "PK_f7db6bc73a729f68872d6181e15" PRIMARY KEY (id)
 );
 
-ALTER TABLE projetoqq.colaborador ADD CONSTRAINT "FK_a04ebcbad1de3817f80efb86c08" FOREIGN KEY ("time") REFERENCES projetoqq."time"(id);
+ALTER TABLE projetoqq.colaborador ADD CONSTRAINT "FK_a04ebcbad1de3817f80efb86c08" FOREIGN KEY ("time") REFERENCES projetoqq."time"(id) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE projetoqq."time" ADD CONSTRAINT "FK_33e07074bd809488da50da246e9" FOREIGN KEY (gestor) REFERENCES projetoqq.colaborador(matricula);
+ALTER TABLE projetoqq."time" ADD CONSTRAINT "FK_33e07074bd809488da50da246e9" FOREIGN KEY (gestor) REFERENCES projetoqq.colaborador(matricula) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE projetoqq.solicitacao_decimo_terceiro ADD CONSTRAINT "FK_d0f657b4027e542b92a7e14e684" FOREIGN KEY (colaborador) REFERENCES projetoqq.colaborador(matricula);
+ALTER TABLE projetoqq.solicitacao_decimo_terceiro ADD CONSTRAINT "FK_d0f657b4027e542b92a7e14e684" FOREIGN KEY (colaborador) REFERENCES projetoqq.colaborador(matricula) ON DELETE CASCADE ON UPDATE CASCADE;
 
-ALTER TABLE projetoqq.solicitacao_ferias ADD CONSTRAINT "FK_80f31f5a67e554e19edf9672143" FOREIGN KEY (colaborador) REFERENCES projetoqq.colaborador(matricula);
+ALTER TABLE projetoqq.solicitacao_ferias ADD CONSTRAINT "FK_80f31f5a67e554e19edf9672143" FOREIGN KEY (colaborador) REFERENCES projetoqq.colaborador(matricula) ON DELETE CASCADE ON UPDATE CASCADE;
     `);
   }
 

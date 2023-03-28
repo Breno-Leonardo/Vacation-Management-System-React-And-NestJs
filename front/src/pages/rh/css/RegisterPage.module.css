@@ -23,6 +23,14 @@
   margin-bottom: 0.4rem;
  
 }
+.spanError{
+  margin-top: 1rem;
+  font-size:1.6rem;
+  visibility: hidden;
+}
+.spanVisible{
+  visibility: visible;
+}
 
 @media (max-width: 768px) {
   .infos {

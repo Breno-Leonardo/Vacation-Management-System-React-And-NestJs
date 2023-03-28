@@ -11,6 +11,7 @@ export const URL_CHECK_TOKEN = URL_BASE+'/auth/check';
 export const URL_GET_ALL_COLLABORATORS  = URL_BASE+'/colaborador/lista-colaboradores';
 export const URL_CREATE_COLLABORATOR= URL_BASE+'/colaborador/cadastro';
 export const URL_GET_ALL_TEAM_COLLABORATORS  = URL_BASE+'/colaborador/lista-colaboradores/time';
+export const URL_DELETE_COLLABORATOR  = URL_BASE+'/colaborador/lista-colaboradores/delete';
 
 export const URL_GET_ALL_TEAMS  = URL_BASE+'/times/lista-times';
 export const URL_CREATE_TEAM= URL_BASE+'/times/cadastro';

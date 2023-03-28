@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { CollaboratorTokenType } from "../types/CollaboratorTokenType";
-import { CollaboratorType } from "../types/CollaboratorTypes";
 
 interface GlobalData {
   collaborator?: CollaboratorTokenType;

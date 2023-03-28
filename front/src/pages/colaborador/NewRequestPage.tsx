@@ -13,9 +13,8 @@ import {
 } from "../../constants/constants";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { useRequests } from "../../hooks/useRequests";
-import { formatDate } from "../../functions/auxFunctions";
-import { VacationRequestBody } from "../../types/CreateVacationRequestType";
-import { useNavigate } from "react-router-dom";
+import { formatDate, formatDateForUTC } from "../../functions/auxFunctions";
+import { VacationRequestBody } from "../../types/VacationRequestType";
 
 export function NewRequestPage() {
   const [optionsDays, setOptionsDays] = useState([5, 10, 15, 20, 30]);
@@ -33,34 +32,49 @@ export function NewRequestPage() {
       setOptionsDays([5, 20]);
       setNumberDays(5);
     }
-    
   }, [collaborator]);
 
   const handleRequest = async () => {
     let currentDate = new Date(Date.now());
     if (startDate != undefined && startDate > currentDate) {
-      const reqResponse=await postRequest<VacationRequestBody>(URL_CREATE_VACATION_REQUEST, {
-        dataSolicitacao: currentDate,
-        dataInicio: startDate,
-        dataTermino: endDate,
-        mensagemColaborador: collaboratorMessage,
-        mensagemGestor: "",
-        statusSolicitacao: "Em Aberto",
-        colaborador: collaborator?.matricula,
+      const request = await postRequest<VacationRequestBody>(
+        URL_CREATE_VACATION_REQUEST,
+        {
+          dataSolicitacao: currentDate,
+          dataInicio: startDate,
+          dataTermino: endDate,
+          mensagemColaborador: collaboratorMessage,
+          mensagemGestor: "",
+          statusSolicitacao: "Em Aberto",
+          colaborador: collaborator?.matricula,
+        }
+      ).then((response) => {
+        window.location.href = window.location.href.replace(
+          "nova-solicitacao",
+          ""
+        );
       });
-
-      if(reqResponse){
-        window.location.href = window.location.href.replace("nova-solicitacao","");
-      }
+      request;
     } else {
     }
   };
 
   const handleStartDate = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setStartDate(new Date(event.target.value));
-    const dateEnd = new Date(event.target.value);
-    dateEnd.setDate(dateEnd.getDate() + numberDays);
-    setEndDate(dateEnd);
+    if (event.target.value != "") {
+      //current date +1 day for min in input
+      const minDate = new Date(Date.now());
+      minDate.setUTCDate(minDate.getUTCDate() + 1);
+      const dateSelected = new Date(event.target.value);
+      const diff = dateSelected.getTime() - minDate.getTime();
+      console.log("diff", diff);
+      if (diff > 0) {
+        console.log("data min", minDate, "data select", dateSelected);
+        setStartDate(new Date(event.target.value));
+        const dateEnd = new Date(event.target.value);
+        dateEnd.setDate(dateEnd.getDate() + numberDays);
+        setEndDate(dateEnd);
+      }
+    }
   };
   const handleNumberOfDays = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setNumberDays(parseInt(event.target.value));
@@ -83,11 +97,9 @@ export function NewRequestPage() {
             sizeInput="Medium"
             width="Medium"
             onChange={handleStartDate}
-            min="2023-03-27"
             onKeyDown={(event) => {
               event.preventDefault();
             }}
-            
           ></Input>
         </div>
         <div className={styles.infosContent}>

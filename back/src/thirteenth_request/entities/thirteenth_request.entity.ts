@@ -21,6 +21,7 @@ export class ThirteenthRequestEntity {
 
   @ManyToOne(() => CollaboratorEntity, (colaborador) => colaborador.matricula, {
     nullable: false,
+    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'colaborador', referencedColumnName: 'matricula' })
   colaborador: CollaboratorEntity;

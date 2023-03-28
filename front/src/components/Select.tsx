@@ -1,6 +1,6 @@
 import styles from "./css/Select.module.css";
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  optionsDouble?: string[][];
+  optionsDouble?: any[][];
   optionsUnique?: string[] | number[];
   sizeSelect?: "Big" | "Medium" | "Small";
   width?: "Big" | "Medium" | "Small";

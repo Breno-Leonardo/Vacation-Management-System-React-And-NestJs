@@ -17,6 +17,7 @@ export class TeamEntity {
 
   @ManyToOne(() => CollaboratorEntity, (gestor) => gestor.matricula, {
     nullable: false,
+    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'gestor', referencedColumnName: 'matricula' })
   gestor: CollaboratorEntity;

@@ -1,39 +1,121 @@
-import {Container} from "../../components/Container";
+import { Container } from "../../components/Container";
 import styles from "./css/RequestsPageCollaborator.module.css";
-import {EmployeeLine} from "../../components/EmployeeLine";
-import {Button} from "../../components/Button";
-import {Card} from "../../components/Card";
-import {Link} from "react-router-dom";
-import {Topics} from "../../components/Topics";
-import { formatDateRequestTopic } from "../../functions/auxFunctions";
+import { EmployeeLine } from "../../components/EmployeeLine";
+import { Button } from "../../components/Button";
+import { Card } from "../../components/Card";
+import { Link } from "react-router-dom";
+import { Topics } from "../../components/Topics";
+import {
+  formatDate,
+  formatDateRequestTopic,
+  
+} from "../../functions/auxFunctions";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
+import { useRequests } from "../../hooks/useRequests";
+import { useEffect, useState } from "react";
+import { URL_GET_ALL_VACATION_REQUEST } from "../../constants/constants";
+import { VacationRequestBody } from "../../types/VacationRequestType";
 
-const solicitacao = {
-  nome: "Breno Leonardo",
-  dataSolicitacao: "15/01/2022",
-  inicio: "17/01/2022",
-  fim: "27/01/2022",
-  status: "Em Aberto",
-  dataLimiteConcessiva: "26/02/2022",
-  attentionFlag: false,
-};
-
-const solicitacoes = [solicitacao, solicitacao, solicitacao, solicitacao, solicitacao];
 
 export function RequestsPageCollaborator() {
+  const { collaborator } = useGlobalContext();
+  const { getRequest } = useRequests();
+  const [requests, setRequests] = useState<VacationRequestBody[]>();
+  const [loading, setLoading] = useState(true);
+  let aquisitiveEnd = "";
+  let aquisitiveStart = "";
+  let concessiveEnd = "";
+  let concessiveStart = "";
+  useEffect(() => {
+    const getRequests = async () =>
+      await getRequest(
+        URL_GET_ALL_VACATION_REQUEST + "/" + collaborator?.matricula
+      )
+        .then((result: VacationRequestBody[]) => {
+          //filtering for requests of the year
+          result = result.filter(
+            (request) => request.dataSolicitacao.indexOf("2023-") > -1
+          );
+          setLoading(false);
+          setRequests(result);
+        })
+        .catch(() => {});
+    if (collaborator != undefined) {
+      getRequests();
+    }
+  }, [collaborator]);
+  //dates cards
+  if (collaborator != undefined) {
+    //aquisitive
+    aquisitiveEnd = new Date(collaborator?.fimAquisitivo).toUTCString();
+    let aux = new Date(collaborator?.fimAquisitivo);
+    aux.setUTCFullYear(aux.getUTCFullYear()-1);
+    aux.setUTCDate(aux.getUTCDate() +1)
+    aquisitiveStart = aux.toUTCString();
+    //concessive
+    aux = new Date(collaborator?.fimAquisitivo);
+    aux.setUTCFullYear(aux.getUTCFullYear()+1);
+    aux.setUTCDate(aux.getUTCDate() -collaborator.saldoDiasFerias)
+    concessiveEnd=aux.toUTCString()
+    aux = new Date(collaborator?.fimAquisitivo);
+    aux.setUTCDate(aux.getUTCDate() +1)
+    concessiveStart=aux.toUTCString();
+
+  }
   return (
     <>
-      <div className={styles.divCards}>
-        <Card content="30" size="Medium" title="Saldo De Dias"></Card>
-        <Card content="" initialDateContent="07/07/2022" size="Medium" title="Período Aquisitivo"></Card>
-        <Card content="" initialDateContent="07/07/2023" size="Medium" title="Período Concessivo"></Card>
-      </div>
+      {collaborator != undefined ? (
+        <div className={styles.divCards}>
+          <Card
+            content={collaborator?.saldoDiasFerias.toString()}
+            size="Medium"
+            title="Saldo De Dias"
+          ></Card>
+          <Card
+            content=""
+            initialDateContent={formatDate(aquisitiveStart)}
+            finalDateContent={formatDate(aquisitiveEnd)}
+            size="Medium"
+            title="Período Aquisitivo"
+          ></Card>
+          <Card
+            content=""
+            initialDateContent={formatDate(concessiveStart)}
+            finalDateContent={formatDate(concessiveEnd)}
+            size="Medium"
+            title="Período Concessivo"
+          ></Card>
+        </div>
+      ) : (
+        <></>
+      )}
 
-      <Container title="Solicitações">
-        <Topics fields={[formatDateRequestTopic(), "Início", "Fim", "Status"]} position="center"></Topics>
+      <Container loading={loading} title="Solicitações">
+        <Topics
+          fields={[formatDateRequestTopic(), "Início", "Fim", "Status"]}
+          position="center"
+        ></Topics>
 
-        {solicitacoes.map((f) => {
-          return <EmployeeLine fields={[f.dataSolicitacao, f.inicio, f.fim, f.status]} colorsFields={["black", "green", "red"]} position="center" hasIcon={false}></EmployeeLine>;
-        })}
+        {requests != undefined ? (
+          requests.map((soli: any) => {
+            return (
+              <EmployeeLine
+                fields={[
+                  formatDate(soli.dataSolicitacao),
+                  formatDate(soli.dataInicio),
+                  formatDate(soli.dataTermino),
+                  soli.statusSolicitacao,
+                ]}
+                colorsFields={["black", "green", "red", "black"]}
+                position="center"
+                hasIcon={false}
+              ></EmployeeLine>
+            );
+          })
+        ) : (
+          <></>
+        )}
+
         <Link to="/colaborador/nova-solicitacao">
           <Button content="Nova Solicitação" size="ExtraBig"></Button>
         </Link>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   connectionAPIPost,
   connectionAPIGet,
+  connectionAPIDelete,
 } from "../functions/connections/connectionAPI";
 
 export function useRequests() {
@@ -32,11 +33,20 @@ export function useRequests() {
     setLoadingPost(false);
     return returnData;
   };
-
+  const deleteRequest = async <T,>(url: string): Promise<T | any | undefined> => {
+    
+    const returnData = await connectionAPIDelete(url)
+      .then((result) => {
+        return result;
+      })
+      .catch((error) => {});
+    return returnData;
+  };
   return {
     loadingPost,
     loadingGet,
     getRequest,
     postRequest,
+    deleteRequest,
   };
 }

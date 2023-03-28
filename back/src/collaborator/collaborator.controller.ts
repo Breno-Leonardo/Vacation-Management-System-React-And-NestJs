@@ -11,6 +11,7 @@ import { CreateCollaboratorDto } from './dto/createCollaborator.dto';
 import { CollaboratorService } from './collaborator.service';
 import { Roles } from 'src/decorators/roles.decorator';
 import { CollaboratorType } from './enum/collaborator-type';
+import { Delete } from '@nestjs/common/decorators';
 
 @Controller('colaborador')
 export class CollaboratorController {
@@ -56,5 +57,11 @@ export class CollaboratorController {
     @Body() createCollaboratorDto: CreateCollaboratorDto,
   ) {
     return this.collaboratorService.createCollaborator(createCollaboratorDto);
+  }
+
+  @Roles([CollaboratorType.Rh])
+  @Delete('lista-colaboradores/delete/:matricula')
+  async deleteCollaboratorByRegistration(@Param('matricula') matricula) {
+    return this.collaboratorService.deleteCollaboratorByMatricula(matricula);
   }
 }

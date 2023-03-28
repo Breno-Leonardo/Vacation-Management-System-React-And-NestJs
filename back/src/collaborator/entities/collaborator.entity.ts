@@ -51,7 +51,9 @@ export class CollaboratorEntity {
   })
   fimAquisitivo: Date;
 
-  @ManyToOne(() => TeamEntity, (team) => team.id)
+  @ManyToOne(() => TeamEntity, (team) => team.id, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'time', referencedColumnName: 'id' })
   time: TeamEntity;
 }

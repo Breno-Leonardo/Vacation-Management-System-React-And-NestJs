@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DeleteResult } from 'typeorm';
 import { CreateCollaboratorDto } from './dto/createCollaborator.dto';
 import { CollaboratorEntity } from './entities/collaborator.entity';
 import * as bcrypt from 'bcrypt';
@@ -74,4 +74,39 @@ export class CollaboratorService {
     }
     return collaborator;
   }
+
+  async findProductById(matricula: string): Promise<CollaboratorEntity> {
+    const collaborator = await this.collaboratorRepository.findOne({
+      where: {
+        matricula: matricula,
+      },
+      relations: ['time'],
+    });
+
+    if (!collaborator) {
+      throw new NotFoundException(`colaborador ${matricula} not found`);
+    }
+
+    return collaborator;
+  }
+
+  async deleteCollaboratorByMatricula(
+    matricula: string,
+  ): Promise<DeleteResult> {
+    await this.findProductById(matricula);
+
+    return this.collaboratorRepository.delete({ matricula: matricula });
+  }
+
+  // async deleteCollaboratorByMatricula(
+  //   matricula: string,
+  // ): Promise<DeleteResult> {
+  //   const collaborator = await this.collaboratorRepository.findOne({
+  //     where: { matricula: matricula },
+  //   });
+  //   if (!collaborator) {
+  //     throw new NotFoundException(`Collaborator: ${matricula} not found`);
+  //   }
+  //   return this.collaboratorRepository.delete(collaborator);
+  // }
 }

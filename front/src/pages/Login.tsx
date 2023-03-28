@@ -21,7 +21,6 @@ export function Login() {
   const [user, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [goLogin, setGoLogin] = useState(false);
-  const { collaborator, setCollaboratorStorageContext } = useGlobalContext();
   const { loadingGet, getRequest, loadingPost, postRequest } = useRequests();
 
   const [mensageErrorVisibility, setMensageErrorVisibility] =
@@ -69,10 +68,10 @@ export function Login() {
   }, [goLogin]);
 
   const handleUser = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLogin(event.target.value);
+    setLogin((event.target.value).trim());
   };
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
+    setPassword((event.target.value).trim());
   };
   const handleLogin = async () => {
     const authLogin = await postRequest<AuthType>(URL_LOGIN, {

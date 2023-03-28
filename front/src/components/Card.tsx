@@ -7,14 +7,15 @@ interface CardProps {
   icon?: string;
   miniIcon?: string;
   initialDateContent?: string;
+  finalDateContent?: string;
 }
-function setContent(content: string, initialDateContent: string) {
+function setContent(content: string, initialDateContent: string,finalDateContent:string) {
   if (initialDateContent != "") {
     return (
       <div className={styles.divDates}>
         <p>{initialDateContent}</p>
         <p>até</p>
-        <p>{initialDateContent}</p>
+        <p>{finalDateContent}</p>
       </div>
     );
   } else {
@@ -22,7 +23,7 @@ function setContent(content: string, initialDateContent: string) {
   }
 }
 
-export function Card({title, content, size, color = "Green", icon = "", miniIcon = "", initialDateContent = ""}: CardProps) {
+export function Card({title, content, size, color = "Green", icon = "", miniIcon = "", initialDateContent = "", finalDateContent=""}: CardProps) {
   return icon != "" ? (
     <div className={`${styles.Card} ${styles[size]} ${styles[color]} `}>
       <img className={styles.icon} src={icon}></img>
@@ -31,7 +32,7 @@ export function Card({title, content, size, color = "Green", icon = "", miniIcon
   ) : (
     <div className={`${styles.Card} ${styles[size]} ${styles[color]} `}>
       <span>{title}</span>
-      {setContent(content, initialDateContent)}
+      {setContent(content, initialDateContent,finalDateContent)}
     </div>
   );
 }

@@ -8,10 +8,12 @@ import {
   URL_GET_ALL_THIRTEENTH_REQUEST,
 } from "../../constants/constants";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
+import { useState } from "react";
 
 export function ThirteenthPageCollaborator() {
   const { postRequest, getRequest } = useRequests();
   const { collaborator } = useGlobalContext();
+  const [messageError, setMessageError] = useState("");
 
   const handleRequest = async () => {
     let currentDate = new Date(Date.now());
@@ -27,22 +29,22 @@ export function ThirteenthPageCollaborator() {
           ) == -1
         ) {
           const createRequest = async () =>
-          await postRequest<ThirteenthRequestBody>(URL_CREATE_THIRTEENTH_REQUEST, {
-            dataSolicitacao: currentDate,
-            colaborador: collaborator?.matricula,
-          })
-            .then((response) => {
-              console.log("Solicitação Criada");
-            })
-            .catch(() => {
-              console.log("Solicitação Não FoiCriada");
-            });
+            await postRequest<ThirteenthRequestBody>(
+              URL_CREATE_THIRTEENTH_REQUEST,
+              {
+                dataSolicitacao: currentDate,
+                colaborador: collaborator?.matricula,
+              }
+            )
+              .then((response) => {})
+              .catch(() => {});
           createRequest();
         } else {
+          setMessageError("spanVisible");
           console.log("Já solicitou esse ano");
         }
       });
-      getHistoryRequests();
+    getHistoryRequests();
   };
 
   return (
@@ -51,6 +53,9 @@ export function ThirteenthPageCollaborator() {
       <div className={styles.divRequest}>
         <p>Gostaria de antecipar seu décimo terceiro ?</p>
         <Button content="SOLICITAR" size="Big" onClick={handleRequest}></Button>
+        <span className={`${styles.spanError} ${styles[messageError]} `}>
+          Não foi possivel, você já solicitou esse ano.
+        </span>
       </div>
     </Container>
   );

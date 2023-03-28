@@ -9,3 +9,11 @@
   align-items: center;
   text-align: center;
 }
+.spanError{
+  margin-top:2rem;
+  font-size: 1.7rem;
+  visibility: hidden;
+}
+.spanVisible{
+  visibility: visible;
+}
