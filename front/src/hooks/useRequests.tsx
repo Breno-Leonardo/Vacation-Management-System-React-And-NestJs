@@ -3,6 +3,7 @@ import {
   connectionAPIPost,
   connectionAPIGet,
   connectionAPIDelete,
+  connectionAPIPut,
 } from "../functions/connections/connectionAPI";
 
 export function useRequests() {
@@ -33,6 +34,19 @@ export function useRequests() {
     setLoadingPost(false);
     return returnData;
   };
+  const putRequest = async <T,>(
+    url: string,
+    body: any
+  ): Promise<T | any | undefined> => {
+    const returnData = await connectionAPIPut(url, body)
+      .then((result) => {
+        return result;
+      })
+      .catch((error) => {
+        return undefined;
+      });
+    return returnData;
+  };
   const deleteRequest = async <T,>(url: string): Promise<T | any | undefined> => {
     
     const returnData = await connectionAPIDelete(url)
@@ -48,5 +62,6 @@ export function useRequests() {
     getRequest,
     postRequest,
     deleteRequest,
+    putRequest,
   };
 }

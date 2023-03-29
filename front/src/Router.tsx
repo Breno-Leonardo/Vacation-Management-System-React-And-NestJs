@@ -17,6 +17,7 @@ import { RHLayout } from "./layouts/RHLayout";
 import { RegisterTeamPage } from "./pages/rh/RegisterTeamPage";
 import { RemovePage } from "./pages/rh/RemovePage";
 import { Login } from "./pages/Login";
+import { UpdatePage } from "./pages/rh/UpdatePage";
 
 export function Router() {
   return (
@@ -110,6 +111,10 @@ export function Router() {
         <Route
           path="remover-colaborador"
           element={<RemovePage></RemovePage>}
+        ></Route>
+        <Route
+          path="atualizar-colaborador"
+          element={<UpdatePage></UpdatePage>}
         ></Route>
       </Route>
     </>

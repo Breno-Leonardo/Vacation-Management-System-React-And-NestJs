@@ -17,21 +17,21 @@ import {
 import { VacationRequestBody } from "../../types/VacationRequestType";
 import { CollaboratorType } from "../../types/CollaboratoType";
 
-
 export function TeamPageCollaborator() {
   const { collaborator } = useGlobalContext();
   const { getRequest } = useRequests();
-  const [requests, setRequests] = useState<VacationRequestBody[]>();
-  const [teamCollaborators, setTeamCollaborators] = useState<CollaboratorType[]>();
+  const [requests, setRequests] = useState<any>([]);
+  const [teamCollaborators, setTeamCollaborators] =
+    useState<CollaboratorType[]>();
   const [loading, setLoading] = useState(true);
-  const [go, setGo] = useState(false);
+  const [content, setContent] = useState();
   ///colaborators  team members
   useEffect(() => {
     const getRequests = async () =>
       await getRequest(
         URL_GET_ALL_TEAM_COLLABORATORS + "/" + collaborator?.time.id
       )
-        .then((result:CollaboratorType[]) => {
+        .then((result: CollaboratorType[]) => {
           setTeamCollaborators(result);
         })
         .catch(() => {});
@@ -42,9 +42,12 @@ export function TeamPageCollaborator() {
 
   //members requests
   useEffect(() => {
-    const getRequestsTeam = async (c:CollaboratorType, isLast:boolean=false) =>
+    const getRequestsTeam = async (
+      c: CollaboratorType,
+      isLast: boolean = false
+    ) =>
       await getRequest(URL_GET_ALL_VACATION_REQUEST + "/" + c?.matricula)
-        .then((result:VacationRequestBody[]) => {
+        .then((result: VacationRequestBody[]) => {
           //merging requests arrays
           setRequests((old: any) => {
             if (old != undefined) {
@@ -53,10 +56,10 @@ export function TeamPageCollaborator() {
               return [...result];
             }
           });
-          if(isLast){
-            setTimeout(() => {
-              setLoading(false);
-            }, 100);
+          if (isLast) {
+            // setTimeout(() => {
+            setLoading(false);
+            // }, 500);
           }
         })
         .catch(() => {});
@@ -70,9 +73,26 @@ export function TeamPageCollaborator() {
       }
     }
   }, [teamCollaborators]);
-  
 
-  
+  //set requests
+  useEffect(() => {
+    setContent(
+      requests.map((soli: any) => {
+        return (
+          <EmployeeLine
+            fields={[
+              formatNameForMobile(soli.colaborador.nome),
+              formatDate(soli.dataSolicitacao),
+              formatDate(soli.dataInicio),
+              formatDate(soli.dataTermino),
+              soli.statusSolicitacao,
+            ]}
+            colorsFields={["black", "black", "green", "red", "black"]}
+          ></EmployeeLine>
+        );
+      })
+    );
+  }, [loading]);
 
   return (
     <Container loading={loading} title="Solicitações e Férias do Time">
@@ -81,24 +101,7 @@ export function TeamPageCollaborator() {
         position="spaced"
       ></Topics>
 
-      {requests != undefined ? (
-        requests.map((soli: any) => {
-          return (
-            <EmployeeLine
-              fields={[
-                formatNameForMobile(soli.colaborador.nome),
-                formatDate(soli.dataSolicitacao),
-                formatDate(soli.dataInicio),
-                formatDate(soli.dataTermino),
-                soli.statusSolicitacao,
-              ]}
-              colorsFields={["black", "black", "green", "red", "black"]}
-            ></EmployeeLine>
-          );
-        })
-      ) : (
-        <></>
-      )}
+      {content}
     </Container>
   );
 }

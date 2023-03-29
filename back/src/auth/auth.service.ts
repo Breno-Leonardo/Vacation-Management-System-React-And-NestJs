@@ -39,7 +39,7 @@ export class AuthService {
 
     const collaborator: CollaboratorEntity | undefined =
       await this.collaboratorService
-        .findCollaboratorByMatricula(loginDto.matricula)
+        .findCollaboratorByRegistration(loginDto.matricula)
         .catch(() => undefined);
 
     const isMatch = await compare(loginDto.senha, collaborator?.senha || '');
@@ -95,7 +95,7 @@ export class AuthService {
     const decode: any = this.jwtService.decode(token);
     if (decode.matricula != process.env.ADMIN_LOGIN) {
       let collaboratorReturn = await this.collaboratorService
-        .findCollaboratorByMatricula(decode.matricula)
+        .findCollaboratorByRegistration(decode.matricula)
         .catch(() => undefined);
       collaboratorReturn = {
         matricula: collaboratorReturn.matricula,

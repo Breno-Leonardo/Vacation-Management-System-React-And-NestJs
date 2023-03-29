@@ -25,12 +25,12 @@ export function RegisterCollaboratorPage() {
   const [team, setTeam] = useState(-1);
   const [admissionDate, setAdmissionDate] = useState("");
   const [role, setRole] = useState("");
-  const [hiring, setHiring] = useState("");
+  const optionsHiring = ["CLT", "PJ"];
+  const [hiring, setHiring] = useState(optionsHiring[0]);
   const [lastThirteenth, setLastThirteenth] = useState("");
   const [endAquisitive, setEndAquisitive] = useState("");
   const [numberOfDays, setNumberOfDays] = useState(0);
-
-  const [messageError, setMessageError]  = useState("");
+  const [messageError, setMessageError] = useState("");
   const [optionsTeam, setTeamOptions] = useState<any>([]);
   const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -88,7 +88,10 @@ export function RegisterCollaboratorPage() {
       email != "" &&
       admissionDate != "" &&
       endAquisitive != "" &&
-      password != ""
+      password != "" &&
+      team != -1 &&
+      hiring != "" &&
+      lastThirteenth != ""
     ) {
       const request = await postRequest(URL_CREATE_COLLABORATOR, {
         matricula: registration,
@@ -102,7 +105,7 @@ export function RegisterCollaboratorPage() {
         modeloContratacao: hiring,
         fimAquisitivo: endAquisitive,
         senha: password,
-        time: 1,
+        time: team,
       }).then((response) => {
         window.location.href = window.location.href.replace(
           "cadastrar-colaborador",
@@ -111,7 +114,7 @@ export function RegisterCollaboratorPage() {
       });
       request;
     } else {
-      setMessageError("spanVisible")
+      setMessageError("spanVisible");
     }
   };
 
@@ -122,7 +125,7 @@ export function RegisterCollaboratorPage() {
         result.map((team) => {
           options = [...options, [team.id, team.nome]];
         });
-
+        setTeam(options[0][0]);
         setTeamOptions(options);
       })
       .catch(() => {});
@@ -170,7 +173,7 @@ export function RegisterCollaboratorPage() {
           <Input
             onChange={handlePassword}
             placeholder="Senha"
-            type="text"
+            type="password"
             sizeInput="Medium"
           ></Input>
         </div>
@@ -245,7 +248,7 @@ export function RegisterCollaboratorPage() {
           <Select
             onChange={handleHiring}
             sizeSelect="Medium"
-            optionsUnique={["CLT", "PJ"]}
+            optionsUnique={optionsHiring}
           ></Select>
         </div>
         <div className={styles.infosContent}>
@@ -289,7 +292,9 @@ export function RegisterCollaboratorPage() {
       </div>
 
       <Button onClick={handleRequest} content="CADASTRAR" size="Big"></Button>
-      <span className={`${styles.spanError} ${styles[messageError]} `}>Verifique os campos</span>
+      <span className={`${styles.spanError} ${styles[messageError]} `}>
+        Verifique os campos
+      </span>
     </Container>
   );
 }

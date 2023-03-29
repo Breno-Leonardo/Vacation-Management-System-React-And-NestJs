@@ -3,7 +3,7 @@ interface CardProps {
   content: string;
   title: string;
   size: "Big" | "Medium" | "Small";
-  color?: "Green" | "Red";
+  color?: "Green" | "Red" | "Blue";
   icon?: string;
   miniIcon?: string;
   initialDateContent?: string;

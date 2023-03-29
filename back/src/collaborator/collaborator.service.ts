@@ -5,6 +5,7 @@ import { CreateCollaboratorDto } from './dto/createCollaborator.dto';
 import { CollaboratorEntity } from './entities/collaborator.entity';
 import * as bcrypt from 'bcrypt';
 import { ReturnCollaboratorDtoWithoutKey } from './dto/returnCollaboratorWidthouKey.dto';
+import { UpdateCollaboratorDto } from './dto/updateCollaborator.dto';
 
 const saltOrRounds = 10;
 
@@ -46,7 +47,7 @@ export class CollaboratorService {
     );
   }
 
-  async findCollaboratorByMatricula(
+  async findCollaboratorByRegistration(
     matricula: string,
   ): Promise<CollaboratorEntity> {
     const collaborator = await this.collaboratorRepository.findOne({
@@ -59,7 +60,7 @@ export class CollaboratorService {
     return collaborator;
   }
 
-  async getCollaboratorByMatricula(
+  async getCollaboratorByRegistration(
     matricula: string,
   ): Promise<ReturnCollaboratorDtoWithoutKey[]> {
     const collaborator = (
@@ -75,7 +76,7 @@ export class CollaboratorService {
     return collaborator;
   }
 
-  async findProductById(matricula: string): Promise<CollaboratorEntity> {
+  async findCollaboratorById(matricula: string): Promise<CollaboratorEntity> {
     const collaborator = await this.collaboratorRepository.findOne({
       where: {
         matricula: matricula,
@@ -90,23 +91,25 @@ export class CollaboratorService {
     return collaborator;
   }
 
-  async deleteCollaboratorByMatricula(
+  async deleteCollaboratorByRegistration(
     matricula: string,
   ): Promise<DeleteResult> {
-    await this.findProductById(matricula);
+    await this.findCollaboratorById(matricula);
 
     return this.collaboratorRepository.delete({ matricula: matricula });
   }
 
-  // async deleteCollaboratorByMatricula(
-  //   matricula: string,
-  // ): Promise<DeleteResult> {
-  //   const collaborator = await this.collaboratorRepository.findOne({
-  //     where: { matricula: matricula },
-  //   });
-  //   if (!collaborator) {
-  //     throw new NotFoundException(`Collaborator: ${matricula} not found`);
-  //   }
-  //   return this.collaboratorRepository.delete(collaborator);
-  // }
+  async updateCollaboratorByRegistration(
+    matricula: string,
+    update,
+  ): Promise<UpdateCollaboratorDto> {
+    const collaborator = await this.findCollaboratorById(matricula);
+
+    if (!collaborator) {
+      throw new NotFoundException(`colaborador ${matricula} not found`);
+    }
+    return this.collaboratorRepository.save({
+      ...update,
+    });
+  }
 }

@@ -11,7 +11,8 @@ import { CreateCollaboratorDto } from './dto/createCollaborator.dto';
 import { CollaboratorService } from './collaborator.service';
 import { Roles } from 'src/decorators/roles.decorator';
 import { CollaboratorType } from './enum/collaborator-type';
-import { Delete } from '@nestjs/common/decorators';
+import { Delete, Put } from '@nestjs/common/decorators';
+import { UpdateCollaboratorDto } from './dto/updateCollaborator.dto';
 
 @Controller('colaborador')
 export class CollaboratorController {
@@ -36,7 +37,7 @@ export class CollaboratorController {
   ])
   @Get('lista-colaboradores/:matricula')
   async getCollaboratorByRegistration(@Param('matricula') matricula) {
-    return this.collaboratorService.getCollaboratorByMatricula(matricula);
+    return this.collaboratorService.getCollaboratorByRegistration(matricula);
   }
 
   @Roles([
@@ -62,6 +63,19 @@ export class CollaboratorController {
   @Roles([CollaboratorType.Rh])
   @Delete('lista-colaboradores/delete/:matricula')
   async deleteCollaboratorByRegistration(@Param('matricula') matricula) {
-    return this.collaboratorService.deleteCollaboratorByMatricula(matricula);
+    return this.collaboratorService.deleteCollaboratorByRegistration(matricula);
+  }
+
+  @Roles([CollaboratorType.Rh])
+  @UsePipes(ValidationPipe)
+  @Put('lista-colaboradores/atualizar/:matricula')
+  async updateCollaboratorByRegistration(
+    @Param('matricula') matricula,
+    @Body() update: UpdateCollaboratorDto,
+  ) {
+    return this.collaboratorService.updateCollaboratorByRegistration(
+      matricula,
+      update,
+    );
   }
 }

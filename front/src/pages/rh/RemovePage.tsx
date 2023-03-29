@@ -17,7 +17,7 @@ export function RemovePage() {
   const [role, setRole] = useState("Cargo");
   const { getRequest, deleteRequest } = useRequests();
 
-  const handleRegistration = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleRegistrationSearch= (event: React.ChangeEvent<HTMLInputElement>) => {
     setRegistrationInput(event.target.value);
   };
   const getCollaborator = async () =>
@@ -43,18 +43,14 @@ export function RemovePage() {
       })
       .catch(() => {});
 
-  // const deleteCollaborator = () => {
-  //   if (registrationInput != "") {
-  //     getCollaborator();
-  //   }
-  // };
+  
   return (
     <Container title="Remover Colaborador">
       <></>
       <div className={styles.divSearch}>
         <span>Matrícula: </span>
         <Input
-          onChange={handleRegistration}
+          onChange={handleRegistrationSearch}
           placeholder="Insira a matrícula"
           sizeInput="Medium"
           type="text"

@@ -33,7 +33,10 @@
   background: rgb(1, 101, 60);
   background: linear-gradient(90deg, rgba(1, 101, 60, 1) 0%, rgba(51, 164, 87, 1) 50%, rgba(1, 101, 60, 1) 100%);
 }
-
+.Blue {
+  background: rgb(8, 5, 143);
+  background: linear-gradient(90deg, rgba(8, 5, 143) 0%, rgb(100, 98, 207) 50%, rgba(8, 5, 143) 100%);
+}
 .Big {
   width: 16rem;
 }

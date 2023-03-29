@@ -63,3 +63,19 @@ export function formatDateForUTC(date: string): string {
   }
   return day + "-" + month + "-" + year;
 }
+
+export function isAttentionFlag(limitConcessive: string): boolean {
+  const limitConcessiveDate = new Date(limitConcessive);
+  const dateNow = new Date(Date.now());
+  var diffMonth =
+    (limitConcessiveDate.getFullYear() - dateNow.getFullYear()) * 12 +
+    (limitConcessiveDate.getMonth() - dateNow.getMonth());
+  if (
+    (diffMonth == 1 &&
+      dateNow.getUTCDate() < limitConcessiveDate.getUTCDate()) ||
+    diffMonth > 1
+  ) {
+    return false;
+  }
+  return true;
+}
