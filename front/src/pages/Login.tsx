@@ -5,7 +5,6 @@ import { Input } from "../components/Input";
 import account from "../assets/account-green.svg";
 import key from "../assets/key.svg";
 import { useEffect, useState } from "react";
-import { useGlobalContext } from "../hooks/useGlobalContext";
 import { useRequests } from "../hooks/useRequests";
 import {
   getAuthorization,

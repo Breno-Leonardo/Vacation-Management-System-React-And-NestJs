@@ -30,7 +30,6 @@ export function HistoryRequestsPageManager() {
   const [teamCollaborators, setTeamCollaborators] = useState<string[][]>([]);
   const [teamCollaboratorSelected, setTeamCollaboratorSelected] =
     useState<string>();
-  const [updateRequest, setUpdateRequests] = useState(false);
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState();
   //get teams
@@ -101,6 +100,7 @@ export function HistoryRequestsPageManager() {
               formatDate(soli.dataTermino),
               soli.statusSolicitacao,
             ]}
+            key={soli.id}
             colorsFields={["black", "black", "green", "red", "black"]}
           ></EmployeeLine>
         );
@@ -158,14 +158,7 @@ export function HistoryRequestsPageManager() {
           </ContainerContent>
       </Container>
 
-      {/* <Container loading={loading} title="Histórico de solicitações" marginTop="None">
-        <Topics
-          fields={["Nome", formatDateRequestTopic(), "Início", "Fim", "Status"]}
-          position="spaced"
-        ></Topics>
-
-        {content}
-      </Container> */}
+      
     </>
   );
 }

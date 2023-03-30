@@ -1,8 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { CollaboratorTokenType } from "../types/CollaboratorTokenType";
+import { VacationRequestReturn } from "../types/ReturnVacationRequestType";
 
 interface GlobalData {
   collaborator?: CollaboratorTokenType;
+  currentVacationRequest?: VacationRequestReturn;
 }
 interface GlobalContextProps {
   globalData: GlobalData;
@@ -45,9 +47,28 @@ export const useGlobalContext = () => {
       });
     }
   };
+
+  const setCurrentVacationRequestStorageContext = (
+    vacationRequest: VacationRequestReturn | undefined
+  ) => {
+    if (vacationRequest != undefined) {
+      setGlobalData({
+        ...globalData,
+        currentVacationRequest: vacationRequest,
+      });
+    }
+    else{
+      setGlobalData({
+        ...globalData,
+        currentVacationRequest: undefined,
+      });
+    }
+  };
   return {
     globalData,
     collaborator: globalData?.collaborator,
     setCollaboratorStorageContext,
+    currentVacationRequest: globalData?.currentVacationRequest,
+    setCurrentVacationRequestStorageContext,
   };
 };

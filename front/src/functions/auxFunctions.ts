@@ -79,3 +79,11 @@ export function isAttentionFlag(limitConcessive: string): boolean {
   }
   return true;
 }
+
+export function getLimitConcessive(endAquisitive: Date, numberOfDays: number): string {
+  let aux;
+  aux = new Date(endAquisitive);
+  aux.setUTCFullYear(aux.getUTCFullYear() + 1);
+  aux.setUTCDate(aux.getUTCDate() - numberOfDays);
+  return aux.toUTCString();
+}

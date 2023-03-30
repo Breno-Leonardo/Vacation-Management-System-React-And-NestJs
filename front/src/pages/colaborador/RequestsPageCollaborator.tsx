@@ -109,6 +109,7 @@ export function RequestsPageCollaborator() {
                 colorsFields={["black", "green", "red", "black"]}
                 position="center"
                 hasIcon={false}
+                key={soli.id+Math.floor(Math.random() * 101).toString()}
               ></EmployeeLine>
             );
           })

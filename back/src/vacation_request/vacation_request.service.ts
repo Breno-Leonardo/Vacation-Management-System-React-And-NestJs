@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ReturnVacationRequestDto } from './dto/returnVacationRequest.dto';
+import { UpdateVacationRequestDto } from './dto/vacationUpdate.dto';
 import { CreateVacationRequestDto } from './dto/vacation_request.dto';
 import { VacationRequestEntity } from './entities/vacation_request.entity';
 
@@ -31,10 +32,30 @@ export class VacationRequestService {
 
   async getAllRequests(): Promise<ReturnVacationRequestDto[]> {
     return (
-      await this.vacationRepository.find({ relations: ['colaborador'] })
+      await this.vacationRepository.find({
+        relations: ['colaborador', 'colaborador.time'],
+      })
     ).map((t) => new ReturnVacationRequestDto(t));
   }
 
+  async getRequestByID(id): Promise<ReturnVacationRequestDto[]> {
+    return (
+      await this.vacationRepository.find({
+        relations: ['colaborador', 'colaborador.time'],
+        where: { id },
+      })
+    ).map((t) => new ReturnVacationRequestDto(t));
+  }
+
+  async getAllRequestsByTeam(teamId): Promise<ReturnVacationRequestDto[]> {
+    return (
+      await this.vacationRepository.find({
+        relations: ['colaborador', 'colaborador.time'],
+      })
+    )
+      .filter((t) => t.colaborador.time.id == teamId)
+      .map((t) => new ReturnVacationRequestDto(t));
+  }
   async getAllRequestsByRegistration(
     matricula: string,
   ): Promise<ReturnVacationRequestDto[]> {
@@ -48,5 +69,29 @@ export class VacationRequestService {
         .filter((t) => t.colaborador.matricula == matricula)
         .map((t) => new ReturnVacationRequestDto(t))
     );
+  }
+
+  async findRequestById(id: number): Promise<VacationRequestEntity> {
+    const request = await this.vacationRepository.findOne({
+      where: {
+        id: id,
+      },
+      relations: ['colaborador', 'colaborador.time'],
+    });
+
+    if (!request) {
+      throw new NotFoundException(`Request ${id} not found`);
+    }
+
+    return request;
+  }
+
+  async updateRequestByRegistration(
+    id: number,
+    update,
+  ): Promise<UpdateVacationRequestDto> {
+    return this.vacationRepository.save({
+      ...update,
+    });
   }
 }

@@ -5,6 +5,7 @@ import { Select } from "../../components/Select";
 import {
   formatDate,
   formatNameForMobile,
+  getLimitConcessive,
   isAttentionFlag,
 } from "../../functions/auxFunctions";
 import { Topics } from "../../components/Topics";
@@ -82,13 +83,15 @@ export function TeamPageManager() {
         aux = new Date(c.fimAquisitivo);
         aux.setUTCFullYear(aux.getUTCFullYear() + 1);
         concessiveEnd = aux.toUTCString();
-        aux.setUTCDate(aux.getUTCDate() - c.saldoDiasFerias);
-        limitConcessive = aux.toUTCString();
+        let limitConcessive = getLimitConcessive(
+          c.fimAquisitivo,
+          c.saldoDiasFerias
+        );
         aux = new Date(c.fimAquisitivo);
         aux.setUTCDate(aux.getUTCDate() + 1);
         concessiveStart = aux.toUTCString();
 
-        // attentionFlag
+        
 
         return (
           <EmployeeLine

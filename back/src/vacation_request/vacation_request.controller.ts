@@ -7,10 +7,11 @@ import {
   ValidationPipe,
   Headers,
 } from '@nestjs/common';
-import { Param } from '@nestjs/common/decorators';
+import { Param, Put } from '@nestjs/common/decorators';
 
 import { CollaboratorType } from 'src/collaborator/enum/collaborator-type';
 import { Roles } from 'src/decorators/roles.decorator';
+import { UpdateVacationRequestDto } from './dto/vacationUpdate.dto';
 
 import { CreateVacationRequestDto } from './dto/vacation_request.dto';
 import { VacationRequestService } from './vacation_request.service';
@@ -37,9 +38,30 @@ export class VacationRequestController {
     CollaboratorType.Manager,
     CollaboratorType.Collaborator,
   ])
+  @Get('lista-solicitacoes/time/:teamId')
+  async getAllRequestsByTeam(@Param('teamId') teamId) {
+    return this.vacationRequestService.getAllRequestsByTeam(teamId);
+  }
+
+  @Roles([
+    CollaboratorType.CollaboratorManager,
+    CollaboratorType.Rh,
+    CollaboratorType.Manager,
+    CollaboratorType.Collaborator,
+  ])
   @Get('lista-solicitacoes/:matricula')
   async getAllRequestsByRegistration(@Param('matricula') matricula) {
     return this.vacationRequestService.getAllRequestsByRegistration(matricula);
+  }
+
+  @Roles([
+    CollaboratorType.CollaboratorManager,
+    CollaboratorType.Rh,
+    CollaboratorType.Manager,
+  ])
+  @Get('lista-solicitacoes/id/:id')
+  async getAllRequestsByID(@Param('id') id) {
+    return this.vacationRequestService.getRequestByID(id);
   }
 
   @Roles([
@@ -60,5 +82,19 @@ export class VacationRequestController {
       headers.authorization,
       bodyValues.get('colaborador'),
     );
+  }
+
+  @Roles([
+    CollaboratorType.CollaboratorManager,
+    CollaboratorType.Rh,
+    CollaboratorType.Manager,
+  ])
+  @UsePipes(ValidationPipe)
+  @Put('update/:id')
+  async updateRequest(
+    @Param('id') id,
+    @Body() update: UpdateVacationRequestDto,
+  ) {
+    return this.vacationRequestService.updateRequestByRegistration(id, update);
   }
 }

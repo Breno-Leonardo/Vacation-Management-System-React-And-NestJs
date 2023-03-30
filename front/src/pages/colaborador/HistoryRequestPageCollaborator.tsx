@@ -55,6 +55,7 @@ export function HistoryRequestsPageCollaborator() {
                 soli.statusSolicitacao,
               ]}
               colorsFields={["black", "black", "green", "red", "black"]}
+              key={soli.id+Math.floor(Math.random() * 101).toString()}
             ></EmployeeLine>
           );
         })

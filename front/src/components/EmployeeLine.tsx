@@ -23,7 +23,7 @@ export function EmployeeLine({
   hasIcon = true,
 }: EmployeeLine) {
   return (
-    <div className={`${styles.employeeLine} ${styles[position]}`}>
+    <div key={fields.toString()+Math.floor(Math.random() * 101).toString()} className={`${styles.employeeLine} ${styles[position]}`}>
       <>
         {/* Checando se tem que colocar o icone */}
         {hasIcon ? (
@@ -39,14 +39,14 @@ export function EmployeeLine({
         {fields.map((field, index) => {
           if (index > 0 && index < fields.length - 1) {
             return (
-              <p key={field} className={`${styles[colorsFields[index]]}`}>
+              <p  key={field.toString()+Math.floor(Math.random() * 101).toString()} className={`${styles[colorsFields[index]]}`}>
                 {field}
               </p>
             );
           } else if (index == fields.length - 1) {
             if (attentionFlag) {
               return (
-                <div key={field} className={styles.alertDiv}>
+                <div key={field.toString()+Math.floor(Math.random() * 101).toString()} className={styles.alertDiv}>
                   <>
                     {isFlaged(attentionFlag)}
                     <p className={`${styles[colorsFields[index]]}`}>{field}</p>
@@ -55,7 +55,7 @@ export function EmployeeLine({
               );
             } else {
               return (
-                <p key={field} className={`${styles[colorsFields[index]]}`}>
+                <p key={field.toString()+Math.floor(Math.random() * 101).toString()} className={`${styles[colorsFields[index]]}`}>
                   {field}
                 </p>
               );

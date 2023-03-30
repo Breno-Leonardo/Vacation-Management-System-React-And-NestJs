@@ -9,7 +9,7 @@ import accountGroup from "../assets/account-group-white.svg";
 import calendar from "../assets/calendar-month-outline.svg";
 import { Link } from "react-router-dom";
 import { removeItemStorage } from "../functions/connections/storageProxy";
-import { AUTHORIZATION_KEY, COLLABORATOR_KEY } from "../constants/constants";
+import { AUTHORIZATION_KEY } from "../constants/constants";
 import { formatName } from "../functions/auxFunctions";
 import { CollaboratorTypeEnum } from "../enums/collaborator-type";
 import { useGlobalContext } from "../hooks/useGlobalContext";
@@ -79,7 +79,6 @@ export function Header({ forWho }: HeaderProps) {
               className={styles.exit}
               onClick={() => {
                 removeItemStorage(AUTHORIZATION_KEY);
-                removeItemStorage(COLLABORATOR_KEY);
                 setCollaboratorStorageContext(undefined);
               }}
             >
@@ -135,7 +134,6 @@ export function Header({ forWho }: HeaderProps) {
             to="/"
             onClick={() => {
               removeItemStorage(AUTHORIZATION_KEY);
-              removeItemStorage(COLLABORATOR_KEY);
               setCollaboratorStorageContext(undefined);
             }}
           >
@@ -161,7 +159,7 @@ export function Header({ forWho }: HeaderProps) {
             to="/"
             onClick={() => {
               removeItemStorage(AUTHORIZATION_KEY);
-              removeItemStorage(COLLABORATOR_KEY);
+              
               setCollaboratorStorageContext(undefined);
             }}
           >

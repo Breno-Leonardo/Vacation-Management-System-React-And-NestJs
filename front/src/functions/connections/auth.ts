@@ -1,5 +1,4 @@
-import { AUTHORIZATION_KEY, COLLABORATOR_KEY } from "../../constants/constants";
-import { CollaboratorType } from "../../types/CollaboratorTypes";
+import { AUTHORIZATION_KEY, CURRENT_VACATION_REQUEST } from "../../constants/constants";
 import {
   getItemStorage,
   removeItemStorage,
@@ -16,14 +15,11 @@ export const setAuthorization = (token: string) => {
 
 export const getAuthorization = () => getItemStorage(AUTHORIZATION_KEY);
 
-// export const getCollaboratorStorage = (): CollaboratorType | null => {
-//   const collaboratorString = getItemStorage(COLLABORATOR_KEY);
-//   if (collaboratorString) return JSON.parse(collaboratorString);
-//   return null;
-// };
-// export const setCollaboratorStorage = (collaborator: CollaboratorType) => {
-//   if (collaborator) {
-//     setItemStorage(COLLABORATOR_KEY, JSON.stringify(collaborator));
-//   }
-// };
+export const setCurrentVacationRequestID = (vacationRequestID: number) => {
+  if (vacationRequestID != undefined) {
+    setItemStorage(CURRENT_VACATION_REQUEST, ""+vacationRequestID+"");
+  }
+};
+
+export const getCurrentVacationRequestID = () => getItemStorage(CURRENT_VACATION_REQUEST);
 

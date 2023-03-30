@@ -1,6 +1,7 @@
 import { CollaboratorType } from "./CollaboratoType";
 
-export interface VacationRequestBody {
+export interface VacationRequestReturn {
+  id:number
   dataSolicitacao: string;
   dataInicio: string;
   dataTermino: string;

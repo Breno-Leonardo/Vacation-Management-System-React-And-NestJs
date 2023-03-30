@@ -22,6 +22,9 @@ button {
   font-size: 1 rem;
   font-weight: 400;
 }
+textarea {
+  resize: none;
+}
 #root {
   width: 100%;
 }

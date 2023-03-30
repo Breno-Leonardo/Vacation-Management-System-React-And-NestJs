@@ -84,7 +84,6 @@ export function NewRequestPage() {
   ) => {
     setCollaboratorMessage(event.target.value);
   };
-
   return (
     <Container title="Solicitação">
       <div className={styles.infos}>
@@ -120,7 +119,7 @@ export function NewRequestPage() {
             sizeInput="Medium"
             width="Medium"
             disabled={true}
-            onChange={handleCollaboratorMessage}
+            
             value={
               endDate != undefined ? formatDate(endDate.toUTCString()) : ""
             }
@@ -128,7 +127,7 @@ export function NewRequestPage() {
         </div>
       </div>
 
-      <TextArea placeholder="Digite uma mensagem para o gestor, caso necessário"></TextArea>
+      <TextArea onChange={()=>handleCollaboratorMessage} placeholder="Digite uma mensagem para o gestor, caso necessário"></TextArea>
 
       <Button onClick={handleRequest} content="SOLICITAR" size="Big"></Button>
     </Container>

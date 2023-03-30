@@ -27,7 +27,7 @@ export function TeamPageCollaborator() {
   const [content, setContent] = useState();
   ///colaborators  team members
   useEffect(() => {
-    const getRequests = async () =>
+    const getCollaborators = async () =>
       await getRequest(
         URL_GET_ALL_TEAM_COLLABORATORS + "/" + collaborator?.time.id
       )
@@ -36,7 +36,7 @@ export function TeamPageCollaborator() {
         })
         .catch(() => {});
     if (collaborator != undefined) {
-      getRequests();
+      getCollaborators();
     }
   }, [collaborator]);
 
@@ -57,9 +57,9 @@ export function TeamPageCollaborator() {
             }
           });
           if (isLast) {
-            // setTimeout(() => {
-            setLoading(false);
-            // }, 500);
+            setTimeout(() => {
+              setLoading(false);
+            }, 500);
           }
         })
         .catch(() => {});
@@ -88,6 +88,7 @@ export function TeamPageCollaborator() {
               soli.statusSolicitacao,
             ]}
             colorsFields={["black", "black", "green", "red", "black"]}
+            key={soli.id+Math.floor(Math.random() * 101).toString()}
           ></EmployeeLine>
         );
       })
