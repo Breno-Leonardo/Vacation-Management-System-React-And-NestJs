@@ -76,8 +76,8 @@ export function ResponsePageManager() {
             <EmployeeLine
               fields={[
                 formatNameForMobile(soli.colaborador.nome),
-                soli.dataInicio,
-                soli.dataTermino,
+                formatDate(soli.dataInicio),
+                formatDate(soli.dataTermino),
               ]}
               colorsFields={["black", "green", "red"]}
               position="center"

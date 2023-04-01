@@ -26,10 +26,36 @@ export class CollaboratorService {
     });
   }
 
+  async checkEndAquisitive(
+    collaboratorEntity: CollaboratorEntity,
+  ): Promise<CollaboratorEntity> {
+    if (collaboratorEntity != undefined) {
+      const dateNow = new Date(Date.now());
+      const endAquisitive = new Date(collaboratorEntity.fimAquisitivo);
+      if (dateNow >= endAquisitive) {
+        // console.log('atualizando');
+        endAquisitive.setUTCFullYear(dateNow.getFullYear() + 1);
+        collaboratorEntity.saldoDiasFerias =
+          collaboratorEntity.saldoDiasFerias + 30;
+        collaboratorEntity.fimAquisitivo = endAquisitive;
+        return this.collaboratorRepository.save({
+          ...collaboratorEntity,
+          fimAquisitivo: endAquisitive.toUTCString(),
+        });
+      }
+    }
+    return collaboratorEntity;
+  }
+
   async getAllCollaborators(): Promise<ReturnCollaboratorDtoWithoutKey[]> {
     return (
       await this.collaboratorRepository.find({ relations: ['time'] })
-    ).map((collaborator) => new ReturnCollaboratorDtoWithoutKey(collaborator));
+    ).filter(
+      async (collaborator) =>
+        new ReturnCollaboratorDtoWithoutKey(
+          await this.checkEndAquisitive(collaborator),
+        ),
+    );
   }
 
   async getAllTeamCollaborators(
@@ -41,8 +67,11 @@ export class CollaboratorService {
         .filter((c) => {
           if (c.time != null) return c.time.id == idTime;
         })
-        .map(
-          (collaborator) => new ReturnCollaboratorDtoWithoutKey(collaborator),
+        .filter(
+          async (collaborator) =>
+            new ReturnCollaboratorDtoWithoutKey(
+              await this.checkEndAquisitive(collaborator),
+            ),
         )
     );
   }
@@ -63,17 +92,18 @@ export class CollaboratorService {
   async getCollaboratorByRegistration(
     matricula: string,
   ): Promise<ReturnCollaboratorDtoWithoutKey[]> {
-    const collaborator = (
-      await this.collaboratorRepository.find({
-        relations: ['time'],
-        where: { matricula: matricula },
-      })
-    ).map((t) => new ReturnCollaboratorDtoWithoutKey(t));
-
+    const collaborator = await this.collaboratorRepository.find({
+      relations: ['time'],
+      where: { matricula: matricula },
+    });
     if (!collaborator) {
       throw new NotFoundException(`Collaborator: ${matricula} not found`);
     }
-    return collaborator;
+
+    return collaborator.filter(
+      async (t) =>
+        new ReturnCollaboratorDtoWithoutKey(await this.checkEndAquisitive(t)),
+    );
   }
 
   async findCollaboratorById(matricula: string): Promise<CollaboratorEntity> {

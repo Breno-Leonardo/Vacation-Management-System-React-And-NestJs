@@ -32,12 +32,14 @@ export class VacationRequestService {
   }
 
   async getAllRequests(): Promise<ReturnVacationRequestDto[]> {
-    let requests = await this.vacationRepository.find({
+    const requests = await this.vacationRepository.find({
       relations: ['colaborador', 'colaborador.time'],
     });
 
-    requests = requests.filter((t) => this.checkStatusRequest(t));
-    return requests.map((t) => new ReturnVacationRequestDto(t));
+    return requests.filter(
+      async (t) =>
+        new ReturnVacationRequestDto(await this.checkStatusRequest(t)),
+    );
   }
 
   async getAllRequestsByTeam(teamId): Promise<ReturnVacationRequestDto[]> {
@@ -46,8 +48,11 @@ export class VacationRequestService {
     });
 
     requests = requests.filter((t) => t.colaborador.time.id == teamId);
-    requests = requests.filter((t) => this.checkStatusRequest(t));
-    return requests.map((t) => new ReturnVacationRequestDto(t));
+
+    return requests.filter(
+      async (t) =>
+        new ReturnVacationRequestDto(await this.checkStatusRequest(t)),
+    );
   }
   async getRequestByID(id): Promise<any> {
     let request = await this.vacationRepository.findOne({
@@ -66,8 +71,10 @@ export class VacationRequestService {
     });
 
     requests = requests.filter((t) => t.colaborador.matricula == matricula);
-    requests = requests.filter((t) => this.checkStatusRequest(t));
-    return requests.map((t) => new ReturnVacationRequestDto(t));
+    return requests.filter(
+      async (t) =>
+        new ReturnVacationRequestDto(await this.checkStatusRequest(t)),
+    );
   }
 
   async findRequestById(id: number): Promise<VacationRequestEntity> {
@@ -114,6 +121,7 @@ export class VacationRequestService {
           }
         } else if (dateNow > dateEnd) {
           if (status.toLowerCase() == 'Em Férias'.toLocaleLowerCase()) {
+            // console.log('finalizando');
             vacationRequestEntity.statusSolicitacao = 'Finalizada';
             this.vacationRepository
               .save({

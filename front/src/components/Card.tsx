@@ -8,8 +8,14 @@ interface CardProps {
   miniIcon?: string;
   initialDateContent?: string;
   finalDateContent?: string;
+  fontSize?: "fontDate"| "Normal";
 }
-function setContent(content: string, initialDateContent: string,finalDateContent:string) {
+function setContent(
+  content: string,
+  initialDateContent: string,
+  finalDateContent: string,
+  fontSize= "Normal"
+) {
   if (initialDateContent != "") {
     return (
       <div className={styles.divDates}>
@@ -19,20 +25,32 @@ function setContent(content: string, initialDateContent: string,finalDateContent
       </div>
     );
   } else {
-    return <div className={styles.divContent}>{content}</div>;
+    return <div className={`${styles.divDates} ${styles[fontSize]}`}>{content}</div>;
   }
 }
 
-export function Card({title, content, size, color = "Green", icon = "", miniIcon = "", initialDateContent = "", finalDateContent=""}: CardProps) {
+export function Card({
+  title,
+  content,
+  size,
+  color = "Green",
+  icon = "",
+  miniIcon = "",
+  initialDateContent = "",
+  finalDateContent = "",
+  fontSize = "Normal",
+}: CardProps) {
   return icon != "" ? (
-    <div className={`${styles.Card} ${styles[size]} ${styles[color]} `}>
+    <div className={`${styles.Card} ${styles[size]}  ${styles[color]} `}>
       <img className={styles.icon} src={icon}></img>
       <span>{title}</span>
     </div>
   ) : (
-    <div className={`${styles.Card} ${styles[size]} ${styles[color]} `}>
+    <div
+      className={`${styles.Card}  ${styles[size]}  ${styles[color]} `}
+    >
       <span>{title}</span>
-      {setContent(content, initialDateContent,finalDateContent)}
+      {setContent(content, initialDateContent, finalDateContent,fontSize)}
     </div>
   );
 }

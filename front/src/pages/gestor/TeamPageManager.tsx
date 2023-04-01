@@ -27,7 +27,6 @@ export function TeamPageManager() {
   const [optionsTeam, setTeamOptions] = useState<any>([]);
   const [team, setTeam] = useState(-1);
 
-  const [updateRequest, setUpdateRequests] = useState(false);
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState<any>();
   let aquisitiveEnd = "";
@@ -94,7 +93,6 @@ export function TeamPageManager() {
             aux = new Date(c?.fimAquisitivo);
             concessiveStart = aux.toUTCString();
           }
-         limitConcessive.setUTCDate(limitConcessive.getUTCDate()-1)
         
           
         }
@@ -103,7 +101,7 @@ export function TeamPageManager() {
 
         return (
           <EmployeeLine
-            key={c.matricula}
+            key={c.matricula + Math.floor(Math.random() * 101).toString()}
             fields={[
               formatNameForMobile(c.nome),
               c.saldoDiasFerias.toString(),

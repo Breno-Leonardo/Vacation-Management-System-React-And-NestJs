@@ -8,6 +8,7 @@ import { Topics } from "../../components/Topics";
 import {
   formatDate,
   formatDateRequestTopic,
+  isAttentionFlag,
 } from "../../functions/auxFunctions";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { useRequests } from "../../hooks/useRequests";
@@ -24,6 +25,7 @@ export function RequestsPageCollaborator() {
   let aquisitiveStart = "";
   let concessiveEnd = "";
   let concessiveStart = "";
+  let limitConcessive = "";
   useEffect(() => {
     const getRequests = async () =>
       await getRequest(
@@ -47,6 +49,7 @@ export function RequestsPageCollaborator() {
     //aquisitive
     let aux = new Date(collaborator?.fimAquisitivo);
     aux.setUTCDate(aux.getUTCDate() - 1);
+    limitConcessive = aux.toUTCString();
     aquisitiveEnd = aux.toUTCString();
     aux = new Date(collaborator?.fimAquisitivo);
     aux.setUTCFullYear(aux.getUTCFullYear() - 1);
@@ -59,35 +62,55 @@ export function RequestsPageCollaborator() {
       aux = new Date(collaborator?.fimAquisitivo);
       aux.setUTCFullYear(aux.getUTCFullYear() + 1);
       aux.setUTCDate(aux.getUTCDate() - 1);
+      limitConcessive = aux.toUTCString();
       concessiveEnd = aux.toUTCString();
       aux = new Date(collaborator?.fimAquisitivo);
       concessiveStart = aux.toUTCString();
     }
   }
+
   return (
     <>
       {collaborator != undefined ? (
-        <div className={styles.divCards}>
-          <Card
-            content={collaborator?.saldoDiasFerias.toString()}
-            size="Medium"
-            title="Saldo De Dias"
-          ></Card>
-          <Card
-            content=""
-            initialDateContent={formatDate(aquisitiveStart)}
-            finalDateContent={formatDate(aquisitiveEnd)}
-            size="Medium"
-            title="Período Aquisitivo"
-          ></Card>
-          <Card
-            content=""
-            initialDateContent={formatDate(concessiveStart)}
-            finalDateContent={formatDate(concessiveEnd)}
-            size="Medium"
-            title="Período Concessivo"
-          ></Card>
-        </div>
+        <>
+          {isAttentionFlag(limitConcessive) ? (
+            <div className={styles.warning}>
+              <span>Alerta</span>
+              <p>
+                Você está proximo da data limite concessiva, agende suas férias.{" "}
+              </p>
+            </div>
+          ) : (
+            <></>
+          )}
+          <div className={styles.divCards}>
+            <Card
+              content={collaborator?.saldoDiasFerias.toString()}
+              size="Medium"
+              title="Saldo De Dias"
+            ></Card>
+            <Card
+              content=""
+              initialDateContent={formatDate(aquisitiveStart)}
+              finalDateContent={formatDate(aquisitiveEnd)}
+              size="Medium"
+              title="Período Aquisitivo"
+            ></Card>
+            <Card
+              content=""
+              initialDateContent={formatDate(concessiveStart)}
+              finalDateContent={formatDate(concessiveEnd)}
+              size="Medium"
+              title="Período Concessivo"
+            ></Card>
+            <Card
+              content={formatDate(limitConcessive)}
+              size="Medium"
+              title="Limite Concessivo"
+              fontSize="fontDate"
+            ></Card>
+          </div>
+        </>
       ) : (
         <></>
       )}

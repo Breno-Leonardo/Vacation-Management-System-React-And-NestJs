@@ -36,6 +36,8 @@ export function RequestsPageManager() {
   const { collaborator, setCurrentVacationRequestStorageContext } =
     useGlobalContext();
   const { getRequest } = useRequests();
+  const [alertCollaborators, setAlertCollaborators] =
+    useState<CollaboratorType[]>();
   const [openRequests, setOpenRequests] = useState<VacationRequestReturn[]>();
   const [onVacationRequests, setOnVacationRequests] =
     useState<VacationRequestReturn[]>();
@@ -45,6 +47,7 @@ export function RequestsPageManager() {
   const [optionsTeam, setTeamOptions] = useState<any>([]);
   const [team, setTeam] = useState(-1);
   const [contentOpenRequest, setContentOpenRequest] = useState<any>();
+  const [contentAlert, setContentAlert] = useState<any>();
   const [contentScheduledRequests, setContentScheduledRequests] =
     useState<any>();
   const [contentOnVacation, setContentOnVacation] = useState<any>();
@@ -75,7 +78,7 @@ export function RequestsPageManager() {
       getTeams();
     }
   }, [collaborator]);
- 
+
   //get vacations all collabortors team
   useEffect(() => {
     if (team != undefined && team != -1) {
@@ -211,10 +214,11 @@ export function RequestsPageManager() {
 
   //set on Alert
   useEffect(() => {
-    let numberAlert = 0;
     const getCollaborators = async () =>
       await getRequest(URL_GET_ALL_COLLABORATORS + "/time/" + team.toString())
         .then((result) => {
+          const colaboratorsInAlert: any = [];
+          const limits: any = [];
           result.map((collaborator: CollaboratorType) => {
             let limitConcessive = new Date(collaborator.fimAquisitivo);
             let aux;
@@ -229,15 +233,54 @@ export function RequestsPageManager() {
               aux.setUTCDate(aux.getUTCDate() - 1);
               limitConcessive = aux;
             }
-            if (isAttentionFlag(limitConcessive.toUTCString())) numberAlert++;
+            if (isAttentionFlag(limitConcessive.toUTCString())) {
+              limits.push(limitConcessive);
+              colaboratorsInAlert.push(collaborator);
+            }
           });
-          setCardOnAlert(numberAlert);
+          setCardOnAlert(limits.length);
+          setAlertCollaborators(colaboratorsInAlert);
         })
         .catch(() => {});
     if (team != -1) {
       getCollaborators();
     }
   }, [team]);
+
+  //set on alert colaborators
+  useEffect(() => {
+    if (alertCollaborators != undefined) {
+      setContentAlert(
+        alertCollaborators.map((c: CollaboratorType) => {
+          let limitConcessive = new Date(c.fimAquisitivo);
+          let aux;
+          if (c.saldoDiasFerias > 0) {
+            aux = new Date(c.fimAquisitivo);
+            aux.setUTCDate(aux.getUTCDate() - 1);
+
+            limitConcessive = aux;
+          } else {
+            aux = new Date(c.fimAquisitivo);
+            aux.setUTCFullYear(aux.getUTCFullYear() + 1);
+            aux.setUTCDate(aux.getUTCDate() - 1);
+            limitConcessive = aux;
+          }
+          return (
+            <EmployeeLine
+              fields={[
+                formatNameForMobile(c.nome),
+                c.time.nome,
+                formatDate(limitConcessive.toUTCString()),
+              ]}
+              key={c.matricula + "alert"}
+              colorsFields={["black", "black", "red"]}
+              position="center"
+            ></EmployeeLine>
+          );
+        })
+      );
+    }
+  }, [alertCollaborators]);
 
   //set Gannt chart tasks
   useEffect(() => {
@@ -356,7 +399,7 @@ export function RequestsPageManager() {
           title="Em alerta"
         ></Card>
       </div>
-      {/* {tasks.length > 0 ? (
+      {tasks.length > 0 ? (
         <>
           <div className={styles.divGantt}>
             <div className={styles.divGanttButtons}>
@@ -413,7 +456,7 @@ export function RequestsPageManager() {
         </>
       ) : (
         <></>
-      )} */}
+      )}
 
       <Container title="Solicitações">
         <div className={styles.divForButton}>
@@ -423,7 +466,7 @@ export function RequestsPageManager() {
               formatDateRequestTopic(),
               "Início",
               "Fim",
-              "Data Limite Concessiva",
+              "Limite Concessivo",
             ]}
             position="spaced"
           ></Topics>
@@ -440,6 +483,14 @@ export function RequestsPageManager() {
         {contentOpenRequest}
       </Container>
 
+      <Container title="Funcionários Em Alerta">
+        <Topics
+          fields={["Nome", "Time", "Limite Concessivo"]}
+          position="center"
+        ></Topics>
+
+        {contentAlert}
+      </Container>
       <Container title="Funcionários de férias">
         <Topics fields={["Nome", "Início", "Fim"]} position="center"></Topics>
 
