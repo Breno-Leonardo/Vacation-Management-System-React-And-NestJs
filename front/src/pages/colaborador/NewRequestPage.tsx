@@ -7,10 +7,7 @@ import { Select } from "../../components/Select";
 import { Input } from "../../components/Input";
 import calendar from "../../assets/calendar-month-outline-black.svg";
 import { useEffect, useState } from "react";
-import {
-  URL_CREATE_VACATION_REQUEST,
-  URL_GET_ALL_COLLABORATORS,
-} from "../../constants/constants";
+import { URL_CREATE_VACATION_REQUEST } from "../../constants/constants";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { useRequests } from "../../hooks/useRequests";
 import { formatDate, formatDateForUTC } from "../../functions/auxFunctions";
@@ -30,6 +27,9 @@ export function NewRequestPage() {
       setNumberDays(15);
     } else if (collaborator?.saldoDiasFerias == 20) {
       setOptionsDays([5, 20]);
+      setNumberDays(5);
+    } else if (collaborator?.saldoDiasFerias == 25) {
+      setOptionsDays([5, 10, 15, 20]);
       setNumberDays(5);
     }
   }, [collaborator]);
@@ -61,14 +61,16 @@ export function NewRequestPage() {
 
   const handleStartDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value != "") {
+      const dateNow = new Date(Date.now());
       //current date +1 day for min in input
-      const minDate = new Date(Date.now());
-      minDate.setUTCDate(minDate.getUTCDate() + 1);
+      const minDate = new Date(
+        dateNow.getUTCFullYear(),
+        dateNow.getUTCMonth(),
+        dateNow.getUTCDate()
+      );
       const dateSelected = new Date(event.target.value);
       const diff = dateSelected.getTime() - minDate.getTime();
-      console.log("diff", diff);
       if (diff > 0) {
-        console.log("data min", minDate, "data select", dateSelected);
         setStartDate(new Date(event.target.value));
         const dateEnd = new Date(event.target.value);
         dateEnd.setDate(dateEnd.getDate() + numberDays);
@@ -80,10 +82,13 @@ export function NewRequestPage() {
     setNumberDays(parseInt(event.target.value));
   };
   const handleCollaboratorMessage = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setCollaboratorMessage(event.target.value);
   };
+
+  const stringDateNow = formatDateForUTC(new Date(Date.now()));
+
   return (
     <Container title="Solicitação">
       <div className={styles.infos}>
@@ -95,6 +100,7 @@ export function NewRequestPage() {
             type="date"
             sizeInput="Medium"
             width="Medium"
+            min={stringDateNow}
             onChange={handleStartDate}
             onKeyDown={(event) => {
               event.preventDefault();
@@ -119,7 +125,6 @@ export function NewRequestPage() {
             sizeInput="Medium"
             width="Medium"
             disabled={true}
-            
             value={
               endDate != undefined ? formatDate(endDate.toUTCString()) : ""
             }
@@ -127,7 +132,10 @@ export function NewRequestPage() {
         </div>
       </div>
 
-      <TextArea onChange={()=>handleCollaboratorMessage} placeholder="Digite uma mensagem para o gestor, caso necessário"></TextArea>
+      <TextArea
+        onChange={handleCollaboratorMessage}
+        placeholder="Digite uma mensagem para o gestor, caso necessário"
+      ></TextArea>
 
       <Button onClick={handleRequest} content="SOLICITAR" size="Big"></Button>
     </Container>

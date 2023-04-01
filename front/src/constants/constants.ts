@@ -20,6 +20,7 @@ export const URL_CREATE_TEAM= URL_BASE+'/times/cadastro';
 export const URL_GET_ALL_VACATION_REQUEST  = URL_BASE+'/solicitacao-ferias/lista-solicitacoes';
 export const URL_CREATE_VACATION_REQUEST= URL_BASE+'/solicitacao-ferias/nova-solicitacao';
 export const URL_UPDATE_VACATION_REQUEST= URL_BASE+'/solicitacao-ferias/update';
+export const URL_ACCEPT_VACATION_REQUEST= URL_BASE+'/solicitacao-ferias/aprovar';
 
 export const URL_GET_ALL_THIRTEENTH_REQUEST  = URL_BASE+'/decimo-terceiro/lista-solicitacoes';
 export const URL_CREATE_THIRTEENTH_REQUEST= URL_BASE+'/decimo-terceiro/nova-solicitacao';

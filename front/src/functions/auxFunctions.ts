@@ -19,7 +19,7 @@ export function formatNameForMobile(name: string): string {
 
 export function formatName(name: string): string {
   const names = name.split(" ");
-  if (name.length > 2) {
+  if (names.length >= 2) {
     return names[0] + " " + names[names.length - 1];
   }
 
@@ -45,13 +45,12 @@ export function formatDate(date: string): string {
   return day + "/" + month + "/" + year;
 }
 
-export function formatDateForUTC(date: string): string {
-  const dateConvert = new Date(date);
+export function formatDateForUTC(date: Date): string {
   const width = window.innerWidth;
 
-  let day = dateConvert.getUTCDate().toString();
-  let month = (dateConvert.getUTCMonth() + 1).toString();
-  let year = dateConvert.getUTCFullYear().toString();
+  let day = date.getUTCDate().toString();
+  let month = (date.getUTCMonth() + 1).toString();
+  let year = date.getUTCFullYear().toString();
   if (width < 768) {
     year = year.substring(2, 4);
   }
@@ -61,7 +60,7 @@ export function formatDateForUTC(date: string): string {
   if (day.length == 1) {
     day = "0" + day;
   }
-  return day + "-" + month + "-" + year;
+  return year + "-" + month + "-" + day;
 }
 
 export function isAttentionFlag(limitConcessive: string): boolean {
@@ -78,12 +77,4 @@ export function isAttentionFlag(limitConcessive: string): boolean {
     return false;
   }
   return true;
-}
-
-export function getLimitConcessive(endAquisitive: Date, numberOfDays: number): string {
-  let aux;
-  aux = new Date(endAquisitive);
-  aux.setUTCFullYear(aux.getUTCFullYear() + 1);
-  aux.setUTCDate(aux.getUTCDate() - numberOfDays);
-  return aux.toUTCString();
 }

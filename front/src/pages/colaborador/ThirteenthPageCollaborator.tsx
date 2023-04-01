@@ -8,13 +8,17 @@ import {
   URL_GET_ALL_THIRTEENTH_REQUEST,
 } from "../../constants/constants";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function ThirteenthPageCollaborator() {
   const { postRequest, getRequest } = useRequests();
   const { collaborator } = useGlobalContext();
   const [messageError, setMessageError] = useState("");
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    setLoading(false);
+  }, [collaborator]);
   const handleRequest = async () => {
     let currentDate = new Date(Date.now());
 
@@ -48,7 +52,7 @@ export function ThirteenthPageCollaborator() {
   };
 
   return (
-    <Container title="Solicitar Décimo Terceiro ">
+    <Container loading={loading} title="Solicitar Décimo Terceiro ">
       <></>
       <div className={styles.divRequest}>
         <p>Gostaria de antecipar seu décimo terceiro ?</p>

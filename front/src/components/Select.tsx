@@ -4,6 +4,7 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   optionsUnique?: string[] | number[];
   sizeSelect?: "Big" | "Medium" | "Small";
   width?: "Big" | "Medium" | "Small";
+  optionDisabled?: string;
 }
 // cada option do array de options é constituido por duas opções, cpf e nome
 export function Select({
@@ -13,12 +14,30 @@ export function Select({
   width = "Big",
   onChange,
   value,
+  placeholder,
+  disabled,
+  optionDisabled,
 }: SelectProps) {
   const sizeWidth = "width" + width;
+  if (disabled) {
+    return (
+      <select
+        onChange={onChange}
+        disabled={disabled}
+        className={`${styles.Select} ${styles[sizeSelect]} ${styles[sizeWidth]}`}
+      >
+        <option value={optionDisabled} selected>
+          {optionDisabled}
+        </option>
+      </select>
+    );
+  }
   if (optionsDouble.length > 0) {
     return (
       <select
         onChange={onChange}
+        placeholder={placeholder}
+        disabled={disabled}
         className={`${styles.Select} ${styles[sizeSelect]} ${styles[sizeWidth]}`}
       >
         {optionsDouble.map((option) => {

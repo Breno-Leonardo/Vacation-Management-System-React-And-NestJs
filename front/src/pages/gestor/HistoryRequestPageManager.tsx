@@ -118,10 +118,8 @@ export function HistoryRequestsPageManager() {
   };
 
   return (
-    <>
+    <ContainerContent loading={loading}>
       <Container title="Histórico de solicitações">
-        <></>
-
         <div className={styles.divSearch}>
           <div>
             <span>Time: </span>
@@ -140,25 +138,21 @@ export function HistoryRequestsPageManager() {
               optionsDouble={teamCollaborators}
             ></Select>
           </div>
-          
         </div>
-        <ContainerContent loading={loading}>
-            <Topics
-              fields={[
-                "Nome",
-                formatDateRequestTopic(),
-                "Início",
-                "Fim",
-                "Status",
-              ]}
-              position="spaced"
-            ></Topics>
+        
+          <Topics
+            fields={[
+              "Nome",
+              formatDateRequestTopic(),
+              "Início",
+              "Fim",
+              "Status",
+            ]}
+            position="spaced"
+          ></Topics>
 
-            {content}
-          </ContainerContent>
+          {content}
       </Container>
-
-      
-    </>
+    </ContainerContent>
   );
 }

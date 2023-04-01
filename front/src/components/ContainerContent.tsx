@@ -1,7 +1,7 @@
 import styles from "./css/ContainerContent.module.css";
 
 interface ContainerProps {
-  children?: any[];
+  children?: any;
   loading?: boolean;
   marginTop?: "Normal" | "None";
   marginBottom?: "Normal" | "None";
@@ -17,7 +17,7 @@ export function ContainerContent({
   const marginTopCss = "marginTop" + marginTop;
   return (
     <>
-      {loading ? <div className={styles.loading}></div> : <></>}
+      {loading ? <div className={`${styles.loading} ${styles[marginTopCss]} ${styles[marginBottomCss]}`}></div> : <></>}
       {loading ? <></> : children}
     </>
   );

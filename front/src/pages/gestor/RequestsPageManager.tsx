@@ -13,7 +13,6 @@ import {
   formatDate,
   formatDateRequestTopic,
   formatNameForMobile,
-  getLimitConcessive,
   isAttentionFlag,
 } from "../../functions/auxFunctions";
 import React, { useEffect, useState } from "react";
@@ -28,6 +27,7 @@ import {
 import { TeamType } from "../../types/TeamType";
 import { VacationRequestReturn } from "../../types/ReturnVacationRequestType";
 import { setCurrentVacationRequestID } from "../../functions/connections/auth";
+import { ContainerContent } from "../../components/ContainerContent";
 
 export function RequestsPageManager() {
   const [viewMode, setViewMode] = React.useState(ViewMode.Day);
@@ -36,13 +36,11 @@ export function RequestsPageManager() {
   const { collaborator, setCurrentVacationRequestStorageContext } =
     useGlobalContext();
   const { getRequest } = useRequests();
-  const [openRequests, setOpenRequests] = useState<VacationRequestReturn[]>([]);
-  const [onVacationRequests, setOnVacationRequests] = useState<
-    VacationRequestReturn[]
-  >([]);
-  const [scheduledRequests, setScheduledRequests] = useState<
-    VacationRequestReturn[]
-  >([]);
+  const [openRequests, setOpenRequests] = useState<VacationRequestReturn[]>();
+  const [onVacationRequests, setOnVacationRequests] =
+    useState<VacationRequestReturn[]>();
+  const [scheduledRequests, setScheduledRequests] =
+    useState<VacationRequestReturn[]>();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [optionsTeam, setTeamOptions] = useState<any>([]);
   const [team, setTeam] = useState(-1);
@@ -54,6 +52,8 @@ export function RequestsPageManager() {
   const [cardOpen, setCardOpen] = useState(0);
   const [cardSchedule, setCardSchedule] = useState(0);
   const [cardOnAlert, setCardOnAlert] = useState(0);
+  const [loading, setLoading] = useState(true);
+
   //get teams
   useEffect(() => {
     const getTeams = async () =>
@@ -75,131 +75,138 @@ export function RequestsPageManager() {
       getTeams();
     }
   }, [collaborator]);
-
+ 
   //get vacations all collabortors team
   useEffect(() => {
-    const getRequests = async () =>
-      await getRequest(URL_GET_ALL_VACATION_REQUEST + "/time/" + team)
-        .then((result) => {
-          setTasks([]);
-          const open = JSON.parse(JSON.stringify(result));
-          const scheduled = JSON.parse(JSON.stringify(result));
-          const onVacation = JSON.parse(JSON.stringify(result));
-          setOpenRequests(
-            open.filter(
-              (request: VacationRequestReturn) =>
-                request.statusSolicitacao == "Em Aberto"
-            )
-          );
-          setOnVacationRequests(
-            scheduled.filter(
-              (request: VacationRequestReturn) =>
-                request.statusSolicitacao == "Em Férias"
-            )
-          );
-          setScheduledRequests(
-            onVacation.filter(
-              (request: VacationRequestReturn) =>
-                request.statusSolicitacao == "Agendada"
-            )
-          );
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
-    if (team != undefined) {
+    if (team != undefined && team != -1) {
+      const getRequests = async () =>
+        await getRequest(URL_GET_ALL_VACATION_REQUEST + "/time/" + team)
+          .then((result) => {
+            const open = JSON.parse(JSON.stringify(result));
+            const scheduled = JSON.parse(JSON.stringify(result));
+            const onVacation = JSON.parse(JSON.stringify(result));
+            setOpenRequests(
+              open.filter(
+                (request: VacationRequestReturn) =>
+                  request.statusSolicitacao == "Em Aberto"
+              )
+            );
+            setOnVacationRequests(
+              scheduled.filter(
+                (request: VacationRequestReturn) =>
+                  request.statusSolicitacao == "Em Férias"
+              )
+            );
+            setScheduledRequests(
+              onVacation.filter(
+                (request: VacationRequestReturn) =>
+                  request.statusSolicitacao == "Agendada"
+              )
+            );
+          })
+          .catch((err) => {
+            console.log("err", err);
+          });
+
       getRequests();
     }
   }, [team]);
 
   //set open requests
   useEffect(() => {
-    setCardOpen(openRequests.length);
+    if (openRequests != undefined) {
+      setCardOpen(openRequests.length);
 
-    setContentOpenRequest(
-      openRequests.map((soli: VacationRequestReturn) => {
-        let aux;
-        aux = new Date(soli.colaborador.fimAquisitivo);
-        aux.setUTCFullYear(aux.getUTCFullYear() + 1);
-        aux.setUTCDate(aux.getUTCDate() - soli.colaborador.saldoDiasFerias);
-        let limitConcessive = aux.toUTCString();
+      setContentOpenRequest(
+        openRequests.map((soli: VacationRequestReturn) => {
+          let limitConcessive = new Date(soli.colaborador.fimAquisitivo);
+          let aux;
+          aux = new Date(soli.colaborador.fimAquisitivo);
+          aux.setUTCDate(aux.getUTCDate() - 1);
+          limitConcessive = aux;
 
-        return (
-          <div className={styles.divForButton} key={soli.id+"openRequests"}>
-            <div className={styles.divLink}>
-              <Link to="/gestor/resposta">
-                <EmployeeLine
-                  fields={[
-                    formatNameForMobile(soli.colaborador.nome),
-                    formatDate(soli.dataSolicitacao),
-                    formatDate(soli.dataInicio),
-                    formatDate(soli.dataTermino),
-                    formatDate(limitConcessive),
-                  ]}
-                  
-                  attentionFlag={isAttentionFlag(limitConcessive)}
-                  colorsFields={["black", "black", "green", "red", "black"]}
-                ></EmployeeLine>
-              </Link>
+          return (
+            <div className={styles.divForButton} key={soli.id + "openRequests"}>
+              <div className={styles.divLink}>
+                <Link to="/gestor/resposta">
+                  <EmployeeLine
+                    fields={[
+                      formatNameForMobile(soli.colaborador.nome),
+                      formatDate(soli.dataSolicitacao),
+                      formatDate(soli.dataInicio),
+                      formatDate(soli.dataTermino),
+                      formatDate(limitConcessive.toUTCString()),
+                    ]}
+                    attentionFlag={isAttentionFlag(
+                      limitConcessive.toUTCString()
+                    )}
+                    colorsFields={["black", "black", "green", "red", "black"]}
+                  ></EmployeeLine>
+                </Link>
+              </div>
+              <div className={styles.buttonRequest}>
+                <Link to="/gestor/resposta">
+                  <Button
+                    onClick={() => {
+                      setCurrentVacationRequestStorageContext(soli);
+                      setCurrentVacationRequestID(soli.id);
+                    }}
+                    content="Responder"
+                    size="Small"
+                  ></Button>
+                </Link>
+              </div>
             </div>
-            <div className={styles.buttonRequest}>
-              <Link to="/gestor/resposta">
-                <Button
-                  onClick={() => {
-                    setCurrentVacationRequestStorageContext(soli);
-                    setCurrentVacationRequestID(soli.id);
-                  }}
-                  content="Responder"
-                  size="Small"
-                ></Button>
-              </Link>
-            </div>
-          </div>
-        );
-      })
-    );
+          );
+        })
+      );
+    }
   }, [openRequests]);
 
   //set scheduled requests
   useEffect(() => {
-    setCardSchedule(scheduledRequests.length);
-    setContentScheduledRequests(
-      scheduledRequests.map((soli: VacationRequestReturn) => {
-        return (
-          <EmployeeLine
-            fields={[
-              formatNameForMobile(soli.colaborador.nome),
-              formatDate(soli.dataInicio),
-              formatDate(soli.dataTermino),
-            ]}
-            key={soli.id+"ScheduleRequest"}
-            colorsFields={["black", "green", "red"]}
-            position="center"
-          ></EmployeeLine>
-        );
-      })
-    );
+    if (scheduledRequests != undefined) {
+      setCardSchedule(scheduledRequests.length);
+      setContentScheduledRequests(
+        scheduledRequests.map((soli: VacationRequestReturn) => {
+          return (
+            <EmployeeLine
+              fields={[
+                formatNameForMobile(soli.colaborador.nome),
+                formatDate(soli.dataInicio),
+                formatDate(soli.dataTermino),
+              ]}
+              key={soli.id + "ScheduleRequest"}
+              colorsFields={["black", "green", "red"]}
+              position="center"
+            ></EmployeeLine>
+          );
+        })
+      );
+    }
   }, [scheduledRequests]);
 
   //set on vacation requests
   useEffect(() => {
-    setCardOnVacation(onVacationRequests.length);
-    setContentOnVacation(
-      onVacationRequests.map((soli: VacationRequestReturn) => {
-        return (
-          <EmployeeLine
-            fields={[
-              formatNameForMobile(soli.colaborador.nome),
-              formatDate(soli.dataInicio),
-              formatDate(soli.dataTermino),
-            ]}
-            key={soli.id+"vacation"}
-            colorsFields={["black", "green", "red"]}
-            position="center"
-          ></EmployeeLine>
-        );
-      })
-    );
+    if (onVacationRequests != undefined) {
+      setCardOnVacation(onVacationRequests.length);
+      setContentOnVacation(
+        onVacationRequests.map((soli: VacationRequestReturn) => {
+          return (
+            <EmployeeLine
+              fields={[
+                formatNameForMobile(soli.colaborador.nome),
+                formatDate(soli.dataInicio),
+                formatDate(soli.dataTermino),
+              ]}
+              key={soli.id + "vacation"}
+              colorsFields={["black", "green", "red"]}
+              position="center"
+            ></EmployeeLine>
+          );
+        })
+      );
+    }
   }, [onVacationRequests]);
 
   //set on Alert
@@ -209,11 +216,20 @@ export function RequestsPageManager() {
       await getRequest(URL_GET_ALL_COLLABORATORS + "/time/" + team.toString())
         .then((result) => {
           result.map((collaborator: CollaboratorType) => {
-            let limitConcessive = getLimitConcessive(
-              collaborator.fimAquisitivo,
-              collaborator.saldoDiasFerias
-            );
-            if (isAttentionFlag(limitConcessive)) numberAlert++;
+            let limitConcessive = new Date(collaborator.fimAquisitivo);
+            let aux;
+            if (collaborator.saldoDiasFerias > 0) {
+              aux = new Date(collaborator.fimAquisitivo);
+              aux.setUTCDate(aux.getUTCDate() - 1);
+
+              limitConcessive = aux;
+            } else {
+              aux = new Date(collaborator.fimAquisitivo);
+              aux.setUTCFullYear(aux.getUTCFullYear() + 1);
+              aux.setUTCDate(aux.getUTCDate() - 1);
+              limitConcessive = aux;
+            }
+            if (isAttentionFlag(limitConcessive.toUTCString())) numberAlert++;
           });
           setCardOnAlert(numberAlert);
         })
@@ -294,12 +310,21 @@ export function RequestsPageManager() {
     }
   }, [onVacationRequests]);
 
+  //all loaded tasks
+  useEffect(() => {
+    if (
+      contentOnVacation != undefined &&
+      contentOpenRequest != undefined &&
+      contentScheduledRequests != undefined
+    )
+      setLoading(false);
+  }, [contentOnVacation, contentOpenRequest, contentScheduledRequests]);
   const handleTeam = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setTeam(parseInt(event.target.value));
   };
 
   return collaborator != undefined ? (
-    <>
+    <ContainerContent loading={loading}>
       <div className={styles.divSearch}>
         <span>Time: </span>
         <Select
@@ -331,7 +356,7 @@ export function RequestsPageManager() {
           title="Em alerta"
         ></Card>
       </div>
-      {tasks.length > 0 ? (
+      {/* {tasks.length > 0 ? (
         <>
           <div className={styles.divGantt}>
             <div className={styles.divGanttButtons}>
@@ -388,7 +413,7 @@ export function RequestsPageManager() {
         </>
       ) : (
         <></>
-      )}
+      )} */}
 
       <Container title="Solicitações">
         <div className={styles.divForButton}>
@@ -426,7 +451,7 @@ export function RequestsPageManager() {
 
         {contentScheduledRequests}
       </Container>
-    </>
+    </ContainerContent>
   ) : (
     <></>
   );

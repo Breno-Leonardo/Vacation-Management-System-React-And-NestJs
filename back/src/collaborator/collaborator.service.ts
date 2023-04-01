@@ -91,6 +91,22 @@ export class CollaboratorService {
     return collaborator;
   }
 
+  async debitDaysVacation(
+    matricula: string,
+    debit: number,
+  ): Promise<UpdateCollaboratorDto> {
+    const collaborator = await this.findCollaboratorById(matricula);
+
+    if (!collaborator) {
+      throw new NotFoundException(`colaborador ${matricula} not found`);
+    }
+    if (collaborator.saldoDiasFerias >= debit)
+      return this.collaboratorRepository.save({
+        ...collaborator,
+        saldoDiasFerias: collaborator.saldoDiasFerias - debit,
+      });
+  }
+
   async deleteCollaboratorByRegistration(
     matricula: string,
   ): Promise<DeleteResult> {

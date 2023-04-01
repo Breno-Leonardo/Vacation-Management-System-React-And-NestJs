@@ -3,9 +3,9 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ReturnVacationRequestDto } from './dto/returnVacationRequest.dto';
-import { UpdateVacationRequestDto } from './dto/vacationUpdate.dto';
 import { CreateVacationRequestDto } from './dto/vacation_request.dto';
 import { VacationRequestEntity } from './entities/vacation_request.entity';
+import { CollaboratorService } from 'src/collaborator/collaborator.service';
 
 @Injectable()
 export class VacationRequestService {
@@ -13,6 +13,7 @@ export class VacationRequestService {
     @InjectRepository(VacationRequestEntity)
     private readonly vacationRepository: Repository<VacationRequestEntity>,
     private jwtService: JwtService,
+    private readonly collacolaboratorService: CollaboratorService,
   ) {}
 
   async createVacationRequest(
@@ -31,44 +32,42 @@ export class VacationRequestService {
   }
 
   async getAllRequests(): Promise<ReturnVacationRequestDto[]> {
-    return (
-      await this.vacationRepository.find({
-        relations: ['colaborador', 'colaborador.time'],
-      })
-    ).map((t) => new ReturnVacationRequestDto(t));
-  }
+    let requests = await this.vacationRepository.find({
+      relations: ['colaborador', 'colaborador.time'],
+    });
 
-  async getRequestByID(id): Promise<ReturnVacationRequestDto[]> {
-    return (
-      await this.vacationRepository.find({
-        relations: ['colaborador', 'colaborador.time'],
-        where: { id },
-      })
-    ).map((t) => new ReturnVacationRequestDto(t));
+    requests = requests.filter((t) => this.checkStatusRequest(t));
+    return requests.map((t) => new ReturnVacationRequestDto(t));
   }
 
   async getAllRequestsByTeam(teamId): Promise<ReturnVacationRequestDto[]> {
-    return (
-      await this.vacationRepository.find({
-        relations: ['colaborador', 'colaborador.time'],
-      })
-    )
-      .filter((t) => t.colaborador.time.id == teamId)
-      .map((t) => new ReturnVacationRequestDto(t));
+    let requests = await this.vacationRepository.find({
+      relations: ['colaborador', 'colaborador.time'],
+    });
+
+    requests = requests.filter((t) => t.colaborador.time.id == teamId);
+    requests = requests.filter((t) => this.checkStatusRequest(t));
+    return requests.map((t) => new ReturnVacationRequestDto(t));
+  }
+  async getRequestByID(id): Promise<any> {
+    let request = await this.vacationRepository.findOne({
+      relations: ['colaborador', 'colaborador.time'],
+      where: { id },
+    });
+    request = await this.checkStatusRequest(request);
+
+    return new ReturnVacationRequestDto(request);
   }
   async getAllRequestsByRegistration(
     matricula: string,
   ): Promise<ReturnVacationRequestDto[]> {
-    return (
-      (
-        await this.vacationRepository.find({
-          relations: ['colaborador'],
-        })
-      )
-        //filtering the teams that have the manager with the same registration
-        .filter((t) => t.colaborador.matricula == matricula)
-        .map((t) => new ReturnVacationRequestDto(t))
-    );
+    let requests = await this.vacationRepository.find({
+      relations: ['colaborador', 'colaborador.time'],
+    });
+
+    requests = requests.filter((t) => t.colaborador.matricula == matricula);
+    requests = requests.filter((t) => this.checkStatusRequest(t));
+    return requests.map((t) => new ReturnVacationRequestDto(t));
   }
 
   async findRequestById(id: number): Promise<VacationRequestEntity> {
@@ -86,12 +85,84 @@ export class VacationRequestService {
     return request;
   }
 
-  async updateRequestByRegistration(
-    id: number,
-    update,
-  ): Promise<UpdateVacationRequestDto> {
-    return this.vacationRepository.save({
-      ...update,
-    });
+  async checkStatusRequest(
+    vacationRequestEntity: VacationRequestEntity,
+  ): Promise<VacationRequestEntity> {
+    if (vacationRequestEntity != undefined) {
+      const status = vacationRequestEntity.statusSolicitacao;
+      if (
+        status.toLowerCase() == 'Em Férias'.toLocaleLowerCase() ||
+        status.toLowerCase() == 'Agendada'.toLocaleLowerCase()
+      ) {
+        const dateStart = new Date(vacationRequestEntity.dataInicio);
+        const dateEnd = new Date(vacationRequestEntity.dataTermino);
+        const dateNow = new Date(Date.now());
+
+        if (dateNow >= dateStart && dateNow <= dateEnd) {
+          if (status.toLowerCase() == 'Agendada'.toLocaleLowerCase()) {
+            vacationRequestEntity.statusSolicitacao = 'Em Férias';
+            this.vacationRepository
+              .save({
+                ...vacationRequestEntity,
+                statusSolicitacao: 'Em Férias',
+              })
+              .then()
+              .catch((err) => {
+                err;
+              });
+            return vacationRequestEntity;
+          }
+        } else if (dateNow > dateEnd) {
+          if (status.toLowerCase() == 'Em Férias'.toLocaleLowerCase()) {
+            vacationRequestEntity.statusSolicitacao = 'Finalizada';
+            this.vacationRepository
+              .save({
+                ...vacationRequestEntity,
+                statusSolicitacao: 'Finalizada',
+              })
+              .then()
+              .catch((err) => {
+                err;
+              });
+            return vacationRequestEntity;
+          }
+        }
+      }
+    }
+
+    return vacationRequestEntity;
+  }
+
+  async updateRequestByRegistration(id: number, update): Promise<any> {
+    const request = await this.findRequestById(id);
+    this.vacationRepository
+      .save({
+        ...request,
+        ...update,
+      })
+      .then()
+      .catch((err) => {
+        err;
+      });
+    return;
+  }
+
+  async acceptRequestByRegistration(id: number, update, debit): Promise<any> {
+    const request = await this.findRequestById(id);
+    this.collacolaboratorService.debitDaysVacation(
+      request.colaborador.matricula,
+      debit,
+    );
+
+    this.vacationRepository
+      .save({
+        ...request,
+        ...update,
+      })
+      .then()
+      .catch((err) => {
+        err;
+      });
+    return;
   }
 }

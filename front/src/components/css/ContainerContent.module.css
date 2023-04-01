@@ -3,11 +3,18 @@
   align-self:center;
   justify-self: center;
   animation: is-rotating 1s infinite;
-  border: 6px solid #e5e5e5;
+  border: 6px solid #000000;
   border-radius: 50%;
   border-top-color: var(--green-light);
   height: 4rem;
   width: 4rem;
+  box-shadow: 0px 0px 55px rgb(0, 253, 63);
+}
+.marginBottomNormal{
+
+}
+.marginTopNormal{
+  margin-top: 20%;
 }
 
 @keyframes is-rotating {

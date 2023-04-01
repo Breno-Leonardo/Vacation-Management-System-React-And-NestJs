@@ -16,18 +16,10 @@ export class ThirteenthRequestService {
 
   async createThirteenthRequest(
     createThirteenthRequestDto: CreateThirteenthRequestDto,
-    token: string,
-    matriculaBody: string,
   ): Promise<ThirteenthRequestEntity> {
-    //testing if registration in token is equals registration in body request
-    const matriculaToken = Object.values(this.jwtService.decode(token))[0];
-
-    if (matriculaToken == matriculaBody) {
-      return this.thirteenthRequestRepository.save({
-        ...createThirteenthRequestDto,
-      });
-    } else throw new Error(`Incorrect Token`);
-    return;
+    return this.thirteenthRequestRepository.save({
+      ...createThirteenthRequestDto,
+    });
   }
 
   async getAllRequests(): Promise<ReturnThirteenthRequestDto[]> {

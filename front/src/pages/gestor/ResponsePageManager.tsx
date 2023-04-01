@@ -3,16 +3,16 @@ import styles from "./css/ResponsePageManager.module.css";
 import { EmployeeLine } from "../../components/EmployeeLine";
 import { Button } from "../../components/Button";
 import { TextArea } from "../../components/TextArea";
-import {
-  formatDate,
-  formatNameForMobile,
-  getLimitConcessive,
-} from "../../functions/auxFunctions";
+import { formatDate, formatNameForMobile } from "../../functions/auxFunctions";
 import { Topics } from "../../components/Topics";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { useEffect, useState } from "react";
 import { getCurrentVacationRequestID } from "../../functions/connections/auth";
-import { URL_GET_ALL_VACATION_REQUEST, URL_UPDATE_VACATION_REQUEST } from "../../constants/constants";
+import {
+  URL_ACCEPT_VACATION_REQUEST,
+  URL_GET_ALL_VACATION_REQUEST,
+  URL_UPDATE_VACATION_REQUEST,
+} from "../../constants/constants";
 import { useRequests } from "../../hooks/useRequests";
 import { VacationRequestReturn } from "../../types/ReturnVacationRequestType";
 
@@ -92,13 +92,12 @@ export function ResponsePageManager() {
 
   //
   const handleManagerMessage = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setManagerMessage(event.target.value);
   };
 
-
-  // days for minus 
+  // days for minus
   let diffInDays = 0;
   if (currentVacationRequest != undefined) {
     const diffInMs =
@@ -108,27 +107,44 @@ export function ResponsePageManager() {
   }
 
   //handle update
-  const handleRequest = async (accept:boolean) => {
-      const request = await putRequest(
-        URL_UPDATE_VACATION_REQUEST+ "/" + currentVacationRequest?.id,
-        {
-          id: currentVacationRequest?.id,
-          dataSolicitacao: currentVacationRequest?.dataSolicitacao,
-          dataInicio: currentVacationRequest?.dataInicio,
-          dataTermino: currentVacationRequest?.dataTermino,
-          mensagemColaborador: currentVacationRequest?.mensagemColaborador,
-          mensagemGestor: managerMessage,
-          statusSolicitacao: accept==true?("Agendada"):("Recusada"),
-          colaborador: currentVacationRequest?.colaborador,
-        }
-      ).then((response) => {
-        window.location.href = window.location.href.replace(
-          "resposta",
-          ""
-        );
-      });
-      request;
+
+  const rejectRequest = async () => {
+    const request = await putRequest(
+      URL_UPDATE_VACATION_REQUEST + "/" + currentVacationRequest?.id,
+      {
+        mensagemGestor: managerMessage,
+        statusSolicitacao: "Recusada",
+      }
+    ).then((response) => {
+      window.location.href = window.location.href.replace("resposta", "");
+    });
+    request;
   };
+  const acceptRequest = async () => {
+    const request = await putRequest(
+      URL_ACCEPT_VACATION_REQUEST +
+        "/" +
+        currentVacationRequest?.id +
+        "/" +
+        diffInDays,
+      {
+        mensagemGestor: managerMessage,
+        statusSolicitacao: "Agendada",
+      }
+    ).then((response) => {
+      window.location.href = window.location.href.replace("resposta", "");
+    });
+    request;
+  };
+  let limitCurrentCocessive;
+  if (currentVacationRequest != undefined) {
+    limitCurrentCocessive = new Date(
+      currentVacationRequest.colaborador.fimAquisitivo
+    );
+
+    limitCurrentCocessive.setUTCDate(limitCurrentCocessive.getUTCDate() - 1);
+  }
+
   return (
     <>
       <Container loading={loadingIntersection} title="Interseções de Férias">
@@ -138,7 +154,8 @@ export function ResponsePageManager() {
 
       <Container loading={loadingRequest} title="Solicitação">
         <></>
-        {currentVacationRequest != undefined ? (
+        {currentVacationRequest != undefined &&
+        limitCurrentCocessive != undefined ? (
           <>
             <div className={styles.infos}>
               <div className={styles.infoPrimary}>
@@ -165,12 +182,7 @@ export function ResponsePageManager() {
               </span>
               <span className={styles.infoSecondary}>
                 Data Limite Concessiva:{" "}
-                {formatDate(
-                  getLimitConcessive(
-                    currentVacationRequest.colaborador.fimAquisitivo,
-                    currentVacationRequest.colaborador.saldoDiasFerias
-                  )
-                )}
+                {formatDate(limitCurrentCocessive.toUTCString())}
               </span>
             </div>
             {currentVacationRequest.mensagemColaborador != "" ? (
@@ -184,10 +196,22 @@ export function ResponsePageManager() {
               <></>
             )}
 
-            <TextArea onChange={()=>handleManagerMessage}placeholder="Digite uma mensagem para o fucionário, caso necessário"></TextArea>
+            <TextArea
+              onChange={handleManagerMessage}
+              placeholder="Digite uma mensagem para o fucionário, caso necessário"
+            ></TextArea>
             <div className={styles.divForButton}>
-              <Button onClick={()=>handleRequest(true)} content="Aprovar" size="Big"></Button>
-              <Button onClick={()=>handleRequest(false)} content="Reprovar" size="Big" color="Red"></Button>
+              <Button
+                onClick={() => acceptRequest()}
+                content="Aprovar"
+                size="Big"
+              ></Button>
+              <Button
+                onClick={() => rejectRequest()}
+                content="Reprovar"
+                size="Big"
+                color="Red"
+              ></Button>
             </div>
           </>
         ) : (

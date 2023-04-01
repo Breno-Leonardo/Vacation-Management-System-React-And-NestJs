@@ -5,7 +5,6 @@ import { Select } from "../../components/Select";
 import {
   formatDate,
   formatNameForMobile,
-  getLimitConcessive,
   isAttentionFlag,
 } from "../../functions/auxFunctions";
 import { Topics } from "../../components/Topics";
@@ -35,7 +34,7 @@ export function TeamPageManager() {
   let aquisitiveStart = "";
   let concessiveEnd = "";
   let concessiveStart = "";
-  let limitConcessive = "";
+  let limitConcessive = new Date();
   //get teams
   useEffect(() => {
     const getTeams = async () =>
@@ -73,25 +72,34 @@ export function TeamPageManager() {
   useEffect(() => {
     setContent(
       collaborators.map((c) => {
-        //aquisitive
-        aquisitiveEnd = new Date(c.fimAquisitivo).toUTCString();
-        let aux = new Date(c?.fimAquisitivo);
-        aux.setUTCFullYear(aux.getUTCFullYear() - 1);
-        aux.setUTCDate(aux.getUTCDate() + 1);
-        aquisitiveStart = aux.toUTCString();
-        //concessive
-        aux = new Date(c.fimAquisitivo);
-        aux.setUTCFullYear(aux.getUTCFullYear() + 1);
-        concessiveEnd = aux.toUTCString();
-        let limitConcessive = getLimitConcessive(
-          c.fimAquisitivo,
-          c.saldoDiasFerias
-        );
-        aux = new Date(c.fimAquisitivo);
-        aux.setUTCDate(aux.getUTCDate() + 1);
-        concessiveStart = aux.toUTCString();
-
+        if (collaborator != undefined) {
+          //aquisitive
+          let aux = new Date(c?.fimAquisitivo);
+          aux.setUTCDate(aux.getUTCDate() - 1);
+          limitConcessive=aux;
+          aquisitiveEnd = aux.toUTCString();
+          aux = new Date(c?.fimAquisitivo);
+          aux.setUTCFullYear(aux.getUTCFullYear() - 1);
+          aquisitiveStart = aux.toUTCString();
+          //concessive
+          if (c.saldoDiasFerias > 0) {
+            concessiveStart = aquisitiveStart;
+            concessiveEnd = aquisitiveEnd;
+          } else {
+            aux = new Date(c?.fimAquisitivo);
+            aux.setUTCFullYear(aux.getUTCFullYear() + 1);
+            aux.setUTCDate(aux.getUTCDate() - 1);
+            limitConcessive=aux
+            concessiveEnd = aux.toUTCString();
+            aux = new Date(c?.fimAquisitivo);
+            concessiveStart = aux.toUTCString();
+          }
+         limitConcessive.setUTCDate(limitConcessive.getUTCDate()-1)
         
+          
+        }
+
+        setLoading(false);
 
         return (
           <EmployeeLine
@@ -101,9 +109,9 @@ export function TeamPageManager() {
               c.saldoDiasFerias.toString(),
               formatDate(aquisitiveStart) + " até " + formatDate(aquisitiveEnd),
               formatDate(concessiveStart) + " até " + formatDate(concessiveEnd),
-              formatDate(limitConcessive),
+              formatDate(limitConcessive.toUTCString()),
             ]}
-            attentionFlag={isAttentionFlag(limitConcessive)}
+            attentionFlag={isAttentionFlag(limitConcessive.toUTCString())}
           ></EmployeeLine>
         );
       })
@@ -115,28 +123,30 @@ export function TeamPageManager() {
   };
 
   return (
-    <Container title="Time">
-      <div className={styles.divSearch}>
-        <span>Time: </span>
-        <Select
-          onChange={handleTeam}
-          sizeSelect="Medium"
-          width="Medium"
-          optionsDouble={optionsTeam}
-        ></Select>
-      </div>
-      <Topics
-        fields={[
-          "Nome",
-          "Saldo",
-          "Período Aquisitivo",
-          "Período Concessivo",
-          "Limite Concessivo",
-        ]}
-        position="spaced"
-      ></Topics>
+    <ContainerContent loading={loading}>
+      <Container title="Time">
+        <div className={styles.divSearch}>
+          <span>Time: </span>
+          <Select
+            onChange={handleTeam}
+            sizeSelect="Medium"
+            width="Medium"
+            optionsDouble={optionsTeam}
+          ></Select>
+        </div>
+        <Topics
+          fields={[
+            "Nome",
+            "Saldo",
+            "Período Aquisitivo",
+            "Período Concessivo",
+            "Limite Concessivo",
+          ]}
+          position="spaced"
+        ></Topics>
 
-      <ContainerContent>{content}</ContainerContent>
-    </Container>
+        <ContainerContent>{content}</ContainerContent>
+      </Container>
+    </ContainerContent>
   );
 }

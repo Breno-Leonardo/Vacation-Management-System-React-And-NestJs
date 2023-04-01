@@ -4,9 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { VacationRequestEntity } from './entities/vacation_request.entity';
 import { VacationRequestController } from './vacation_request.controller';
 import { VacationRequestService } from './vacation_request.service';
+import { CollaboratorService } from 'src/collaborator/collaborator.service';
+import { CollaboratorModule } from 'src/collaborator/collaborator.module';
 
 @Module({
   imports: [
+    CollaboratorModule,
     TypeOrmModule.forFeature([VacationRequestEntity]),
     JwtModule.registerAsync({
       useFactory: () => ({

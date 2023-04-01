@@ -8,13 +8,16 @@ import { useEffect, useState } from "react";
 import { useRequests } from "../../hooks/useRequests";
 import {
   URL_CREATE_COLLABORATOR,
+  URL_CREATE_THIRTEENTH_REQUEST,
   URL_GET_ALL_TEAMS,
 } from "../../constants/constants";
 import { TeamType } from "../../types/TeamType";
+import { formatDateForUTC } from "../../functions/auxFunctions";
+import { ThirteenthRequestBody } from "../../types/CreateThirteenthRequestType";
 
 export function RegisterCollaboratorPage() {
   const { getRequest } = useRequests();
-
+  const [disabledSelect, setDisabledSelect] = useState(true);
   const [name, setName] = useState("");
   const [cpf, setCPF] = useState("");
   const [registration, setRegistration] = useState("");
@@ -60,6 +63,15 @@ export function RegisterCollaboratorPage() {
   };
   const handleAdmissionDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAdmissionDate(event.target.value);
+    const dateNow = new Date(Date.now());
+    const date = new Date(event.target.value);
+    date.setUTCFullYear(dateNow.getUTCFullYear());
+    if (dateNow <= date) {
+      setEndAquisitive(formatDateForUTC(date));
+    } else {
+      date.setUTCFullYear(dateNow.getUTCFullYear() + 1);
+      setEndAquisitive(formatDateForUTC(date));
+    }
   };
   const handleRole = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRole(event.target.value);
@@ -90,8 +102,7 @@ export function RegisterCollaboratorPage() {
       endAquisitive != "" &&
       password != "" &&
       team != -1 &&
-      hiring != "" &&
-      lastThirteenth != ""
+      hiring != ""
     ) {
       const request = await postRequest(URL_CREATE_COLLABORATOR, {
         matricula: registration,
@@ -113,6 +124,23 @@ export function RegisterCollaboratorPage() {
         );
       });
       request;
+
+      const createRequest = async () =>
+        await postRequest<ThirteenthRequestBody>(
+          URL_CREATE_THIRTEENTH_REQUEST,
+          {
+            dataSolicitacao: lastThirteenth,
+            colaborador: registration,
+          }
+        )
+          .then((response) => {
+            console.log("deucerto", response);
+          })
+          .catch((err) => {
+            console.log("error", err);
+          });
+
+      if (lastThirteenth != "") createRequest();
     } else {
       setMessageError("spanVisible");
     }
@@ -127,6 +155,7 @@ export function RegisterCollaboratorPage() {
         });
         setTeam(options[0][0]);
         setTeamOptions(options);
+        setDisabledSelect(false);
       })
       .catch(() => {});
 
@@ -135,6 +164,7 @@ export function RegisterCollaboratorPage() {
       getTeams();
     }
   };
+  
   return (
     <Container title="Cadastro de Colaborador">
       <div className={styles.infos}>
@@ -216,6 +246,8 @@ export function RegisterCollaboratorPage() {
             onChange={handleTeam}
             sizeSelect="Medium"
             optionsDouble={optionsTeam}
+            disabled={disabledSelect}
+            optionDisabled={"Insira a matrícula do gestor"}
           ></Select>
         </div>
       </div>
@@ -233,12 +265,17 @@ export function RegisterCollaboratorPage() {
           ></Input>
         </div>
         <div className={styles.infosContent}>
-          <span>Cargo</span>
+          <span>Fim aquisitivo atual</span>
           <Input
-            onChange={handleRole}
-            placeholder="Cargo"
-            type="text"
+            onChange={handleEndAquisitive}
+            placeholder="dd/mm/aaaa"
+            type="date"
             sizeInput="Medium"
+            value={endAquisitive}
+            disabled={true}
+            onKeyDown={(event) => {
+              event.preventDefault();
+            }}
           ></Input>
         </div>
       </div>
@@ -266,15 +303,12 @@ export function RegisterCollaboratorPage() {
       </div>
       <div className={styles.infos}>
         <div className={styles.infosContent}>
-          <span>Fim aquisitivo atual</span>
+          <span>Cargo</span>
           <Input
-            onChange={handleEndAquisitive}
-            placeholder="dd/mm/aaaa"
-            type="date"
+            onChange={handleRole}
+            placeholder="Cargo"
+            type="text"
             sizeInput="Medium"
-            onKeyDown={(event) => {
-              event.preventDefault();
-            }}
           ></Input>
         </div>
         <div className={styles.infosContent}>

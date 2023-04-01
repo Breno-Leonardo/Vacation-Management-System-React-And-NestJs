@@ -97,4 +97,19 @@ export class VacationRequestController {
   ) {
     return this.vacationRequestService.updateRequestByRegistration(id, update);
   }
+
+  @Roles([CollaboratorType.CollaboratorManager, CollaboratorType.Manager])
+  @UsePipes(ValidationPipe)
+  @Put('aprovar/:id/:debit')
+  async acceptRequest(
+    @Param('id') id,
+    @Param('debit') debit,
+    @Body() update: UpdateVacationRequestDto,
+  ) {
+    return this.vacationRequestService.acceptRequestByRegistration(
+      id,
+      update,
+      debit,
+    );
+  }
 }

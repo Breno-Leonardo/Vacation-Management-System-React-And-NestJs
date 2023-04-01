@@ -8,14 +8,12 @@ import { Topics } from "../../components/Topics";
 import {
   formatDate,
   formatDateRequestTopic,
-  
 } from "../../functions/auxFunctions";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { useRequests } from "../../hooks/useRequests";
 import { useEffect, useState } from "react";
 import { URL_GET_ALL_VACATION_REQUEST } from "../../constants/constants";
 import { VacationRequestBody } from "../../types/VacationRequestType";
-
 
 export function RequestsPageCollaborator() {
   const { collaborator } = useGlobalContext();
@@ -47,20 +45,24 @@ export function RequestsPageCollaborator() {
   //dates cards
   if (collaborator != undefined) {
     //aquisitive
-    aquisitiveEnd = new Date(collaborator?.fimAquisitivo).toUTCString();
     let aux = new Date(collaborator?.fimAquisitivo);
-    aux.setUTCFullYear(aux.getUTCFullYear()-1);
-    aux.setUTCDate(aux.getUTCDate() +1)
+    aux.setUTCDate(aux.getUTCDate() - 1);
+    aquisitiveEnd = aux.toUTCString();
+    aux = new Date(collaborator?.fimAquisitivo);
+    aux.setUTCFullYear(aux.getUTCFullYear() - 1);
     aquisitiveStart = aux.toUTCString();
     //concessive
-    aux = new Date(collaborator?.fimAquisitivo);
-    aux.setUTCFullYear(aux.getUTCFullYear()+1);
-    aux.setUTCDate(aux.getUTCDate() -collaborator.saldoDiasFerias)
-    concessiveEnd=aux.toUTCString()
-    aux = new Date(collaborator?.fimAquisitivo);
-    aux.setUTCDate(aux.getUTCDate() +1)
-    concessiveStart=aux.toUTCString();
-
+    if (collaborator.saldoDiasFerias > 0) {
+      concessiveStart = aquisitiveStart;
+      concessiveEnd = aquisitiveEnd;
+    } else {
+      aux = new Date(collaborator?.fimAquisitivo);
+      aux.setUTCFullYear(aux.getUTCFullYear() + 1);
+      aux.setUTCDate(aux.getUTCDate() - 1);
+      concessiveEnd = aux.toUTCString();
+      aux = new Date(collaborator?.fimAquisitivo);
+      concessiveStart = aux.toUTCString();
+    }
   }
   return (
     <>
@@ -109,7 +111,7 @@ export function RequestsPageCollaborator() {
                 colorsFields={["black", "green", "red", "black"]}
                 position="center"
                 hasIcon={false}
-                key={soli.id+Math.floor(Math.random() * 101).toString()}
+                key={soli.id + Math.floor(Math.random() * 101).toString()}
               ></EmployeeLine>
             );
           })
@@ -117,9 +119,14 @@ export function RequestsPageCollaborator() {
           <></>
         )}
 
-        <Link to="/colaborador/nova-solicitacao">
-          <Button content="Nova Solicitação" size="ExtraBig"></Button>
-        </Link>
+        {collaborator?.saldoDiasFerias != undefined &&
+        collaborator.saldoDiasFerias > 0 ? (
+          <Link to="/colaborador/nova-solicitacao">
+            <Button content="Nova Solicitação" size="ExtraBig"></Button>
+          </Link>
+        ) : (
+          <></>
+        )}
       </Container>
     </>
   );

@@ -21,7 +21,7 @@ interface HeaderProps {
 export function Header({ forWho }: HeaderProps) {
   const { collaborator, setCollaboratorStorageContext } = useGlobalContext();
   let name = "Usuário";
-  if (collaborator) name = formatName(collaborator.nome);
+  if (collaborator!=undefined) name = formatName(collaborator.nome);
 
   if (forWho == "Colaborador") {
     //Colaborador
