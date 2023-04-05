@@ -1,6 +1,7 @@
 import { IsString } from 'class-validator';
 import { TeamEntity } from 'src/team/entities/team.entity';
 import { CollaboratorEntity } from '../entities/collaborator.entity';
+import { ReturnTeamDto } from 'src/team/dto/returnTeam.dto';
 
 export class ReturnCollaboratorDto {
   @IsString()
@@ -13,13 +14,17 @@ export class ReturnCollaboratorDto {
 
   saldoDiasFerias: number;
   cargo: string;
-  time: TeamEntity;
+  time: ReturnTeamDto;
+  email: string;
+  gmail: string;
   constructor(collaboratorEntity: CollaboratorEntity) {
     this.matricula = collaboratorEntity.matricula;
     this.nome = collaboratorEntity.nome;
-    this.time = collaboratorEntity.time;
+    this.time = new ReturnTeamDto(collaboratorEntity.time);
     this.fimAquisitivo = collaboratorEntity.fimAquisitivo;
     this.saldoDiasFerias = collaboratorEntity.saldoDiasFerias;
     this.cargo = collaboratorEntity.cargo;
+    this.email = collaboratorEntity.email;
+    this.gmail = collaboratorEntity.gmail;
   }
 }

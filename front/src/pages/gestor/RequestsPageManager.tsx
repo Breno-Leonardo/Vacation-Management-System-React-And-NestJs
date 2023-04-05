@@ -106,6 +106,7 @@ export function RequestsPageManager() {
                   request.statusSolicitacao == "Agendada"
               )
             );
+            setTasks([])
           })
           .catch((err) => {
             console.log("err", err);
@@ -240,6 +241,7 @@ export function RequestsPageManager() {
           });
           setCardOnAlert(limits.length);
           setAlertCollaborators(colaboratorsInAlert);
+           
         })
         .catch(() => {});
     if (team != -1) {

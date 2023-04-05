@@ -10,7 +10,11 @@
   font-size: 1.75rem;
 }
 
-
+.divButtons {
+  display: flex;
+  justify-content: center;
+  
+}
 
 @media(max-width:768px){
   .divSearch{  

@@ -15,6 +15,7 @@ export const URL_DELETE_COLLABORATOR  = URL_BASE+'/colaborador/lista-colaborador
 export const URL_UPDATE_COLLABORATOR= URL_BASE+'/colaborador/lista-colaboradores/atualizar';
 
 export const URL_GET_ALL_TEAMS  = URL_BASE+'/times/lista-times';
+export const URL_GET_TEAM_BY_ID  = URL_BASE+'/times/lista-times/id/';
 export const URL_CREATE_TEAM= URL_BASE+'/times/cadastro';
 
 export const URL_GET_ALL_VACATION_REQUEST  = URL_BASE+'/solicitacao-ferias/lista-solicitacoes';
@@ -28,3 +29,11 @@ export const URL_CREATE_THIRTEENTH_REQUEST= URL_BASE+'/decimo-terceiro/nova-soli
 export const ERROR_ACCESS_DANIED = 'Sem permissão.';
 export const ERROR_CONNECTION = 'Erro de conexão';
 export const ERROR_INVALID_PASSWORD = 'Usuário ou senha inválidos.';
+
+
+// python
+export const URL_BASE_PYTHON="http://127.0.0.1:5000"
+export const URL_MESSAGE_EMAIL = URL_BASE_PYTHON+'/enviar-email';
+export const URL_MESSAGE_WORKPLACE = URL_BASE_PYTHON+'/enviar-mensagem-workplace';
+export const URL_XLSX = URL_BASE_PYTHON+'/baixar-xlsx';
+export const URL_CSV = URL_BASE_PYTHON+'/baixar-csv';

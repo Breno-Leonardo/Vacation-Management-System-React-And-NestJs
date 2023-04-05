@@ -11,6 +11,7 @@ import { getCurrentVacationRequestID } from "../../functions/connections/auth";
 import {
   URL_ACCEPT_VACATION_REQUEST,
   URL_GET_ALL_VACATION_REQUEST,
+  URL_MESSAGE_WORKPLACE,
   URL_UPDATE_VACATION_REQUEST,
 } from "../../constants/constants";
 import { useRequests } from "../../hooks/useRequests";
@@ -18,11 +19,12 @@ import { VacationRequestReturn } from "../../types/ReturnVacationRequestType";
 
 export function ResponsePageManager() {
   const [managerMessage, setManagerMessage] = useState("");
+  const { collaborator } = useGlobalContext();
   const { currentVacationRequest, setCurrentVacationRequestStorageContext } =
     useGlobalContext();
   const [loadingIntersection, setLoadingIntersection] = useState(true);
   const [loadingRequest, setLoadingRequest] = useState(true);
-  const { getRequest, putRequest } = useRequests();
+  const { getRequest, putRequest, postRequest } = useRequests();
   const [intersectionRequests, setIntersectionRequests] =
     useState<VacationRequestReturn[]>();
   const [contentIntersectionRequest, setContentIntersectionRequest] =
@@ -109,33 +111,40 @@ export function ResponsePageManager() {
   //handle update
 
   const rejectRequest = async () => {
-    const request = await putRequest(
-      URL_UPDATE_VACATION_REQUEST + "/" + currentVacationRequest?.id,
-      {
-        mensagemGestor: managerMessage,
-        statusSolicitacao: "Recusada",
-      }
-    ).then((response) => {
-      window.location.href = window.location.href.replace("resposta", "");
-    });
-    request;
+    const request = async () =>
+      await putRequest(
+        URL_UPDATE_VACATION_REQUEST + "/" + currentVacationRequest?.id,
+        {
+          mensagemGestor: managerMessage,
+          statusSolicitacao: "Recusada",
+        }
+      ).then((response) => {
+        window.location.href = window.location.href.replace("resposta", "");
+      });
+    request();
   };
+
+  // console.log("o token ",process.env.REACT_APP_TOKEN)
   const acceptRequest = async () => {
-    const request = await putRequest(
-      URL_ACCEPT_VACATION_REQUEST +
-        "/" +
-        currentVacationRequest?.id +
-        "/" +
-        diffInDays,
-      {
-        mensagemGestor: managerMessage,
-        statusSolicitacao: "Agendada",
-      }
-    ).then((response) => {
-      window.location.href = window.location.href.replace("resposta", "");
-    });
-    request;
+    const acceptRequest = async () =>
+      await putRequest(
+        URL_ACCEPT_VACATION_REQUEST +
+          "/" +
+          currentVacationRequest?.id +
+          "/" +
+          diffInDays,
+        {
+          mensagemGestor: managerMessage,
+          statusSolicitacao: "Agendada",
+        }
+      ).then((response) => {
+        window.location.href = window.location.href.replace("resposta", "");
+      });
+    acceptRequest();
+
+    
   };
+
   let limitCurrentCocessive;
   if (currentVacationRequest != undefined) {
     limitCurrentCocessive = new Date(

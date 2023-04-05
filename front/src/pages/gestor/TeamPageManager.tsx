@@ -15,9 +15,14 @@ import { useGlobalContext } from "../../hooks/useGlobalContext";
 import {
   URL_GET_ALL_COLLABORATORS,
   URL_GET_ALL_TEAMS,
+  URL_GET_ALL_TEAM_COLLABORATORS,
+  URL_XLSX,
 } from "../../constants/constants";
 import { TeamType } from "../../types/TeamType";
 import { CollaboratorType } from "../../types/CollaboratoType";
+import { Button } from "../../components/Button";
+import { getAuthorization } from "../../functions/connections/auth";
+import axios from "axios";
 
 export function TeamPageManager() {
   const { collaborator } = useGlobalContext();
@@ -29,6 +34,11 @@ export function TeamPageManager() {
 
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState<any>();
+
+  // for the report
+  const [allTeams, setAllTeams] = useState<any>();
+  const [allCollaborators, setAllCollaborators] = useState<any>([]);
+
   let aquisitiveEnd = "";
   let aquisitiveStart = "";
   let concessiveEnd = "";
@@ -39,6 +49,7 @@ export function TeamPageManager() {
     const getTeams = async () =>
       await getRequest(URL_GET_ALL_TEAMS + "/" + collaborator?.matricula)
         .then((result: TeamType[]) => {
+          setAllTeams(result);
           let options: any[] = [];
           result.map((team) => {
             options = [...options, [team.id, team.nome]];
@@ -67,7 +78,7 @@ export function TeamPageManager() {
     }
   }, [team]);
 
-  //set requests
+  //set information about collaborators
   useEffect(() => {
     setContent(
       collaborators.map((c) => {
@@ -120,8 +131,73 @@ export function TeamPageManager() {
     setTeam(parseInt(event.target.value));
   };
 
+// for the report
+  //get all request all teams
+  useEffect(() => {
+    const getAllCollaborators = async (teamID: string) =>
+      await getRequest(URL_GET_ALL_TEAM_COLLABORATORS + "/" + teamID)
+        .then((result) => {
+          setAllCollaborators((old: any) => {
+            if (old != undefined) {
+              return [...old, ...result];
+            } else {
+              return [...result];
+            }
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    if (allTeams != undefined) {
+      for (let i = 0; i < allTeams.length; i++) {
+        getAllCollaborators(allTeams[i].id);
+      }
+    }
+  }, [allTeams]);
+  
+  const generateReport = () => {
+    const mapRequests = allCollaborators.map((collaborator: any) => {
+      return {
+        Matricula: collaborator.matricula,
+        Colaborador: collaborator.nome,
+        Fim_Aquisitivo: formatDate(collaborator.fimAquisitivo),
+        Saldo_de_dias: formatDate(collaborator.saldoDiasFerias),
+        Time: collaborator.time.nome,
+      };
+    });
+    
+    const dateNow = new Date(Date.now());
+    const request = async () => {
+      const req = await axios({
+        method: "post",
+        data: mapRequests,
+        url: URL_XLSX,
+        responseType: "blob",
+        headers: {
+          Authorization: getAuthorization(),
+          "Content-Type": "application/json",
+        },
+      });
+      var blob = new Blob([req.data], {
+        type: req.headers["content-type"],
+      });
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `Relatorio_${dateNow.getUTCDate()}-${dateNow.getUTCMonth()}-${dateNow.getUTCFullYear()}.xlsx`;
+      link.click();
+    };
+    request();
+  };
+
   return (
     <ContainerContent loading={loading}>
+      <div className={styles.divButtons}>
+        <Button
+          onClick={generateReport}
+          content="Relatório"
+          size="Small"
+        ></Button>
+      </div>
       <Container title="Time">
         <div className={styles.divSearch}>
           <span>Time: </span>

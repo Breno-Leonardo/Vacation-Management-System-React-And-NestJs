@@ -15,10 +15,14 @@ import {
   URL_GET_ALL_COLLABORATORS,
   URL_GET_ALL_TEAMS,
   URL_GET_ALL_VACATION_REQUEST,
+  URL_XLSX,
 } from "../../constants/constants";
 import { TeamType } from "../../types/TeamType";
 import { CollaboratorType } from "../../types/CollaboratoType";
 import { ContainerContent } from "../../components/ContainerContent";
+import { Button } from "../../components/Button";
+import axios from "axios";
+import { getAuthorization } from "../../functions/connections/auth";
 
 export function HistoryRequestsPageManager() {
   const { collaborator } = useGlobalContext();
@@ -32,11 +36,17 @@ export function HistoryRequestsPageManager() {
     useState<string>();
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState();
+
+  // for the report
+  const [allTeams, setAllTeams] = useState<any>();
+  const [allRequests, setAllRequests] = useState<any>([]);
+
   //get teams
   useEffect(() => {
     const getTeams = async () =>
       await getRequest(URL_GET_ALL_TEAMS + "/" + collaborator?.matricula)
         .then((result: TeamType[]) => {
+          setAllTeams(result);
           let options: any[] = [];
           result.map((team) => {
             options = [...options, [team.id, team.nome]];
@@ -117,8 +127,75 @@ export function HistoryRequestsPageManager() {
     setTeamCollaboratorSelected(event.target.value);
   };
 
+  // for the report
+  //get all request all teams
+  useEffect(() => {
+    const getAllRequests = async (teamID: string) =>
+      await getRequest(URL_GET_ALL_VACATION_REQUEST + "/time/" + teamID)
+        .then((result) => {
+          setAllRequests((old: any) => {
+            if (old != undefined) {
+              return [...old, ...result];
+            } else {
+              return [...result];
+            }
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    if (allTeams != undefined) {
+      for (let i = 0; i < allTeams.length; i++) {
+        getAllRequests(allTeams[i].id);
+      }
+    }
+  }, [allTeams]);
+  
+  const generateReport = () => {
+    const mapRequests = allRequests.map((request: any) => {
+      return {
+        id: request.id,
+        Colaborador: request.colaborador.nome,
+        Matricula: request.colaborador.matricula,
+        dataSolicitacao: formatDate(request.dataSolicitacao),
+        Inicio: formatDate(request.dataInicio),
+        Termino: formatDate(request.dataTermino),
+        Status: request.statusSolicitacao,
+        Time: request.colaborador.time.nome,
+      };
+    });
+    
+    const dateNow = new Date(Date.now());
+    const request = async () => {
+      const req = await axios({
+        method: "post",
+        data: mapRequests,
+        url: URL_XLSX,
+        responseType: "blob",
+        headers: {
+          Authorization: getAuthorization(),
+          "Content-Type": "application/json",
+        },
+      });
+      var blob = new Blob([req.data], {
+        type: req.headers["content-type"],
+      });
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `Relatorio_${dateNow.getUTCDate()}-${dateNow.getUTCMonth()}-${dateNow.getUTCFullYear()}.xlsx`;
+      link.click();
+    };
+    request();
+  };
   return (
-    <ContainerContent loading={loading}>
+    <ContainerContent>
+      <div className={styles.divButtons}>
+        <Button
+          onClick={generateReport}
+          content="Relatório"
+          size="Small"
+        ></Button>
+      </div>
       <Container title="Histórico de solicitações">
         <div className={styles.divSearch}>
           <div>
@@ -139,19 +216,12 @@ export function HistoryRequestsPageManager() {
             ></Select>
           </div>
         </div>
-        
-          <Topics
-            fields={[
-              "Nome",
-              formatDateRequestTopic(),
-              "Início",
-              "Fim",
-              "Status",
-            ]}
-            position="spaced"
-          ></Topics>
 
-          {content}
+        <Topics
+          fields={["Nome", formatDateRequestTopic(), "Início", "Fim", "Status"]}
+          position="spaced"
+        ></Topics>
+        <ContainerContent loading={loading}>{content}</ContainerContent>
       </Container>
     </ContainerContent>
   );

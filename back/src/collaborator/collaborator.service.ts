@@ -48,14 +48,9 @@ export class CollaboratorService {
   }
 
   async getAllCollaborators(): Promise<ReturnCollaboratorDtoWithoutKey[]> {
-    return (
-      await this.collaboratorRepository.find({ relations: ['time'] })
-    ).filter(
-      async (collaborator) =>
-        new ReturnCollaboratorDtoWithoutKey(
-          await this.checkEndAquisitive(collaborator),
-        ),
-    );
+    return (await this.collaboratorRepository.find({ relations: ['time'] }))
+      .filter((collaborator) => this.checkEndAquisitive(collaborator))
+      .map((collaborator) => new ReturnCollaboratorDtoWithoutKey(collaborator));
   }
 
   async getAllTeamCollaborators(
@@ -67,11 +62,9 @@ export class CollaboratorService {
         .filter((c) => {
           if (c.time != null) return c.time.id == idTime;
         })
-        .filter(
-          async (collaborator) =>
-            new ReturnCollaboratorDtoWithoutKey(
-              await this.checkEndAquisitive(collaborator),
-            ),
+        .filter((collaborator) => this.checkEndAquisitive(collaborator))
+        .map(
+          (collaborator) => new ReturnCollaboratorDtoWithoutKey(collaborator),
         )
     );
   }
@@ -100,10 +93,9 @@ export class CollaboratorService {
       throw new NotFoundException(`Collaborator: ${matricula} not found`);
     }
 
-    return collaborator.filter(
-      async (t) =>
-        new ReturnCollaboratorDtoWithoutKey(await this.checkEndAquisitive(t)),
-    );
+    return collaborator
+      .filter((collaborator) => this.checkEndAquisitive(collaborator))
+      .map((collaborator) => new ReturnCollaboratorDtoWithoutKey(collaborator));
   }
 
   async findCollaboratorById(matricula: string): Promise<CollaboratorEntity> {

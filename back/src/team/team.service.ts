@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateTeamDto } from './dto/createTeam.dto';
@@ -39,5 +39,16 @@ export class TeamService {
         .filter((t) => t.gestor.matricula == matricula)
         .map((t) => new ReturnTeamDto(t))
     );
+  }
+
+  async getTeamsByID(id: number): Promise<ReturnTeamDto> {
+    const t = await this.teamRepository.findOne({
+      where: { id },
+      relations: ['gestor'],
+    });
+    if (!t) {
+      throw new NotFoundException(`Team: ${id} not found`);
+    }
+    return new ReturnTeamDto(t);
   }
 }

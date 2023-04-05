@@ -13,7 +13,7 @@ export function RegisterTeamPage() {
 
   const handleRequest = async () => {
     if (name != "" && managerRegistration != "") {
-      const request = await postRequest(
+      const request = async () => await postRequest(
         URL_CREATE_TEAM,
         {
           nome:name,
@@ -25,7 +25,7 @@ export function RegisterTeamPage() {
           ""
         );
       });
-      request;
+      request();
     } else {
     }
   };

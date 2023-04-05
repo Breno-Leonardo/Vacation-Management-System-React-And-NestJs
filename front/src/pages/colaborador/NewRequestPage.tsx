@@ -7,7 +7,12 @@ import { Select } from "../../components/Select";
 import { Input } from "../../components/Input";
 import calendar from "../../assets/calendar-month-outline-black.svg";
 import { useEffect, useState } from "react";
-import { URL_CREATE_VACATION_REQUEST } from "../../constants/constants";
+import {
+  URL_CREATE_VACATION_REQUEST,
+  URL_GET_TEAM_BY_ID,
+  URL_MESSAGE_EMAIL,
+  URL_MESSAGE_WORKPLACE,
+} from "../../constants/constants";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { useRequests } from "../../hooks/useRequests";
 import { formatDate, formatDateForUTC } from "../../functions/auxFunctions";
@@ -16,11 +21,12 @@ import { VacationRequestBody } from "../../types/VacationRequestType";
 export function NewRequestPage() {
   const [optionsDays, setOptionsDays] = useState([5, 10, 15, 20, 30]);
   const { collaborator } = useGlobalContext();
+  const [collaboratorManager, setCollaboratorManager] = useState<any>();
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [collaboratorMessage, setCollaboratorMessage] = useState("");
   const [numberDays, setNumberDays] = useState(optionsDays[0]);
-  const { postRequest } = useRequests();
+  const { postRequest, getRequest } = useRequests();
   useEffect(() => {
     if (collaborator?.saldoDiasFerias == 15) {
       setOptionsDays([15]);
@@ -32,14 +38,22 @@ export function NewRequestPage() {
       setOptionsDays([5, 10, 15, 20]);
       setNumberDays(5);
     }
+    const getManager = async () =>
+      await getRequest(URL_GET_TEAM_BY_ID + collaborator?.time.id)
+        .then((result) => {
+          setCollaboratorManager(result.gestor);
+        })
+        .catch(() => {});
+    if (collaborator != undefined) {
+      getManager();
+    }
   }, [collaborator]);
 
   const handleRequest = async () => {
     let currentDate = new Date(Date.now());
     if (startDate != undefined && startDate > currentDate) {
-      const request = await postRequest<VacationRequestBody>(
-        URL_CREATE_VACATION_REQUEST,
-        {
+      const request = async () =>
+        await postRequest<VacationRequestBody>(URL_CREATE_VACATION_REQUEST, {
           dataSolicitacao: currentDate,
           dataInicio: startDate,
           dataTermino: endDate,
@@ -47,14 +61,39 @@ export function NewRequestPage() {
           mensagemGestor: "",
           statusSolicitacao: "Em Aberto",
           colaborador: collaborator?.matricula,
-        }
-      ).then((response) => {
-        window.location.href = window.location.href.replace(
-          "nova-solicitacao",
-          ""
-        );
-      });
-      request;
+        }).then((response) => {
+          window.location.href = window.location.href.replace(
+            "nova-solicitacao",
+            ""
+          );
+        });
+      request();
+
+      if (collaboratorManager != undefined && collaborator!=undefined && endDate != undefined) {
+        //message workplace
+        const messageWorkplace = async () =>
+          await postRequest(URL_MESSAGE_WORKPLACE, {
+            gestor: collaboratorManager?.nome,
+            colaborador: collaborator.nome,
+            colaboradorMatricula: collaborator.matricula,
+            inicio: formatDate(startDate.toUTCString()),
+            fim: formatDate(endDate.toUTCString()),
+          }).then((response) => {});
+        messageWorkplace();
+
+        //message workplace
+        const messageEmail = async () =>
+          await postRequest(URL_MESSAGE_EMAIL, {
+            gestor: collaboratorManager?.nome,
+            colaborador: collaborator.nome,
+            colaboradorMatricula: collaborator.matricula,
+            inicio: formatDate(startDate.toUTCString()),
+            fim: formatDate(endDate.toUTCString()),
+            email: "br_l@hotmail.com",
+            gmail: "brenoleonardo.dev@gmail.com",
+          }).then((response) => {});
+        messageEmail();
+      }
     } else {
     }
   };

@@ -2,10 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ReturnVacationRequestDto } from './dto/returnVacationRequest.dto';
 import { CreateVacationRequestDto } from './dto/vacation_request.dto';
 import { VacationRequestEntity } from './entities/vacation_request.entity';
 import { CollaboratorService } from 'src/collaborator/collaborator.service';
+import { ReturnVacationRequestDto } from './dto/returnVacation.dto';
 
 @Injectable()
 export class VacationRequestService {
@@ -32,49 +32,45 @@ export class VacationRequestService {
   }
 
   async getAllRequests(): Promise<ReturnVacationRequestDto[]> {
-    const requests = await this.vacationRepository.find({
-      relations: ['colaborador', 'colaborador.time'],
+    let requests = await this.vacationRepository.find({
+      relations: ['colaborador', 'colaborador.time', 'colaborador.time.gestor'],
     });
 
-    return requests.filter(
-      async (t) =>
-        new ReturnVacationRequestDto(await this.checkStatusRequest(t)),
-    );
+    requests = requests.filter((t) => this.checkStatusRequest(t));
+    return requests.map((t) => new ReturnVacationRequestDto(t));
   }
 
   async getAllRequestsByTeam(teamId): Promise<ReturnVacationRequestDto[]> {
     let requests = await this.vacationRepository.find({
-      relations: ['colaborador', 'colaborador.time'],
+      relations: ['colaborador', 'colaborador.time', 'colaborador.time.gestor'],
     });
 
     requests = requests.filter((t) => t.colaborador.time.id == teamId);
 
-    return requests.filter(
-      async (t) =>
-        new ReturnVacationRequestDto(await this.checkStatusRequest(t)),
-    );
+    requests = requests.filter((t) => this.checkStatusRequest(t));
+    return requests.map((t) => new ReturnVacationRequestDto(t));
   }
+
   async getRequestByID(id): Promise<any> {
     let request = await this.vacationRepository.findOne({
-      relations: ['colaborador', 'colaborador.time'],
+      relations: ['colaborador', 'colaborador.time', 'colaborador.time.gestor'],
       where: { id },
     });
     request = await this.checkStatusRequest(request);
 
     return new ReturnVacationRequestDto(request);
   }
+
   async getAllRequestsByRegistration(
     matricula: string,
   ): Promise<ReturnVacationRequestDto[]> {
     let requests = await this.vacationRepository.find({
-      relations: ['colaborador', 'colaborador.time'],
+      relations: ['colaborador', 'colaborador.time', 'colaborador.time.gestor'],
     });
 
     requests = requests.filter((t) => t.colaborador.matricula == matricula);
-    return requests.filter(
-      async (t) =>
-        new ReturnVacationRequestDto(await this.checkStatusRequest(t)),
-    );
+    requests = requests.filter((t) => this.checkStatusRequest(t));
+    return requests.map((t) => new ReturnVacationRequestDto(t));
   }
 
   async findRequestById(id: number): Promise<VacationRequestEntity> {
@@ -82,7 +78,7 @@ export class VacationRequestService {
       where: {
         id: id,
       },
-      relations: ['colaborador', 'colaborador.time'],
+      relations: ['colaborador', 'colaborador.time', 'colaborador.time.gestor'],
     });
 
     if (!request) {

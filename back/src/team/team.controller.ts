@@ -32,6 +32,17 @@ export class TeamController {
     CollaboratorType.Manager,
     CollaboratorType.Collaborator,
   ])
+  @Get('lista-times/id/:id')
+  async getTeamsByID(@Param('id') id) {
+    return this.teamService.getTeamsByID(id);
+  }
+
+  @Roles([
+    CollaboratorType.CollaboratorManager,
+    CollaboratorType.Rh,
+    CollaboratorType.Manager,
+    CollaboratorType.Collaborator,
+  ])
   @Get('lista-times/:matricula')
   async getTeamsByManagerRegistration(@Param('matricula') matricula) {
     return this.teamService.getTeamsByMatriculaManager(matricula);
