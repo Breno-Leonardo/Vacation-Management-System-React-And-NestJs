@@ -26,7 +26,9 @@ export function formatName(name: string): string {
   return name;
 }
 
-export function formatDate(date: string): string {
+export function formatDate(date: string| undefined): string {
+  if(date == undefined) 
+    return "undefined"
   const dateConvert = new Date(date);
   const width = window.innerWidth;
 

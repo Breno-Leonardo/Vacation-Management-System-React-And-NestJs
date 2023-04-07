@@ -34,6 +34,7 @@ export const ERROR_INVALID_PASSWORD = 'Usuário ou senha inválidos.';
 // python
 export const URL_BASE_PYTHON="http://127.0.0.1:5000"
 export const URL_MESSAGE_EMAIL = URL_BASE_PYTHON+'/enviar-email';
+export const URL_MESSAGE_EMAIL_RESPONSE = URL_BASE_PYTHON+'/enviar-email-resposta';
 export const URL_MESSAGE_WORKPLACE = URL_BASE_PYTHON+'/enviar-mensagem-workplace';
 export const URL_XLSX = URL_BASE_PYTHON+'/baixar-xlsx';
 export const URL_CSV = URL_BASE_PYTHON+'/baixar-csv';

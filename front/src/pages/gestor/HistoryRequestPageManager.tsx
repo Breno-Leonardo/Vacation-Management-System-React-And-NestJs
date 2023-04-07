@@ -150,7 +150,7 @@ export function HistoryRequestsPageManager() {
       }
     }
   }, [allTeams]);
-  
+
   const generateReport = () => {
     const mapRequests = allRequests.map((request: any) => {
       return {
@@ -164,7 +164,7 @@ export function HistoryRequestsPageManager() {
         Time: request.colaborador.time.nome,
       };
     });
-    
+
     const dateNow = new Date(Date.now());
     const request = async () => {
       const req = await axios({
@@ -188,41 +188,41 @@ export function HistoryRequestsPageManager() {
     request();
   };
   return (
-    <ContainerContent>
-      <div className={styles.divButtons}>
-        <Button
-          onClick={generateReport}
-          content="Relatório"
-          size="Small"
-        ></Button>
-      </div>
-      <Container title="Histórico de solicitações">
-        <div className={styles.divSearch}>
-          <div>
-            <span>Time: </span>
-            <Select
-              onChange={handleTeam}
-              sizeSelect="Medium"
-              width="Medium"
-              optionsDouble={optionsTeam}
-            ></Select>
-          </div>
-          <div>
-            <span>Funcionário: </span>
-            <Select
-              sizeSelect="Medium"
-              onChange={handleColaboratorSelected}
-              optionsDouble={teamCollaborators}
-            ></Select>
-          </div>
+    <Container
+      title="Histórico de solicitações"
+      loading={loading}
+      buttonReport={["Relatório", generateReport]}
+    >
+      <div className={styles.divSearch}>
+        <div>
+          <span>Time: </span>
+          <Select
+            onChange={handleTeam}
+            sizeSelect="Medium"
+            width="Medium"
+            optionsDouble={optionsTeam}
+          ></Select>
         </div>
+        <div>
+          <span>Funcionário: </span>
+          <Select
+            sizeSelect="Medium"
+            onChange={handleColaboratorSelected}
+            optionsDouble={teamCollaborators}
+          ></Select>
+        </div>
+      </div>
 
+      {requests != undefined && requests.length > 0 ? (
         <Topics
           fields={["Nome", formatDateRequestTopic(), "Início", "Fim", "Status"]}
           position="spaced"
         ></Topics>
-        <ContainerContent loading={loading}>{content}</ContainerContent>
-      </Container>
-    </ContainerContent>
+      ) : (
+        <div className="noInformation">Sem Solicitações</div>
+      )}
+
+      <ContainerContent >{content}</ContainerContent>
+    </Container>
   );
 }

@@ -1,8 +1,11 @@
+import { ReactElement } from "react";
 import styles from "./css/Container.module.css";
+import { Button } from "./Button";
 
 interface ContainerProps {
   title?: string;
   children?: any[];
+  buttonReport?: any[]; //string and function
   loading?: boolean;
   marginTop?: "Normal" | "None";
   marginBottom?: "Normal" | "None";
@@ -10,6 +13,7 @@ interface ContainerProps {
 
 export function Container({
   title,
+  buttonReport,
   children,
   loading,
   marginTop = "Normal",
@@ -21,6 +25,17 @@ export function Container({
     <div
       className={`${styles.container} ${styles[marginBottomCss]} ${styles[marginTopCss]}`}
     >
+      {(buttonReport != undefined && loading == false) ? (
+        <div className={styles.buttonReport}>
+          <Button
+            onClick={buttonReport[1]}
+            content={buttonReport[0]}
+            size="Small"
+          ></Button>
+        </div>
+      ) : (
+        <></>
+      )}
       {title != "" ? (
         <>
           <span className={styles.titleCenter}>{title}</span>

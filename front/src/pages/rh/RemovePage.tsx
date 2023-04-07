@@ -39,7 +39,7 @@ export function RemovePage() {
   const deleteCollaborator = async () =>
     await deleteRequest(URL_DELETE_COLLABORATOR + "/" + registration)
       .then((result) => {
-        
+        setName("Funcionario")
       })
       .catch(() => {});
 

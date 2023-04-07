@@ -116,10 +116,14 @@ export function RequestsPageCollaborator() {
       )}
 
       <Container loading={loading} title="Solicitações">
-        <Topics
-          fields={[formatDateRequestTopic(), "Início", "Fim", "Status"]}
-          position="center"
-        ></Topics>
+        {requests != undefined && requests.length > 0? (
+          <Topics
+            fields={[formatDateRequestTopic(), "Início", "Fim", "Status"]}
+            position="center"
+          ></Topics>
+        ) : (
+          <div className="noInformation">Sem Solicitações</div>
+        )}
 
         {requests != undefined ? (
           requests.map((soli: any) => {

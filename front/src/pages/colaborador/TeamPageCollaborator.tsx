@@ -67,8 +67,10 @@ export function TeamPageCollaborator() {
     if (teamCollaborators != undefined) {
       for (let i = 0; i < teamCollaborators.length; i++) {
         const c = teamCollaborators[i];
-        if (collaborator != undefined) {
+        if (i == teamCollaborators.length - 1) {
           getRequestsTeam(c, true);
+        } else {
+          getRequestsTeam(c, false);
         }
       }
     }
@@ -88,7 +90,7 @@ export function TeamPageCollaborator() {
               soli.statusSolicitacao,
             ]}
             colorsFields={["black", "black", "green", "red", "black"]}
-            key={soli.id+Math.floor(Math.random() * 101).toString()}
+            key={soli.id + Math.floor(Math.random() * 101).toString()}
           ></EmployeeLine>
         );
       })
@@ -97,10 +99,15 @@ export function TeamPageCollaborator() {
 
   return (
     <Container loading={loading} title="Solicitações e Férias do Time">
-      <Topics
-        fields={["Nome", formatDateRequestTopic(), "Início", "Fim", "Status"]}
-        position="spaced"
-      ></Topics>
+      {requests != undefined && requests.length > 0 ? (
+          <Topics
+          fields={["Nome", formatDateRequestTopic(), "Início", "Fim", "Status"]}
+          position="spaced"
+        ></Topics>
+        ) : (
+          <div className="noInformation" >Sem Solicitações</div>
+        )}
+      
 
       {content}
     </Container>

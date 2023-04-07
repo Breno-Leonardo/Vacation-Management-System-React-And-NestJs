@@ -11,7 +11,7 @@ import { getCurrentVacationRequestID } from "../../functions/connections/auth";
 import {
   URL_ACCEPT_VACATION_REQUEST,
   URL_GET_ALL_VACATION_REQUEST,
-  URL_MESSAGE_WORKPLACE,
+  URL_MESSAGE_EMAIL_RESPONSE,
   URL_UPDATE_VACATION_REQUEST,
 } from "../../constants/constants";
 import { useRequests } from "../../hooks/useRequests";
@@ -24,11 +24,13 @@ export function ResponsePageManager() {
     useGlobalContext();
   const [loadingIntersection, setLoadingIntersection] = useState(true);
   const [loadingRequest, setLoadingRequest] = useState(true);
+  const [refresh, setRefresh] = useState(false);
   const { getRequest, putRequest, postRequest } = useRequests();
   const [intersectionRequests, setIntersectionRequests] =
     useState<VacationRequestReturn[]>();
   const [contentIntersectionRequest, setContentIntersectionRequest] =
     useState<any>();
+    
   useEffect(() => {
     if (currentVacationRequest != undefined) {
       setLoadingRequest(false);
@@ -58,16 +60,17 @@ export function ResponsePageManager() {
           .catch((err) => {});
       getIntersectionVacationRequest();
     } else {
-      const idRequest = getCurrentVacationRequestID();
+      let idRequest = getCurrentVacationRequestID();
       const getVacationRequest = async () =>
         await getRequest(URL_GET_ALL_VACATION_REQUEST + "/id/" + idRequest)
           .then((result) => {
-            setCurrentVacationRequestStorageContext(result[0]);
+            setRefresh(true);
+            setCurrentVacationRequestStorageContext(result);
           })
-          .catch((err) => {});
+          .catch((err) => {console.log(err)});
       getVacationRequest();
     }
-  }, [currentVacationRequest]);
+  }, [currentVacationRequest,refresh]);
 
   //set content requests
   useEffect(() => {
@@ -111,6 +114,19 @@ export function ResponsePageManager() {
   //handle update
 
   const rejectRequest = async () => {
+    const messageEmail = async () =>
+      await postRequest(URL_MESSAGE_EMAIL_RESPONSE, {
+        gestor: collaborator?.nome,
+        colaborador: currentVacationRequest?.colaborador.nome,
+        colaboradorMatricula: currentVacationRequest?.colaborador.matricula,
+        inicio: formatDate(currentVacationRequest?.dataInicio),
+        fim: formatDate(currentVacationRequest?.dataTermino),
+        email: currentVacationRequest?.colaborador.email,
+        gmail: currentVacationRequest?.colaborador.gmail,
+        mensagem: managerMessage,
+        aprovou: false,
+      }).then((response) => {});
+    messageEmail();
     const request = async () =>
       await putRequest(
         URL_UPDATE_VACATION_REQUEST + "/" + currentVacationRequest?.id,
@@ -124,8 +140,20 @@ export function ResponsePageManager() {
     request();
   };
 
-  // console.log("o token ",process.env.REACT_APP_TOKEN)
   const acceptRequest = async () => {
+    const messageEmail = async () =>
+      await postRequest(URL_MESSAGE_EMAIL_RESPONSE, {
+        gestor: collaborator?.nome,
+        colaborador: currentVacationRequest?.colaborador.nome,
+        colaboradorMatricula: currentVacationRequest?.colaborador.matricula,
+        inicio: formatDate(currentVacationRequest?.dataInicio),
+        fim: formatDate(currentVacationRequest?.dataTermino),
+        email: currentVacationRequest?.colaborador.email,
+        gmail: currentVacationRequest?.colaborador.gmail,
+        mensagem: managerMessage,
+        aprovou: true,
+      }).then((response) => {});
+    messageEmail();
     const acceptRequest = async () =>
       await putRequest(
         URL_ACCEPT_VACATION_REQUEST +
@@ -141,8 +169,6 @@ export function ResponsePageManager() {
         window.location.href = window.location.href.replace("resposta", "");
       });
     acceptRequest();
-
-    
   };
 
   let limitCurrentCocessive;
@@ -210,11 +236,18 @@ export function ResponsePageManager() {
               placeholder="Digite uma mensagem para o fucionário, caso necessário"
             ></TextArea>
             <div className={styles.divForButton}>
-              <Button
-                onClick={() => acceptRequest()}
-                content="Aprovar"
-                size="Big"
-              ></Button>
+              {currentVacationRequest?.colaborador.saldoDiasFerias -
+                diffInDays >=
+              0 ? (
+                <Button
+                  onClick={() => acceptRequest()}
+                  content="Aprovar"
+                  size="Big"
+                ></Button>
+              ) : (
+                <></>
+              )}
+
               <Button
                 onClick={() => rejectRequest()}
                 content="Reprovar"

@@ -106,7 +106,7 @@ export function RequestsPageManager() {
                   request.statusSolicitacao == "Agendada"
               )
             );
-            setTasks([])
+            setTasks([]);
           })
           .catch((err) => {
             console.log("err", err);
@@ -241,7 +241,6 @@ export function RequestsPageManager() {
           });
           setCardOnAlert(limits.length);
           setAlertCollaborators(colaboratorsInAlert);
-           
         })
         .catch(() => {});
     if (team != -1) {
@@ -459,51 +458,67 @@ export function RequestsPageManager() {
       ) : (
         <></>
       )}
-
-      <Container title="Solicitações">
-        <div className={styles.divForButton}>
-          <Topics
-            fields={[
-              "Nome",
-              formatDateRequestTopic(),
-              "Início",
-              "Fim",
-              "Limite Concessivo",
-            ]}
-            position="spaced"
-          ></Topics>
-          <div className={styles.buttonRequest}>
-            <Button
-              content="Responder"
-              size="Small"
-              visibility="Invisible"
-              onClick={() => {}}
-            ></Button>
+      {cardOpen > 0 ? (
+        <Container title="Solicitações">
+          <div className={styles.divForButton}>
+            <Topics
+              fields={[
+                "Nome",
+                formatDateRequestTopic(),
+                "Início",
+                "Fim",
+                "Limite Concessivo",
+              ]}
+              position="spaced"
+            ></Topics>
+            <div className={styles.buttonRequest}>
+              <Button
+                content="Responder"
+                size="Small"
+                visibility="Invisible"
+                onClick={() => {}}
+              ></Button>
+            </div>
           </div>
-        </div>
 
-        {contentOpenRequest}
-      </Container>
+          {contentOpenRequest}
+        </Container>
+      ) : (
+        <></>
+      )}
 
-      <Container title="Funcionários Em Alerta">
-        <Topics
-          fields={["Nome", "Time", "Limite Concessivo"]}
-          position="center"
-        ></Topics>
+      {cardOnAlert > 0 ? (
+        <Container title="Funcionários Em Alerta">
+          <Topics
+            fields={["Nome", "Time", "Limite Concessivo"]}
+            position="center"
+          ></Topics>
 
-        {contentAlert}
-      </Container>
-      <Container title="Funcionários de férias">
-        <Topics fields={["Nome", "Início", "Fim"]} position="center"></Topics>
+          {contentAlert}
+        </Container>
+      ) : (
+        <></>
+      )}
 
-        {contentOnVacation}
-      </Container>
+      {cardOnVacation > 0 ? (
+        <Container title="Funcionários de férias">
+          <Topics fields={["Nome", "Início", "Fim"]} position="center"></Topics>
 
-      <Container title="Férias agendadas">
-        <Topics fields={["Nome", "Início", "Fim"]} position="center"></Topics>
+          {contentOnVacation}
+        </Container>
+      ) : (
+        <></>
+      )}
 
-        {contentScheduledRequests}
-      </Container>
+      {cardSchedule > 0 ? (
+        <Container title="Férias agendadas">
+          <Topics fields={["Nome", "Início", "Fim"]} position="center"></Topics>
+
+          {contentScheduledRequests}
+        </Container>
+      ) : (
+        <></>
+      )}
     </ContainerContent>
   ) : (
     <></>

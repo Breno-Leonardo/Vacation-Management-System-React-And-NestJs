@@ -190,15 +190,7 @@ export function TeamPageManager() {
   };
 
   return (
-    <ContainerContent loading={loading}>
-      <div className={styles.divButtons}>
-        <Button
-          onClick={generateReport}
-          content="Relatório"
-          size="Small"
-        ></Button>
-      </div>
-      <Container title="Time">
+      <Container loading={loading} title="Time" buttonReport={["Relatório",generateReport]}>
         <div className={styles.divSearch}>
           <span>Time: </span>
           <Select
@@ -221,6 +213,6 @@ export function TeamPageManager() {
 
         <ContainerContent>{content}</ContainerContent>
       </Container>
-    </ContainerContent>
+    
   );
 }

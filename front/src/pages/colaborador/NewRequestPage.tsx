@@ -17,11 +17,12 @@ import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { useRequests } from "../../hooks/useRequests";
 import { formatDate, formatDateForUTC } from "../../functions/auxFunctions";
 import { VacationRequestBody } from "../../types/VacationRequestType";
+import { CollaboratorType } from "../../types/CollaboratoType";
 
 export function NewRequestPage() {
   const [optionsDays, setOptionsDays] = useState([5, 10, 15, 20, 30]);
   const { collaborator } = useGlobalContext();
-  const [collaboratorManager, setCollaboratorManager] = useState<any>();
+  const [collaboratorManager, setCollaboratorManager] = useState<CollaboratorType>();
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const [collaboratorMessage, setCollaboratorMessage] = useState("");
@@ -36,6 +37,14 @@ export function NewRequestPage() {
       setNumberDays(5);
     } else if (collaborator?.saldoDiasFerias == 25) {
       setOptionsDays([5, 10, 15, 20]);
+      setNumberDays(5);
+    }
+    else if (collaborator?.saldoDiasFerias == 10) {
+      setOptionsDays([5, 10]);
+      setNumberDays(5);
+    }
+    else if (collaborator?.saldoDiasFerias == 5) {
+      setOptionsDays([5]);
       setNumberDays(5);
     }
     const getManager = async () =>
@@ -81,7 +90,7 @@ export function NewRequestPage() {
           }).then((response) => {});
         messageWorkplace();
 
-        //message workplace
+        //message email
         const messageEmail = async () =>
           await postRequest(URL_MESSAGE_EMAIL, {
             gestor: collaboratorManager?.nome,
@@ -89,8 +98,8 @@ export function NewRequestPage() {
             colaboradorMatricula: collaborator.matricula,
             inicio: formatDate(startDate.toUTCString()),
             fim: formatDate(endDate.toUTCString()),
-            email: "br_l@hotmail.com",
-            gmail: "brenoleonardo.dev@gmail.com",
+            email: collaboratorManager.email,
+            gmail: collaboratorManager.gmail,
           }).then((response) => {});
         messageEmail();
       }
