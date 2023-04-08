@@ -19,7 +19,7 @@ export function Select({
   optionDisabled,
 }: SelectProps) {
   const sizeWidth = "width" + width;
-  if (disabled) {
+  if (disabled==true) {
     return (
       <select
         onChange={onChange}

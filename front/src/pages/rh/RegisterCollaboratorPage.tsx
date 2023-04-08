@@ -12,12 +12,14 @@ import {
   URL_GET_ALL_TEAMS,
 } from "../../constants/constants";
 import { TeamType } from "../../types/TeamType";
-import { formatDateForUTC } from "../../functions/auxFunctions";
+import { formatDateForUTC, isMoreThanYear } from "../../functions/auxFunctions";
 import { ThirteenthRequestBody } from "../../types/CreateThirteenthRequestType";
 
 export function RegisterCollaboratorPage() {
   const { getRequest } = useRequests();
   const [disabledSelect, setDisabledSelect] = useState(true);
+  const [disabledLastThirteenth, setDisabledLastThirteenth] = useState(false);
+  const [disabledNumberOfDays, setDisabledNumberOfDays] = useState(false);
   const [name, setName] = useState("");
   const [cpf, setCPF] = useState("");
   const [registration, setRegistration] = useState("");
@@ -72,12 +74,27 @@ export function RegisterCollaboratorPage() {
       date.setUTCFullYear(dateNow.getUTCFullYear() + 1);
       setEndAquisitive(formatDateForUTC(date));
     }
+
+
+    if(!isMoreThanYear(event.target.value)){
+      setDisabledNumberOfDays(true)
+      setNumberOfDays(0)
+    }
+    else{
+      setDisabledNumberOfDays(false)
+    }
   };
   const handleRole = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRole(event.target.value);
   };
   const handleHiring = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setHiring(event.target.value);
+    if (event.target.value == "PJ") {
+      setLastThirteenth("");
+      setDisabledLastThirteenth(true);
+    } else {
+      setDisabledLastThirteenth(false);
+    }
   };
   const handleLastThirteenth = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLastThirteenth(event.target.value);
@@ -134,7 +151,7 @@ export function RegisterCollaboratorPage() {
           }
         )
           .then((response) => {
-            console.log("deucerto", response);
+            
           })
           .catch((err) => {
             console.log("error", err);
@@ -164,7 +181,7 @@ export function RegisterCollaboratorPage() {
       getTeams();
     }
   };
-  
+
   return (
     <Container title="Cadastro de Colaborador">
       <div className={styles.infos}>
@@ -248,6 +265,7 @@ export function RegisterCollaboratorPage() {
             optionsDouble={optionsTeam}
             disabled={disabledSelect}
             optionDisabled={"Insira a matrícula do gestor"}
+            placeholder="asdasdas"
           ></Select>
         </div>
       </div>
@@ -294,6 +312,8 @@ export function RegisterCollaboratorPage() {
             onChange={handleLastThirteenth}
             placeholder="dd/mm/aaaa"
             type="date"
+            disabled={disabledLastThirteenth}
+            value={lastThirteenth}
             sizeInput="Medium"
             onKeyDown={(event) => {
               event.preventDefault();
@@ -320,6 +340,7 @@ export function RegisterCollaboratorPage() {
           <Select
             onChange={handleNumberOfDays}
             sizeSelect="Medium"
+            disabled={disabledNumberOfDays}
             optionsUnique={[0, 5, 10, 15, 20, 25, 30]}
           ></Select>
         </div>

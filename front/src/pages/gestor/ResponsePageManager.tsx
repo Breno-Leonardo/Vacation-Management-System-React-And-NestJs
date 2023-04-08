@@ -30,7 +30,7 @@ export function ResponsePageManager() {
     useState<VacationRequestReturn[]>();
   const [contentIntersectionRequest, setContentIntersectionRequest] =
     useState<any>();
-    
+
   useEffect(() => {
     if (currentVacationRequest != undefined) {
       setLoadingRequest(false);
@@ -67,10 +67,12 @@ export function ResponsePageManager() {
             setRefresh(true);
             setCurrentVacationRequestStorageContext(result);
           })
-          .catch((err) => {console.log(err)});
+          .catch((err) => {
+            console.log(err);
+          });
       getVacationRequest();
     }
-  }, [currentVacationRequest,refresh]);
+  }, [currentVacationRequest, refresh]);
 
   //set content requests
   useEffect(() => {
@@ -83,6 +85,7 @@ export function ResponsePageManager() {
                 formatNameForMobile(soli.colaborador.nome),
                 formatDate(soli.dataInicio),
                 formatDate(soli.dataTermino),
+                soli.statusSolicitacao,
               ]}
               colorsFields={["black", "green", "red"]}
               position="center"
@@ -182,10 +185,17 @@ export function ResponsePageManager() {
 
   return (
     <>
-      <Container loading={loadingIntersection} title="Interseções de Férias">
-        <Topics fields={["Nome", "Início", "Fim"]} position="center"></Topics>
-        {contentIntersectionRequest}
-      </Container>
+      {intersectionRequests != undefined && intersectionRequests.length > 0 ? (
+        <Container loading={loadingIntersection} title="Interseções de Férias">
+          <Topics
+            fields={["Nome", "Início", "Fim", "Status"]}
+            position="center"
+          ></Topics>
+          {contentIntersectionRequest}
+        </Container>
+      ) : (
+        <></>
+      )}
 
       <Container loading={loadingRequest} title="Solicitação">
         <></>

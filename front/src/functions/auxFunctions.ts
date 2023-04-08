@@ -10,7 +10,7 @@ export function formatNameForMobile(name: string): string {
   const width = window.innerWidth;
   const names = name.split(" ");
   if (width < 768) {
-    if (name.length > 2) {
+    if (names.length >= 2) {
       return names[0] + " " + names[names.length - 1];
     }
   }
@@ -26,9 +26,8 @@ export function formatName(name: string): string {
   return name;
 }
 
-export function formatDate(date: string| undefined): string {
-  if(date == undefined) 
-    return "undefined"
+export function formatDate(date: string | undefined): string {
+  if (date == undefined) return "undefined";
   const dateConvert = new Date(date);
   const width = window.innerWidth;
 
@@ -69,8 +68,8 @@ export function isAttentionFlag(limitConcessive: string): boolean {
   const limitConcessiveDate = new Date(limitConcessive);
   const dateNow = new Date(Date.now());
   var diffMonth =
-    (limitConcessiveDate.getFullYear() - dateNow.getFullYear()) * 12 +
-    (limitConcessiveDate.getMonth() - dateNow.getMonth());
+    (limitConcessiveDate.getUTCFullYear() - dateNow.getUTCFullYear()) * 12 +
+    (limitConcessiveDate.getUTCMonth() - dateNow.getUTCMonth());
   if (
     (diffMonth == 1 &&
       dateNow.getUTCDate() < limitConcessiveDate.getUTCDate()) ||
@@ -79,4 +78,16 @@ export function isAttentionFlag(limitConcessive: string): boolean {
     return false;
   }
   return true;
+}
+
+export function isMoreThanYear(admissionDate: string): boolean {
+  const admission = new Date(admissionDate);
+  const dateNow = new Date(Date.now());
+  var diff =
+    (dateNow.getUTCFullYear() - admission.getUTCFullYear()) * 12 +
+    (dateNow.getUTCMonth() - admission.getUTCMonth());
+  if (diff > 12||(diff == 12 && dateNow.getUTCDate() >= admission.getUTCDate())) {
+    return true;
+  }
+  return false;
 }

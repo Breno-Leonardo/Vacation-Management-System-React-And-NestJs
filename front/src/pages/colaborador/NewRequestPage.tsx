@@ -121,13 +121,18 @@ export function NewRequestPage() {
       if (diff > 0) {
         setStartDate(new Date(event.target.value));
         const dateEnd = new Date(event.target.value);
-        dateEnd.setDate(dateEnd.getDate() + numberDays);
+        dateEnd.setUTCDate(dateEnd.getUTCDate() + numberDays);
         setEndDate(dateEnd);
       }
     }
   };
   const handleNumberOfDays = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setNumberDays(parseInt(event.target.value));
+    if (startDate != undefined ) {
+      const aux= new Date(startDate)
+      aux.setUTCDate(aux.getUTCDate()+parseInt(event.target.value))
+      setEndDate(aux);
+    }
   };
   const handleCollaboratorMessage = (
     event: React.ChangeEvent<HTMLTextAreaElement>

@@ -60,6 +60,7 @@ hr {
     margin-top: 2rem;
     padding-bottom:4rem;
     padding-top:1.5rem;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2);
   }
   .titleCenter {
     font-size: 1.7rem;

@@ -20,7 +20,6 @@ import {
 import { TeamType } from "../../types/TeamType";
 import { CollaboratorType } from "../../types/CollaboratoType";
 import { ContainerContent } from "../../components/ContainerContent";
-import { Button } from "../../components/Button";
 import axios from "axios";
 import { getAuthorization } from "../../functions/connections/auth";
 
@@ -190,7 +189,7 @@ export function HistoryRequestsPageManager() {
   return (
     <Container
       title="Histórico de solicitações"
-      loading={loading}
+      loading={false}
       buttonReport={["Relatório", generateReport]}
     >
       <div className={styles.divSearch}>
@@ -203,7 +202,7 @@ export function HistoryRequestsPageManager() {
             optionsDouble={optionsTeam}
           ></Select>
         </div>
-        <div>
+        <div className={styles.divEmpo}>
           <span>Funcionário: </span>
           <Select
             sizeSelect="Medium"
@@ -222,7 +221,7 @@ export function HistoryRequestsPageManager() {
         <div className="noInformation">Sem Solicitações</div>
       )}
 
-      <ContainerContent >{content}</ContainerContent>
+      <ContainerContent loading={loading}>{content}</ContainerContent>
     </Container>
   );
 }
