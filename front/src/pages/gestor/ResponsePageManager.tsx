@@ -44,7 +44,11 @@ export function ResponsePageManager() {
             const startCurrent = new Date(currentVacationRequest.dataInicio);
             const endCurrent = new Date(currentVacationRequest.dataTermino);
             result = result.filter((request) => {
-              if (request.id != currentVacationRequest.id) {
+              if (
+                request.id != currentVacationRequest.id &&
+                request.statusSolicitacao != "Finalizada" &&
+                request.statusSolicitacao != "Recusada"
+              ) {
                 const startReq = new Date(request.dataInicio);
                 const endReq = new Date(request.dataTermino);
                 if (

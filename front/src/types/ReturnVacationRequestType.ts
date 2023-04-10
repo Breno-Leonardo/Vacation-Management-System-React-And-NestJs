@@ -7,6 +7,6 @@ export interface VacationRequestReturn {
   dataTermino: string;
   mensagemColaborador: string;
   mensagemGestor: string;
-  statusSolicitacao: "Em Aberto" | "Finalizada" | "Negada" | "Em Férias"| "Agendada";
+  statusSolicitacao: "Em Aberto" | "Finalizada" | "Recusada" | "Em Férias"| "Agendada";
   colaborador: CollaboratorType;
 }
