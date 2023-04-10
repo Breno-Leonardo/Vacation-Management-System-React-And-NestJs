@@ -33,7 +33,7 @@ export function NewRequestPage() {
       setOptionsDays([15]);
       setNumberDays(15);
     } else if (collaborator?.saldoDiasFerias == 20) {
-      setOptionsDays([5, 20]);
+      setOptionsDays([5, 15, 20]);
       setNumberDays(5);
     } else if (collaborator?.saldoDiasFerias == 25) {
       setOptionsDays([5, 10, 15, 20]);

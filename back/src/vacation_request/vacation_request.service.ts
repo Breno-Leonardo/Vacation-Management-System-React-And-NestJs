@@ -24,9 +24,29 @@ export class VacationRequestService {
     //testing if registration in token is equals registration in body request
     const matriculaToken = Object.values(this.jwtService.decode(token))[0];
     if (matriculaToken == matriculaBody) {
-      return this.vacationRepository.save({
-        ...createVacationRequestDto,
-      });
+      const collaborator =
+        await this.collacolaboratorService.findCollaboratorById(matriculaBody);
+      const balanceDays = collaborator.saldoDiasFerias;
+
+      const diffInMs =
+        new Date(createVacationRequestDto.dataTermino).getTime() -
+        new Date(createVacationRequestDto.dataInicio).getTime();
+      const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+
+      if (
+        (balanceDays == 15 && diffInDays == 15) ||
+        (balanceDays == 20 && [5, 15, 20].includes(diffInDays)) ||
+        (balanceDays == 25 && [5, 10, 15, 20].includes(diffInDays)) ||
+        (balanceDays == 10 && [5, 10].includes(diffInDays)) ||
+        (balanceDays == 5 && [5].includes(diffInDays)) ||
+        (balanceDays == 30 && [5, 10, 15, 20, 30].includes(diffInDays))
+      ) {
+        return this.vacationRepository.save({
+          ...createVacationRequestDto,
+        });
+      } else {
+        throw new Error(`Incorrect days request`);
+      }
     } else throw new Error(`Incorrect Token`);
     return;
   }
