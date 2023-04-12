@@ -1,73 +1,150 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Back-end
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+O back-end se baseia no MER:
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+![image](https://user-images.githubusercontent.com/58619307/231471747-b77dfd38-71a0-4890-a169-4ca0d0f9b8cd.png)
 
-## Description
+O módulo TeamModule é referente a entidade time, um time possui necessariamente um gestor.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+O módulo ThirteenthRequestModule é referente a entidade solicitacao_decimo_terceiro.
 
-## Installation
+O módulo VacationRequestModule é referente a entidade solicitacao_ferias.
 
-```bash
-$ npm install
+O módulo CollaboratorModule é referente a entidade colaborador, possui relacionamento com todas as outras.
+
+A aplicação possui quatro perfis de usuário, gestor, colaborador e gestor-colaborador. Gestor aprova solicitações de férias dos times os quais ele lidera, colaborador pode solicitar férias e adiantamento do décimo terceiro, gestor-colaborador possui acesso aos dois tipos de perfis, além desses principais existe o perfil admin, responsável por cadastrar colaboradores e times, atualizar e remover colaboradores.
+
+Um colaborador que lidera um ou mais times e integra um time é um gestor-colaborador, se ele somente lidera um ou mais times é somente um gestor e se ele não lidera nenhum time e integra um ele é um colaborador.
+
+É necessario um arquivo de ambiente .env, segue o esqueleto abaixo.
+
+```
+DB_HOST=
+DB_USERNAME=
+DB_PASSWORD=
+DB_DATABASE=
+DB_SCHEMA=
+
+JWT_SECRET=
+JWT_TIME_EXPIRES=
+
+ADMIN_LOGIN=
+ADMIN_PASSWORD= senha criptografada do admin
 ```
 
-## Running the app
+## Rotas:
 
-```bash
-# development
-$ npm run start
 
-# watch mode
-$ npm run start:dev
+### Colaborador
 
-# production mode
-$ npm run start:prod
+```
+Todos Colaboradores: URL_BASE/colaborador/lista-colaboradores
+
+Criar Colaborador: URL_BASE/colaborador/cadastro
+Body:
+{
+"matricula": "",
+"nome": "",
+"cpf": "",
+"cargo": "",
+"email": "",
+"gmail": "",
+"dataAdmissao": "1980-01-01",
+"saldoDiasFerias": 20,
+"modeloContratacao": "CLT",
+"fimAquisitivo": "2023-04-04",
+"senha": "",
+"time":1
+}
+
+Todos Colaboradores de um time: URL_BASE/colaborador/lista-colaboradores/time/:idTime
+
+Colaborador por matrícula: URL_BASE/colaborador/lista-colaboradores/:matricula
+
+Remover Colaborador: URL_BASE/colaborador/lista-colaboradores/delete/:matricula
+
+Atualizar Colaborador: URL_BASE/colaborador/lista-colaboradores/atualizar/:matricula
+Body:
+{
+"matricula": "",
+"nome": "",
+"cpf": "",
+"cargo": "",
+"email": "",
+"gmail": "",
+"saldoDiasFerias": 20,
+"modeloContratacao": "CLT",
+"time":1
+}
 ```
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
+### Time
+```
+Todos Times: URL_BASE/times/lista-times
 
-# e2e tests
-$ npm run test:e2e
+Time por ID: URL_BASE/times/lista-times/id/:id
 
-# test coverage
-$ npm run test:cov
+Time por matrícula do gestor: URL_BASE/times/lista-times/:matricula
+
+Criar Time: URL_BASE/times/cadastro
+Body:
+{
+ "nome": "",
+ "gestor": "20"
+}
 ```
 
-## Support
+### Décimo Terceiro
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+Todas solicitações de décimo terceiro: URL_BASE/decimo-terceiro/lista-solicitacoes
 
-## Stay in touch
+Solicitação por matricula do colaborador: URL_BASE/decimo-terceiro/lista-solicitacoes/:matricula
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Criar Solicitação: URL_BASE/decimo-terceiro/nova-solicitacao
+Body:
+{
+ "dataSolicitacao": "2023-01-01",
+ "colaborador": "0"
+}
+```
 
-## License
+### Férias
 
-Nest is [MIT licensed](LICENSE).
+
+```
+Todas solicitações de férias: URL_BASE/solicitacao-ferias/lista-solicitacoes
+
+Todas solicitações de férias de um time: URL_BASE/solicitacao-ferias/lista-solicitacoes/time/:timeId
+
+Todas solicitações de férias por uma matrícula: URL_BASE/solicitacao-ferias/lista-solicitacoes/:matricula
+
+Solicitação de férias por ID: URL_BASE/solicitacao-ferias/lista-solicitacoes/id/:id
+
+Criar Solicitação: URL_BASE/solicitacao-ferias/nova-solicitacao
+Body:
+{
+ "dataSolicitacao": "2021-07-27",
+	"dataInicio": "2021-03-07",
+	"dataTermino": "2021-04-09",
+	"mensagemColaborador":"mensagem",
+	"mensagemGestor": "",
+	"colaborador":"87",
+	"statusSolicitacao":"Em Férias"
+}
+
+Atualizar Solicitação: URL_BASE/solicitacao-ferias/update/:id
+Body:
+{
+	"mensagemGestor": "",
+	"statusSolicitacao":""
+}
+
+Aprovar: URL_BASE/solicitacao-ferias/aprovar/:id/:debitoDeDias
+Body:
+{
+	"mensagemGestor": "",
+	"statusSolicitacao":""
+}
+```
