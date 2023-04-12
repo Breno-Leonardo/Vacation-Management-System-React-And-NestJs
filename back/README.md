@@ -148,3 +148,17 @@ Body:
 	"statusSolicitacao":""
 }
 ```
+
+### Autenticacão
+
+```
+Login: URL_BASE/auth/login
+Body:
+{
+	"matricula":"",
+	"senha":""
+}
+```
+
+
+Todas as rotas necessitam do token de autenticação no header em Authorization, ele pode ser obtido com a rota de autenticação, entretanto algumas rotas tem limitação de acesso a admin ou gestor. A rota de criação de requisição precisa ter a mesma matrícula de colaborador no token de autenticação e no body.
