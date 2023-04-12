@@ -1,15 +1,15 @@
-import { ReturnCollaboratorDto } from 'src/collaborator/dto/returnCollaborator.dto';
 import { ThirteenthRequestEntity } from '../entities/thirteenth_request.entity';
+import { ReturnCollaboratorDtoWithoutKey } from 'src/collaborator/dto/returnCollaboratorWidthouKey.dto';
 
 export class ReturnThirteenthRequestDto {
   id: number;
   dataSolicitacao: Date;
-  colaborador: ReturnCollaboratorDto;
+  colaborador: ReturnCollaboratorDtoWithoutKey;
 
   constructor(thirteenthRequestEntity: ThirteenthRequestEntity) {
     this.id = thirteenthRequestEntity.id;
     this.dataSolicitacao = thirteenthRequestEntity.dataSolicitacao;
-    this.colaborador = new ReturnCollaboratorDto(
+    this.colaborador = new ReturnCollaboratorDtoWithoutKey(
       thirteenthRequestEntity.colaborador,
     );
   }
