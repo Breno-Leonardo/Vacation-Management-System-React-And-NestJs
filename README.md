@@ -1,6 +1,6 @@
 # Projeto-Quero-Quero
 
-Sistema de gerenciamento de férias, as tecnologias utilizadas foram React para  o front-end, NestJS para o back-end, PostegreSQL para o banco de dados e Python para a api de mensagens. 
+Sistema de gerenciamento de férias, as tecnologias utilizadas foram React para  o front-end, NestJS para o back-end, PostgreSQL para o banco de dados e Python para a api de mensagens. 
  
 Dentro de cada pasta existe um readme documentando.
 
